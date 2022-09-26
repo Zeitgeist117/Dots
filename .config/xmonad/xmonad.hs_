@@ -1,0 +1,100 @@
+--Base Imports
+
+import XMonad
+import System.IO
+import System.Directory
+import System.Exit
+import XMonad.Util.EZConfig
+import XMonad.Util.Ungrab
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.SpawnOnce
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.WindowSwallowing
+
+-- Autostart
+
+myStartupHook = do
+    spawnOnce "exec picom --experimental-backends &"
+    spawnOnce "exec nitrogen --restore &"
+    spawnOnce "exec stalonetray &"
+    spawnOnce "exec xclip &"
+    spawnOnce "exec nm-applet &"
+    spawnOnce "exec flameshot &"
+    spawnOnce "exec megasync &"
+    spawnOnce "exec dunst &"
+    spawnOnce "exec mpd &"
+    setWMName "LG3D"
+
+-- Variables
+
+myTerminal = "st" :: String
+myBrowser = "qutebrowser" :: String
+myExplorer = "thunar" :: String
+
+--Layouts
+
+myLayout = tiled ||| Mirror tiled ||| Full
+  where
+    tiled   = Tall nmaster delta ratio 
+    nmaster = 1      -- Default number of windows in the master pane
+    ratio   = 1/2    -- Default proportion of screen occupied by master pane
+    delta   = 3/100  -- Percent of screen to increment by when resizing panes
+    spacing = 5
+
+myWorkspaces	= ["1","2","3","4","5","6","7","8","9"]
+
+-- Manage Hook
+
+myManageHook = composeAll
+  -- 'doFloat' forces a window to float.  Useful for dialog boxes and such.
+  -- using 'doShift ( myWorkspaces !! 7)' sends program to workspace 8!
+  -- I'm doing it this way because otherwise I would have to write out the full
+  -- name of my workspaces and the names would be very long if using clickable workspaces.
+  [ className =? "confirm"         --> doFloat
+  , className =? "file_progress"   --> doFloat
+  , className =? "dialog"          --> doFloat
+  , className =? "download"        --> doFloat
+  , className =? "error"           --> doFloat
+  , className =? "Gimp"            --> doFloat
+  , className =? "notification"    --> doFloat
+  , className =? "pinentry-gtk-2"  --> doFloat
+  , className =? "splash"          --> doFloat
+  , className =? "toolbar"         --> doFloat
+  , className =? "Yad"             --> doFloat
+  , title =? "Oracle VM VirtualBox Manager"  --> doFloat
+  , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
+  , className =? "Brave-browser"   --> doShift ( myWorkspaces !! 1 )
+  , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
+  , className =? "Gimp"            --> doShift ( myWorkspaces !! 8 )
+  , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
+  , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
+  , isFullscreen -->  doFloat
+  ] 
+  -- <+> namedScratchpadManageHook myScratchPads
+
+-- Key Binds
+
+main :: IO ()
+main = xmonad . ewmh =<< xmobar myConfig
+
+myConfig = def
+    { manageHook         = myManageHook <+> manageDocks
+	, handleEventHook    = swallowEventHook (className =? "Alacritty"  <||> className =? "St" <||> className =? "XTerm") (return True)
+	, modMask            = mod4Mask  -- Rebind Mod to the Super key 
+	, startupHook        = myStartupHook
+    , layoutHook         = myLayout
+    }
+  `additionalKeysP`
+    [ ("M-S-z", spawn "xscreensaver-command -lock")
+    ,("M-C-s", unGrab *> spawn "scrot -s"       )
+    ,("M-q"  , spawn myBrowser                  ) -- Launches Web Browser
+    ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
+    ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal
+
+    ]

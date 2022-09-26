@@ -1,0 +1,25 @@
+import:
+  - /home/nightwing/.config/alacritty/dracula.yml
+
+window:
+  opacity: 0.6
+
+font:
+  normal:
+    family: Cascadia Code
+    style: regular
+  bold:
+    family: Cascadia Code
+    style: bold
+  italic:
+    family: Cascadia Code
+    style: italic
+  bold_italic:
+    family: Cascadia Code
+    style: Bold Italic
+
+  size: 15
+
+key_bindings:
+  - { key: C, mods: Alt, action: Copy }
+  - { key: V, mods: Alt, action: Paste }
