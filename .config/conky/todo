@@ -1,5 +1,5 @@
 conky.config = {
-	alignment = 'bottom_left',
+	alignment = 'bottom_right',
 	xinerama_head = 1,
 	background = true,
 	cpu_avg_samples = 2,
@@ -14,7 +14,7 @@ conky.config = {
 	draw_outline = false,
 	draw_shades = false,
 	use_xft = true,
-	font = 'JetBrains Mono Nerd Font:size=11',
+	font = 'JetBrains Mono Nerd Font:size=13',
 	gap_x = 50,
 	gap_y = 30,
 	no_buffers = true,
