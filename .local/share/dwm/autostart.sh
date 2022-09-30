@@ -5,6 +5,7 @@ exec nm-applet &
 exec dunst &
 exec dnoted &
 exec xclip &
+exec conky -c ~/.config/conky/todo &
 # exec megasync &
 exec syncthing &
 exec keepassxc &

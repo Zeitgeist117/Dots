@@ -138,6 +138,10 @@ config.set('content.javascript.enabled', True, 'chrome://*/*')
 # Type: Bool
 config.set('content.javascript.enabled', True, 'qute://*/*')
 
+# List of user stylesheet filenames to use.
+# Type: List of File, or File
+c.content.user_stylesheets = '~/.config/qutebrowser/solarized-dark-all-sites.css'
+
 # CSS border value for hints.
 # Type: String
 c.hints.border = '1px solid #282a36'
@@ -518,10 +522,10 @@ c.colors.webpage.darkmode.enabled = False
 
 # Bindings for normal mode
 config.bind('eM', 'hint links spawn mpv {hint-url}')
+config.bind('pw', 'spawn --userscript qute-keepassxc --key ABC1234')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
 config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
 
-# Keepassxc
-config.bind('<Alt-Shift-u>', 'spawn --userscript qute-keepassxc --key ABC1234', mode='insert')
-config.bind('pw', 'spawn --userscript qute-keepassxc --key ABC1234', mode='normal')
+# Bindings for insert mode
+config.bind('<Alt+Shift+u>', 'spawn --userscript qute-keepassxc --key ABC1234', mode='insert')

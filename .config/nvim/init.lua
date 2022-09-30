@@ -79,11 +79,13 @@ require('packer').startup(function(use)
 	use 'ellisonleao/glow.nvim'
 	use "jbyuki/venn.nvim"
 	use 'anuvyklack/hydra.nvim'
+	use 'rrethy/vim-hexokinase'
 
 end)
 
 require'telescope'.load_extension('project')
 
+g.hexokinase_highlighters = "backgroundfull"
 
 
 ----Key-Bindings----------------------------------------
