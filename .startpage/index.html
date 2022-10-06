@@ -1,91 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>~/startpage</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body class="fade-in jquery search">
-    <div class="container">
-        <div class="left-container">
-
-
-
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <link href="./styles.css" rel="stylesheet"> 
+    <title>New tab</title>
   </head>
-<body onLoad='getDate()' style="text-align: center">
-    
-    <h1 id="Date"></h1>
-
-            <div class="gif">
-                <img class='vapor' src="ranni.gif" width="450px" height="400px" />
-            </div>
+  <body>
+    <div class="surface">
+      <img src="./images/bg.gifv" alt="" />
+      <main>
+        <h1>Hello, Zeitgeist!</h1>
+        <div id="searchbar">
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="visually-hidden">Search</span>
+          </button>
+          <input type="text" placeholder="Search" autofocus />
         </div>
-
-     <div class="right-container">
-				
-				<div class="head">
-					<p>&gt; cd ~/<span class="blinking">_</span></p>
-				</div>
-
-				<div class="head-search">
-					<!-- Search actions:
-						https://duckduckgo.org/
-						https://www.google.com/search
-					-->
-					<form method="get" action="https://searx.be" autocomplete="off" id="search">
-						<p>
-							<span class="prefix">&gt; search ~/</span>
-							<input class="search-field" id="search-input" type="text"  type="text" name="q" maxlength="100" />
-							<textarea class="search-field" id="search-textarea" wrap="soft" type="text" name="q" maxlength="100"></textarea>
-							<span class="blinking">_</span>
-						</p>
-					</form>
-				</div>
-
-            <div class="bookmarks">
-                <div class="category">
-                    <div class="links">
-                        <li class="title">daily</li>
-                        <li><a href="https://youtube.com">Youtube</a></li>
-                        <li><a href="https://odysee.com/">Odysee</a></li>
-                        <li><a href="https://twitter.com">Twitter</a></li>
-                        <li><a href="http://127.0.0.1:8384/#settings-gui">SyncThing</a></li>
-                    </div>
-                </div>
-
-                <div class="category">
-                    <div class="links">
-                        <li class="title"><a style="color: #EADBB2" href="https://reddit.com">reddit</a></li>
-                        <li><a href="https://reddit.com/r/unixporn/">r/unixporn</a></li>
-                        <li><a href="https://reddit.com/r/conspiracy/">r/conspiracy</a></li>
-                        <li><a href="https://reddit.com/r/archlinux/">r/archlinux</a></li>
-                        <li><a href="https://reddit.com/r/linuxmasterrace/">r/linuxmr</a></li>
-                    </div>
-                </div>
-
-                <div class="category">
-                    <div class="links">
-                        <li class="title">Gaming</li>
-                        <li><a href="https://www.protondb.com/">Proton DB</a></li>
-                        <li><a href="https://lutris.net/">Lutris</a></li>
-                        <li><a href="https://steamdb.info/">Steam DB</a></li>
-                        <li><a href="https://steamdb.info/sales/">Steam Sales</a></li>
-                    </div>
-                </div>
-
-                <div class="category">
-                    <div class="links">
-                        <li class="title">fun</li>
-                        <li><a href="https://monkeytype.com/">MonkeyType</a></li>
-                        <li><a href="https://free-mp3-download.net/">Music Download</a></li>
-                        <li><a href="https://twitch.tv/">Twitch</a></li>
-                    </div>
-                </div>
-            </div>
+        <div id="bookmarks">
         </div>
+      </main>
     </div>
-</body>
-
+  </body>
+  <script type="text/javascript" src="./scripts.js"></script>
 </html>
