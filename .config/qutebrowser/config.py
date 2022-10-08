@@ -140,7 +140,7 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
-# c.content.user_stylesheets = '~/.config/qutebrowser/solarized-dark-all-sites.css'
+c.content.user_stylesheets = '~/.config/qutebrowser/solarized-dark-all-sites.css'
 
 # CSS border value for hints.
 # Type: String
@@ -518,7 +518,7 @@ c.colors.webpage.bg = 'black'
 # `colors.webpage.darkmode.threshold.background` to 205.  - "With
 # selective inversion of everything": Combines the two variants   above.
 # Type: Bool
-config.set("colors.webpage.darkmode.enabled", True)
+
 # Bindings for normal mode
 config.bind('eM', 'hint links spawn mpv {hint-url}')
 config.bind('pw', 'spawn --userscript qute-keepassxc --key ABC1234')
