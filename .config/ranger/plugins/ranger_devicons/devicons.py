@@ -238,9 +238,10 @@ dir_node_exact_matches = {
     'Music'                            : '',
     'Pictures'                         : '',
     'Public'                           : '',
-    'secondary'                        : '',
+    'Primary'                          : '',
+    'Secondary'                        : '',
+    'Tertiary'                         : '',
     'Templates'                        : '',
-    'tertiary'                         : '',
     'USB'                              : '',
     'Videos'                           : '',
 # Spanish

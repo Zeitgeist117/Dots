@@ -66,7 +66,7 @@ require('packer').startup(function(use)
 	use 'preservim/nerdtree'
 	use 'ryanoasis/vim-devicons'
 	use 'preservim/vim-pencil'
-    -- use 'vimwiki/vimwiki'
+    use 'vimwiki/vimwiki'
 	use 'jiangmiao/auto-pairs'
 	use 'iamcco/markdown-preview.nvim'
 	use 'godlygeek/tabular'
@@ -183,11 +183,13 @@ vim.cmd[[colorscheme dracula]]
 require('wlsample.bubble')
 
 ----Vim-Wiki--------------------------------------------
--- g.vimwiki_list = {{
--- 	path = '~/Notes/wiki',
--- 	syntax = 'markdown',
--- 	ext = '.wiki'
--- }}
+g.vimwiki_list = {{
+	path = '~/Notes/wiki',
+	syntax = 'markdown',
+	ext = '.md'
+}}
+
+g.vimwiki_filetypes = {'markdown'}
 
 ----Telescope-------------------------------------------
 -- You don't need to set any of these options.

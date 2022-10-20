@@ -7,4 +7,4 @@
 config_version: 2
 settings:
   content.notifications.enabled:
-    https://old.reddit.com: true
+    https://www.reddit.com: true

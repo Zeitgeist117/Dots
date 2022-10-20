@@ -140,7 +140,6 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
-c.content.user_stylesheets = '~/.config/qutebrowser/solarized-dark-all-sites.css'
 
 # CSS border value for hints.
 # Type: String
@@ -525,4 +524,6 @@ config.bind('pw', 'spawn --userscript qute-keepassxc --key ABC1234')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
 config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
+
+c.content.user_stylesheets = '~/.config/qutebrowser/nord-dark-all-sites.css'
 
