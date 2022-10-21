@@ -520,7 +520,6 @@ c.colors.webpage.bg = 'black'
 
 # Bindings for normal mode
 config.bind('eM', 'hint links spawn mpv {hint-url}')
-config.bind('pw', 'spawn --userscript qute-keepassxc --key ABC1234')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
 config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
