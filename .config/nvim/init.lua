@@ -67,20 +67,23 @@ require('packer').startup(function(use)
 	use 'preservim/nerdtree'
 	use 'ryanoasis/vim-devicons'
 	use 'preservim/vim-pencil'
-    use 'vimwiki/vimwiki'
+    -- use 'vimwiki/vimwiki'
+	use 'lervag/wiki.vim'
 	use 'jiangmiao/auto-pairs'
-	use 'iamcco/markdown-preview.nvim'
+	-- use 'iamcco/markdown-preview.nvim'
 	use 'godlygeek/tabular'
-	use 'preservim/vim-markdown'
+	-- use 'preservim/vim-markdown'
+	use 'tpope/vim-markdown'
 	use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} } }
 	use 'nvim-telescope/telescope-project.nvim'
 	use "nvim-lua/plenary.nvim"
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use 'tpope/vim-commentary'
 	use 'ellisonleao/glow.nvim'
-	use "jbyuki/venn.nvim"
 	use 'anuvyklack/hydra.nvim'
 	use 'rrethy/vim-hexokinase'
+	use 'vim-pandoc/vim-pandoc'
+	use 'vim-pandoc/vim-pandoc-syntax'
 
 end)
 
@@ -119,28 +122,6 @@ map('n', '<leader>.', '<CMD>Telescope file_browser<CR>')
 map('n', '<leader>fw', '<CMD>Telescope live_grep<CR>')
 
 
--- Venn
--- venn.nvim: enable or disable keymappings
-function _G.Toggle_venn()
-    local venn_enabled = vim.inspect(vim.b.venn_enabled)
-    if venn_enabled == "nil" then
-        vim.b.venn_enabled = true
-        vim.cmd[[setlocal ve=all]]
-        -- draw a line on HJKL keystokes
-        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-        -- draw a box by pressing "f" with visual selection
-        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-    else
-        vim.cmd[[setlocal ve=]]
-        vim.cmd[[mapclear <buffer>]]
-        vim.b.venn_enabled = nil
-    end
-end
--- toggle keymappings for venn using <leader>v
-vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
 
 
 ----Dashboard-------------------------------------------
@@ -184,13 +165,19 @@ vim.cmd[[colorscheme dracula]]
 require('wlsample.bubble')
 
 ----Vim-Wiki--------------------------------------------
-g.vimwiki_list = {{
-	path = '~/Notes/wiki',
-	syntax = 'markdown',
-	ext = '.md'
-}}
+-- g.vimwiki_list = {{
+-- 	path = '~/Notes/wiki',
+-- 	syntax = 'markdown',
+-- 	ext = '.md'
+-- }}
 
-g.vimwiki_filetypes = {'markdown'}
+-- g.vimwiki_filetypes = {'markdown'}
+-- g.vimwiki_global_ext = 0
+
+g.wiki_root = '~/Notes/wiki'
+g.wiki_filetypes = {"md"}
+g.wiki_link_extension = '.md'
+
 
 ----Telescope-------------------------------------------
 -- You don't need to set any of these options.
@@ -224,19 +211,23 @@ g.limelight_default_coefficient = 1
 g.goyo_width = 150
 
 
-g.vim_markdown_folding_disabled = 1
+-- g.vim_markdown_folding_disabled = 1
 
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
     { pattern = {"*.md", "*.tex" }, command = "setlocal spell" }
 )
+vim.api.nvim_create_autocmd(
+    { "BufRead", "BufNewFile" },
+    { pattern = {"*.md", "*.tex" }, command = "Pencil" }
+)
 vim.api.nvim_create_autocmd('User', {
   pattern = 'GoyoEnter',
   desc = 'Settings for goyo',
   callback = function(event)
-	  vim.cmd('Limelight')
-	  vim.cmd('Pencil')
+	  -- vim.cmd('Limelight')
+	  -- vim.cmd('Pencil')
 
   end
 })
@@ -245,15 +236,15 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'GoyoLeave',
   desc = 'Restore settings',
   callback = function(event)
-	  vim.cmd('Limelight!')
-	  vim.cmd('PencilOff')
+	  -- vim.cmd('Limelight!')
+	  -- vim.cmd('PencilOff')
   end
 })
 
 
 ----Auto-Complete--------------------------------------------
 
-  -- Setup nvim-cmp.
+  -- Set up nvim-cmp.
   local cmp = require'cmp'
 
   cmp.setup({
@@ -298,8 +289,8 @@ vim.api.nvim_create_autocmd('User', {
     })
   })
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = 'buffer' }
@@ -316,5 +307,9 @@ vim.api.nvim_create_autocmd('User', {
     })
   })
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Set up lspconfig.
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  --   capabilities = capabilities
+  -- }

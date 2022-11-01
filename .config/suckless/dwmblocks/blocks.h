@@ -5,11 +5,9 @@ static const Block blocks[] = {
 	{"﬙ ", "free -h | awk '/^Mem/ { print $3\"/\"$2 }' | sed s/i//g",	10,		0},
 	{" ", "top -bn1 | grep Cpu | awk '{print $2}'", 5, 0},
 	{" ", "df -h /home/nightwing| grep -vE '^Filesystem' | awk '{print $5, $4 }'", 3600, 0},
-	{" ", "df -h /home/nightwing/Primary| grep -vE '^Filesystem' | awk '{print $5, $4 }'", 3600, 0},
-	{" ", "df -h /home/nightwing/Secondary| grep -vE '^Filesystem' | awk '{print $5, $4 }'", 3600, 0},
-	{" ", "df -h /home/nightwing/Tertiary| grep -vE '^Filesystem' | awk '{print $5, $4 }'", 3600, 0},
 	{"", "/home/nightwing/.config/suckless/dwmblocks/scripts/vol.sh", 0,	10}, 
 	{"", "/home/nightwing/.config/suckless/dwmblocks/scripts/date.sh", 1,	0},
+	{"", "/home/nightwing/.config/suckless/dwmblocks/scripts/bat.sh", 1,	0},
 };
 
 //sets delimeter between status commands. NULL character ('\0') means no delimeter.

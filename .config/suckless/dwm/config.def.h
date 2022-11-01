@@ -16,7 +16,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Fira Code Nerd Font:size=11", "JoyPixels:pixelsize=13" };
+static const char *fonts[]          = { "Fira Code Nerd Font:size=13", "JoyPixels:pixelsize=13" };
 static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
@@ -129,6 +129,7 @@ static const char *emacscmd[]  = { "emacsclient", "-c", "-a","'emacs'", NULL };
 static const char *qbrowser[]  = { "qutebrowser", NULL };
 /* static const char *ecmd[] = { "st", "-e", "nvim", NULL }; */
 static const char *ecmd[] = { "firefox", NULL };
+static const char *scrcmd[] = { "scr", "window",  NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -209,6 +210,8 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
+
+	{ 0, XK_Print,	   spawn,  {.v = scrcmd } },
 };
 
 /* button definitions */

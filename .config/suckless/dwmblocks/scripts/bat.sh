@@ -1,6 +1,6 @@
 #!/bin/sh
 
-batt="$(cat /sys/class/power_supply/BAT0/capacity)"
+batt="$(cat /sys/class/power_supply/BAT1/capacity)"
 
 
 if [ "$batt" -gt "100" ]; then

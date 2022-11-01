@@ -135,11 +135,6 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/limelight.vim",
     url = "https://github.com/junegunn/limelight.vim"
   },
-  ["markdown-preview.nvim"] = {
-    loaded = true,
-    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
-    url = "https://github.com/iamcco/markdown-preview.nvim"
-  },
   nerdtree = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nerdtree",
@@ -185,11 +180,6 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["venn.nvim"] = {
-    loaded = true,
-    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/venn.nvim",
-    url = "https://github.com/jbyuki/venn.nvim"
-  },
   vim = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim",
@@ -213,7 +203,17 @@ _G.packer_plugins = {
   ["vim-markdown"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-markdown",
-    url = "https://github.com/preservim/vim-markdown"
+    url = "https://github.com/tpope/vim-markdown"
+  },
+  ["vim-pandoc"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-pandoc",
+    url = "https://github.com/vim-pandoc/vim-pandoc"
+  },
+  ["vim-pandoc-syntax"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-pandoc-syntax",
+    url = "https://github.com/vim-pandoc/vim-pandoc-syntax"
   },
   ["vim-pencil"] = {
     loaded = true,
@@ -225,16 +225,16 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-vsnip",
     url = "https://github.com/hrsh7th/vim-vsnip"
   },
-  vimwiki = {
-    loaded = true,
-    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vimwiki",
-    url = "https://github.com/vimwiki/vimwiki"
-  },
   ["which-key.nvim"] = {
     config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0" },
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
+  },
+  ["wiki.vim"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/wiki.vim",
+    url = "https://github.com/lervag/wiki.vim"
   },
   ["windline.nvim"] = {
     loaded = true,

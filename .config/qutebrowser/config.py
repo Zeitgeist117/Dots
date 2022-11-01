@@ -140,6 +140,7 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
+c.content.user_stylesheets = '~/.config/qutebrowser/nord-dark-all-sites.css'
 
 # CSS border value for hints.
 # Type: String
@@ -507,22 +508,21 @@ c.colors.tabs.selected.even.bg = '#282a36'
 # Type: QtColor
 c.colors.webpage.bg = 'black'
 
-# Render all web contents using a dark theme. Example configurations
-# from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
-# inversion": Set   `colors.webpage.darkmode.algorithm` accordingly.  -
-# "With selective image inversion": Set
-# `colors.webpage.darkmode.policy.images` to `smart`.  - "With selective
-# inversion of non-image elements": Set
-# `colors.webpage.darkmode.threshold.text` to 150 and
-# `colors.webpage.darkmode.threshold.background` to 205.  - "With
-# selective inversion of everything": Combines the two variants   above.
-# Type: Bool
+# Default font size (in pixels) for regular text.
+# Type: Int
+c.fonts.web.size.default = 22
+
+# Default font size (in pixels) for fixed-pitch text.
+# Type: Int
+c.fonts.web.size.default_fixed = 16
+
+# Minimum logical font size (in pixels) that is applied when zooming
+# out.
+# Type: Int
+c.fonts.web.size.minimum_logical = 12
 
 # Bindings for normal mode
 config.bind('eM', 'hint links spawn mpv {hint-url}')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
 config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
-
-c.content.user_stylesheets = '~/.config/qutebrowser/nord-dark-all-sites.css'
-
