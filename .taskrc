@@ -47,3 +47,4 @@ data.location=~/.task
 
 # Include the solarized themes, enable solarized dark
 #include /usr/share/task/solarized-light-256.theme
+news.version=2.6.0
