@@ -1,16 +1,15 @@
 exec picom --experimental-backends &
 exec feh --bg-scale ~/Pictures/WALLPAPERS/lifeafter.jpg &
+exec conky -c ~/.config/conky/todo &
+exec dwmblocks &
 # exec nitrogen --restore &
-exec xrandr --rate 144 &
-exec /usr/bin/emacs --daemon &
+# exec /usr/bin/emacs --daemon &
 exec nm-applet & 
 exec dunst &
 exec dnoted &
 exec xclip &
-exec conky -c ~/.config/conky/todo &
-# exec megasync &
+# exec mpd &
 exec syncthing &
 exec keepassxc &
-exec flameshot &
+# exec flameshot &
 exec protonmail-bridge &
-exec dwmblocks &
