@@ -67,8 +67,8 @@ require('packer').startup(function(use)
 	use 'preservim/nerdtree'
 	use 'ryanoasis/vim-devicons'
 	use 'preservim/vim-pencil'
-    -- use 'vimwiki/vimwiki'
-	use 'lervag/wiki.vim'
+    use 'vimwiki/vimwiki'
+	-- use 'lervag/wiki.vim'
 	use 'jiangmiao/auto-pairs'
 	-- use 'iamcco/markdown-preview.nvim'
 	use 'godlygeek/tabular'
@@ -149,8 +149,6 @@ dashboard.section.header.val = {
      [[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ]],
 }
 
--- Set footer
-dashboard.section.footer.val = fortune()
 dashboard.section.header.opts.hl = "Title"
 dashboard.section.buttons.opts.hl = "Debug"
 dashboard.section.footer.opts.hl = "Conceal"
@@ -165,18 +163,18 @@ vim.cmd[[colorscheme dracula]]
 require('wlsample.bubble')
 
 ----Vim-Wiki--------------------------------------------
--- g.vimwiki_list = {{
--- 	path = '~/Notes/wiki',
--- 	syntax = 'markdown',
--- 	ext = '.md'
--- }}
+g.vimwiki_list = {{
+	path = '~/Notes/wiki',
+	syntax = 'markdown',
+	ext = '.md'
+}}
 
--- g.vimwiki_filetypes = {'markdown'}
--- g.vimwiki_global_ext = 0
+g.vimwiki_filetypes = {'markdown'}
+g.vimwiki_global_ext = 0
 
-g.wiki_root = '~/Notes/wiki'
-g.wiki_filetypes = {"md"}
-g.wiki_link_extension = '.md'
+-- g.wiki_root = '~/Notes/wiki'
+-- g.wiki_filetypes = {"md"}
+-- g.wiki_link_extension = '.md'
 
 
 ----Telescope-------------------------------------------
@@ -211,23 +209,25 @@ g.limelight_default_coefficient = 1
 g.goyo_width = 150
 
 
--- g.vim_markdown_folding_disabled = 1
+g.vim_markdown_folding_disabled = 1
 
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
     { pattern = {"*.md", "*.tex" }, command = "setlocal spell" }
 )
+
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.tex" }, command = "Pencil" }
+    { pattern = {"*.md", "*.tex" }, command = "set filetype=markdown" }
 )
 vim.api.nvim_create_autocmd('User', {
   pattern = 'GoyoEnter',
   desc = 'Settings for goyo',
   callback = function(event)
 	  -- vim.cmd('Limelight')
-	  -- vim.cmd('Pencil')
+	  vim.cmd('Pencil')
+	  vim.cmd('set filetype=markdown')
 
   end
 })
@@ -237,7 +237,8 @@ vim.api.nvim_create_autocmd('User', {
   desc = 'Restore settings',
   callback = function(event)
 	  -- vim.cmd('Limelight!')
-	  -- vim.cmd('PencilOff')
+	  vim.cmd('PencilOff')
+	  vim.cmd('set filetype=markdown')
   end
 })
 

@@ -114,6 +114,19 @@ config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko
 # Type: FormatString
 config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36', 'https://*.slack.com/*')
 
+# Which method of blocking ads should be used.  Support for Adblock Plus
+# (ABP) syntax blocklists using Brave's Rust library requires the
+# `adblock` Python package to be installed, which is an optional
+# dependency of qutebrowser. It is required when either `adblock` or
+# `both` are selected.
+# Type: String
+# Valid values:
+#   - auto: Use Brave's ABP-style adblocker if available, host blocking otherwise
+#   - adblock: Use Brave's ABP-style adblocker
+#   - hosts: Use hosts blocking
+#   - both: Use both hosts blocking and Brave's ABP-style adblocker
+c.content.blocking.method = 'both'
+
 # Load images automatically in web pages.
 # Type: Bool
 config.set('content.images', True, 'chrome-devtools://*')
@@ -192,6 +205,11 @@ c.url.searchengines = {'DEFAULT': 'https://searx.be/?q={}'}
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = 'file:///home/nightwing/.startpage/index.html'
+
+# Format to use for the window title. The same placeholders like for
+# `tabs.title.format` are defined.
+# Type: FormatString
+c.window.title_format = '{perc}{current_title}'
 
 # Text color of the completion widget. May be a single color to use for
 # all columns or a list of three colors, one for each column.

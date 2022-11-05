@@ -129,7 +129,8 @@ static const char *emacscmd[]  = { "emacsclient", "-c", "-a","'emacs'", NULL };
 static const char *qbrowser[]  = { "qutebrowser", NULL };
 /* static const char *ecmd[] = { "st", "-e", "nvim", NULL }; */
 static const char *ecmd[] = { "firefox", NULL };
-static const char *scrcmd[] = { "scr", "window",  NULL };
+static const char *scrwcmd[] = { "scr", "select",  NULL };
+static const char *scrcmd[] = { "scr",  NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -207,11 +208,16 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	/*Audio Keys*/
-	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
+	/* { 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") }, */
+	/* { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") }, */
+	/* { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") }, */
 
-	{ 0, XK_Print,	   spawn,  {.v = scrcmd } },
+	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t && getvol") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5 && getvol") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5 && getvol") },
+
+	{ 0, XF86XK_Launch6,	   spawn,  {.v = scrwcmd } },
+	{ 0|ShiftMask, XF86XK_Launch6,	   spawn,  {.v = scrcmd } },
 };
 
 /* button definitions */
