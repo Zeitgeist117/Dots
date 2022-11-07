@@ -113,11 +113,10 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-c", "-l", "20", NULL };
-static const char *kamojicmd[] = { "demoji", NULL };
+static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *emacscmd[]  = { "emacsclient", "-c", "-a","'emacs'", NULL };
 static const char *qbrowser[]  = { "qutebrowser", NULL };
-/* static const char *ecmd[] = { "st", "-e", "nvim", NULL }; */
 static const char *ecmd[] = { "firefox", NULL };
 static const char *scrwcmd[] = { "scr", "select",  NULL };
 static const char *scrcmd[] = { "scr",  NULL };
@@ -167,7 +166,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,						XK_v,      spawn,	       {.v = ecmd} },
-	{ MODKEY,						XK_e,      spawn,          {.v = kamojicmd} },
+	{ MODKEY,						XK_e,      spawn,          {.v = pmenucmd} },
 	{ MODKEY,			            XK_y,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY|ControlMask,           XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },

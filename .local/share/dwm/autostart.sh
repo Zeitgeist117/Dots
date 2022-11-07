@@ -1,5 +1,5 @@
 exec picom --experimental-backends &
-exec feh --bg-scale ~/Pictures/WALLPAPERS/lifeafter.jpg &
+exec ~/.fehbg &
 exec conky -c ~/.config/conky/todo &
 # exec dwmblocks &
 exec slstatus &
