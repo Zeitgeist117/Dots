@@ -70,5 +70,5 @@ conky.text = [[
 $color
 ${color3}TODO $color
 ${color3}$hr
-${color3}${execi 5 task | grep -vE '^ID' | grep -vE '-'| awk '!($1="")' | awk '!($1="")' | awk '!($1="")'}
+${color3}${execi 5 task simple | grep -vE '^Description' | grep -vE '^-'}
 ]]

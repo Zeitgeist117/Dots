@@ -29,6 +29,8 @@ list.all.projects=no
 #undo.style=diff
 default.command=list
 
+report.simple.columns=description.desc
+report.simple.filter=status:pending
 
 # Files
 data.location=~/.task
