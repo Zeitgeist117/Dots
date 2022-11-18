@@ -15,10 +15,9 @@ import XMonad.Hooks.ManageDocks
 myStartupHook :: X ()
 myStartupHook = do -- | TRIED REMOVING @exec@ FROM THE FOLLOWING COMMANDS, MODIFIED TRAYER'S COMMAND SLIGHTLY; SEE IF THIS WORKS...
     spawnOnce "picom --experimental-backends &"
-    spawnOnce "feh --bg-scale ~/Pictures/WALLPAPERS/lifeafter.jpg &"
+    spawnOnce "~/.fehbg &"
     spawnOnce "conky -c ~/.config/conky/todo &"
     spawn "sleep 1 && trayer -l --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --tint 0x292d3e --height 22 &"
-    spawnOnce "dunst &"
     spawnOnce "nm-applet &"
     spawnOnce "syncthing &"
     spawnOnce "mpd &"

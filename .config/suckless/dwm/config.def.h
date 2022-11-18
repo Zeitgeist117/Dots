@@ -16,7 +16,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Fira Code Nerd Font:size=13", "JoyPixels:pixelsize=13", "Sazanami Mincho:size=13" };
+static const char *fonts[]          = { "TerminessTTF Nerd Font Mono:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
 static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
 /* #include "/home/nightwing/.cache/wal/colors-wal-dwm.h" */
 
@@ -58,7 +58,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "爵", "戮", "", ""};
+static const char *tags[] = { "", "", "", "", "", "", ""};
 
 /*Window Rules*/
 static const Rule rules[] = {
@@ -93,18 +93,18 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",     tile },   
- 	{ "[]=",      dwindle }, /* first entry is default */
-	{ "[M]=",     monocle },
-	{ "TTT",      bstack },
-	{ "|M|",      centeredmaster },
-	{ "###",      nrowgrid },
-	{ "HHH",      grid },
-	{ "H[]",      deck },
-	{ "===",      bstackhoriz },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ ">M>",      centeredfloatingmaster },
-	{ "[F]=",     NULL },    /* no layout function means floating behavior */
+ 	{ "[]=",    dwindle }, /* first entry is default */
+	{ "[M]=",    monocle },
+	{ "TTT",     bstack },
+	{ "|M|",     centeredmaster },
+	{ "###",     nrowgrid },
+	{ "HHH",     grid },
+	{ "H[]",     deck },
+	{ "===",     bstackhoriz },
+	{ "---",     horizgrid },
+	{ ":::",     gaplessgrid },
+	{ ">M>",     centeredfloatingmaster },
+	{ "[F]=",    NULL },    /* no layout function means floating behavior */
 };
 
 /* key definitions */

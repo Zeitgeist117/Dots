@@ -19,6 +19,7 @@ static const unsigned int def_location = 1;
 
 /* default X11 font or font set */
 static const char *fonts[] = {
+	"TerminessTTF Nerd Font:pixelsize=18",
 	"Fira Code Nerd Font:size=18",
 	"JoyPixels:pixelsize=18"
 };

@@ -1,5 +1,7 @@
-*.font: Cascadia Code-14
-!!*.alpha: 0.8
+/* *.font: Cascadia Code-14 */
+*.font:TerminessTTF Nerd Font Mono-16
+
+/* *.alpha: 0.6 */
 !! moonify theme
 /* *.color0: #323437 */
 /* *.color1: #ff5454 */
@@ -82,8 +84,8 @@
 /*  *color15: #c5b89f */
 
 ! Dracula Xresources palette
-*.foreground: #dfdfdf
-*.background: #282A36 
+*.foreground:  #dfdfdf
+*.background:  #282A36 
  *.color0:     #000000
  *.color1:     #FF5555
  *.color2:     #50FA7B

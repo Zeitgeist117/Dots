@@ -4,7 +4,7 @@ PS1='''┌[%B%n% %b]─[%B%M% %b]─[%~% ]
 └[λ] '''
 # ╭─nightwing@Archknight ~
 # ╰─
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.

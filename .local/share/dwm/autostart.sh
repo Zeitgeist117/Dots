@@ -12,5 +12,4 @@ exec xclip &
 # exec mpd &
 exec syncthing &
 exec keepassxc &
-# exec flameshot &
 exec protonmail-bridge &
