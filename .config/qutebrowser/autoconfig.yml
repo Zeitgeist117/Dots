@@ -6,7 +6,5 @@
 
 config_version: 2
 settings:
-  content.blocking.method:
-    global: both
-  window.title_format:
-    global: '{perc}{current_title}'
+  content.media.video_capture:
+    https://inventaire.io: true

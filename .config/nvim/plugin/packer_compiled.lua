@@ -155,6 +155,11 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  nvimager = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nvimager",
+    url = "https://github.com/mbpowers/nvimager"
+  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/plenary.nvim",

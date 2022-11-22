@@ -1,6 +1,6 @@
 #!/bin/sh
 
-batt="$(cat /sys/class/power_supply/BAT1/capacity)"
+batt="$(cat /sys/class/power_supply/BAT0/capacity)"
 
 
 if [ "$batt" -gt "100" ]; then
@@ -28,4 +28,4 @@ else
 fi
 
 
-echo " $icon $batt%" 
+echo " ^b#44475a^^c#f8f8f2^ $icon ^b#50fa7b^^c#282A36^ $batt% " 

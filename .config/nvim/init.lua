@@ -84,6 +84,7 @@ require('packer').startup(function(use)
 	use 'rrethy/vim-hexokinase'
 	use 'vim-pandoc/vim-pandoc'
 	use 'vim-pandoc/vim-pandoc-syntax'
+	use 'mbpowers/nvimager'
 
 end)
 
@@ -121,6 +122,7 @@ map('n', '<leader>ff', '<CMD>Telescope find_files<CR>')
 map('n', '<leader>.', '<CMD>Telescope file_browser<CR>')
 map('n', '<leader>fw', '<CMD>Telescope live_grep<CR>')
 
+map('n', '<leader>qq', '<CMD>NvimagerToggle<CR>')
 
 
 
@@ -222,7 +224,7 @@ vim.api.nvim_create_autocmd(
     { pattern = {"*.md", "*.tex" }, command = "set filetype=markdown" }
 )
 vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoEnter',
+  pattern = 'GoyoEnter nested call',
   desc = 'Settings for goyo',
   callback = function(event)
 	  -- vim.cmd('Limelight')
@@ -233,7 +235,7 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoLeave',
+  pattern = 'GoyoLeave nested call',
   desc = 'Restore settings',
   callback = function(event)
 	  -- vim.cmd('Limelight!')

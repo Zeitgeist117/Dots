@@ -28,9 +28,9 @@ static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
 
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
-static const char col_gray3[]       = "#dfdfdf";
+static const char col_gray3[]       = "#f8f8f2";
 static const char col_gray4[]       = "#282A36";
-static const char col_cyan[]        = "#dfdfdf";
+static const char col_cyan[]        = "#f8f8f2";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },

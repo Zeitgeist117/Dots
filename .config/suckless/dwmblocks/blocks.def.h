@@ -6,7 +6,7 @@ static const Block blocks[] = {
 	{" ", "top -bn1 | grep Cpu | awk '{print $2}'", 5, 0},
 	{" ", "df -h /home/nightwing| grep -vE '^Filesystem' | awk '{print $5, $4 }'", 3600, 0},
 	{"", "/home/nightwing/.config/suckless/dwmblocks/scripts/date.sh", 1,	0},
-	/* {"", "/home/nightwing/.config/suckless/dwmblocks/scripts/bat.sh", 1,	0}, */
+	{"", "/home/nightwing/.config/suckless/dwmblocks/scripts/bat.sh", 1,	0},
 };
 
 //sets delimeter between status commands. NULL character ('\0') means no delimeter.

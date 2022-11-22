@@ -16,7 +16,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "TerminessTTF Nerd Font Mono:size=16", "FontAwesome:size=16", "JoyPixels:pixelsize=16", "Sazanami Mincho:size=16" };
+static const char *fonts[]          = { "TerminessTTF Nerd Font Mono:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
 static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
 /* #include "/home/nightwing/.cache/wal/colors-wal-dwm.h" */
 
@@ -28,9 +28,9 @@ static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
 
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
-static const char col_gray3[]       = "#dfdfdf";
+static const char col_gray3[]       = "#f8f8f2";
 static const char col_gray4[]       = "#282A36";
-static const char col_cyan[]        = "#dfdfdf";
+static const char col_cyan[]        = "#f8f8f2";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },

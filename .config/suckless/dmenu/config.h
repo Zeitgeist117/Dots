@@ -6,15 +6,16 @@ static int centered = 0;
 static int min_width = 500;
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"FiraCode Nerd Font:size=11",
-	"JoyPixels:pixelsize=11",
+	"TerminessTTF Nerd Font Mono:size=15",
+	"FiraCode Nerd Font:size=15",
+	"JoyPixels:pixelsize=15",
 };
 static const char *prompt      = "ﬦ ";      /* -p  option; prompt to the left of input field */
 static int colorprompt = 1;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
-	[SchemeNorm] = { "#bbbbbb", "#282A36" },
-	[SchemeSel] = { "#282A36", "#dfdfdf" },
+	[SchemeNorm] = { "#f8f8f2", "#282A36" },
+	[SchemeSel] = { "#282A36", "#f8f8f2" },
 	[SchemeOut] = { "#000000", "#00ffff" },
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
