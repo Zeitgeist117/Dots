@@ -4,24 +4,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "util.h"
 
 void
-die(const char *fmt, ...) {
+report(int err, const char *title, const char *fmt, ...)
+{
+    FILE *stream;
     va_list ap;
+//    time_t rawtime;
 
+    stream = ((err) ? stderr : stdout);
+
+//    time(&rawtime);
+//    fprintf(stream, "[%s] <%li> ", title, rawtime);
+
+    fprintf(stream, "[%s] ", title);
+    
     va_start(ap, fmt);
-    vfprintf(stderr, fmt, ap);
+    vfprintf(stream, fmt, ap);
     va_end(ap);
 
-    if (fmt[0] && fmt[strlen(fmt)-1] == ':') {
-	fputc(' ', stderr);
-	perror(NULL);
-    } else {
-	fputc('\n', stderr);
-    }
+    fputc('\n', stream);
+}
 
+void
+die(const char *fmt, ...)
+{
+    va_list ap;
+    
+    va_start(ap, fmt);
+    report(1, "ERROR", fmt, ap);
+    va_end(ap);
+    
     exit(1);
 }
 
@@ -35,12 +51,3 @@ ecalloc(size_t nmemb, size_t size)
     return p;
 }
 
-void
-strfindtrans (char *dest, char *src, char find, size_t *from) {
-    unsigned int cnt;
-
-    cnt = 0;
-    while (src[++*from] != find)
-	dest[cnt++] = src[*from];
-    dest[cnt] = '\0';
-}

@@ -29,7 +29,7 @@ o.ve = all
 
 ----Plugins---------------------------------------------
 require('packer').startup(function(use)
-
+	use 'wbthomason/packer.nvim'
 -- Auto-Complete
 
 	use 'neovim/nvim-lspconfig'
@@ -45,46 +45,42 @@ require('packer').startup(function(use)
 	use 'dracula/vim'
 	use 'windwp/windline.nvim'
 	use {
-	 'goolord/alpha-nvim',
-	 config = function ()
-        require'alpha'.setup(require'alpha.themes.dashboard'.config)
-	 end
-	}
+	  'goolord/alpha-nvim',
+	  config = function ()
+        -- require'alpha'.setup(require'alpha.themes.dashboard'.config)
+	  end
+	 }
 
-	use {
-	  "folke/which-key.nvim",
-	  config = function()
-      require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-     }
-	end
-	}
+	-- use {
+	--   "folke/which-key.nvim",
+	--   config = function()
+      -- require("which-key").setup {
+      -- -- your configuration comes here
+      -- -- or leave it empty to use the default settings
+      -- -- refer to the configuration section below
+     -- }
+	-- end
+	-- }
+
 	use 'junegunn/goyo.vim'
 	use 'junegunn/fzf.vim'
 	use 'junegunn/limelight.vim'
-	use 'preservim/nerdtree'
-	use 'ryanoasis/vim-devicons'
 	use 'preservim/vim-pencil'
     use 'vimwiki/vimwiki'
-	-- use 'lervag/wiki.vim'
-	use 'jiangmiao/auto-pairs'
-	-- use 'iamcco/markdown-preview.nvim'
 	use 'godlygeek/tabular'
-	-- use 'preservim/vim-markdown'
-	use 'tpope/vim-markdown'
+	use 'preservim/vim-markdown'
+	use 'preservim/nerdtree'
+	use 'ryanoasis/vim-devicons'
+
+	use 'jiangmiao/auto-pairs'
 	use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} } }
 	use 'nvim-telescope/telescope-project.nvim'
 	use "nvim-lua/plenary.nvim"
 	use "nvim-telescope/telescope-file-browser.nvim"
 	use 'tpope/vim-commentary'
-	use 'ellisonleao/glow.nvim'
-	use 'anuvyklack/hydra.nvim'
 	use 'rrethy/vim-hexokinase'
 	use 'vim-pandoc/vim-pandoc'
 	use 'vim-pandoc/vim-pandoc-syntax'
-	use 'mbpowers/nvimager'
 
 end)
 
@@ -174,10 +170,6 @@ g.vimwiki_list = {{
 g.vimwiki_filetypes = {'markdown'}
 g.vimwiki_global_ext = 0
 
--- g.wiki_root = '~/Notes/wiki'
--- g.wiki_filetypes = {"md"}
--- g.wiki_link_extension = '.md'
-
 
 ----Telescope-------------------------------------------
 -- You don't need to set any of these options.
@@ -210,8 +202,8 @@ g.limelight_conceal_guifg = '#777777'
 g.limelight_default_coefficient = 1
 g.goyo_width = 150
 
-
 g.vim_markdown_folding_disabled = 1
+g.markdown_syntax_conceal = 0
 
 
 vim.api.nvim_create_autocmd(
@@ -221,28 +213,27 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.tex" }, command = "set filetype=markdown" }
+    { pattern = {"*.md", "*.wiki" }, command = "set filetype=markdown" }
 )
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'GoyoLeave nested call',
+  desc = 'Restore settings',
+  callback = function(event)
+	  vim.cmd('PencilOff')
+	  vim.cmd('set filetype=markdown')
+  end
+})
 vim.api.nvim_create_autocmd('User', {
   pattern = 'GoyoEnter nested call',
-  desc = 'Settings for goyo',
+  desc = 'Settings md',
   callback = function(event)
-	  -- vim.cmd('Limelight')
 	  vim.cmd('Pencil')
 	  vim.cmd('set filetype=markdown')
 
   end
 })
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoLeave nested call',
-  desc = 'Restore settings',
-  callback = function(event)
-	  -- vim.cmd('Limelight!')
-	  vim.cmd('PencilOff')
-	  vim.cmd('set filetype=markdown')
-  end
-})
 
 
 ----Auto-Complete--------------------------------------------
@@ -316,3 +307,12 @@ vim.api.nvim_create_autocmd('User', {
   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
   --   capabilities = capabilities
   -- }
+
+
+
+
+vim.api.nvim_create_autocmd(
+  { "BufRead", "BufNewFile" },
+  { pattern = {"*.cfg"}, command = "set filetype=xml" }
+)
+

@@ -5,9 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "CascadiaCode:pixelsize=12:antiahttps://raw.githubusercontent.com/4ntid0t3/dotfiles/master/wall.pnglias=true:autohint=true";
+static char *font = "CascadiaCode:pixelsize=12:antialias=true:autohint=true";
 static char *font2[] = { "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true" };
-static int borderpx = 2;
+static int borderpx = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -75,10 +75,10 @@ static unsigned int cursorthickness = 2;
  * 0: disable (render all U25XX glyphs normally from the font).
  */
 const int boxdraw = 1;
-const int boxdraw_bold = 0;
+const int boxdraw_bold = 1;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 0;
+const int boxdraw_braille = 1;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -161,8 +161,8 @@ static unsigned int cursorshape = 2;
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 80;
-static unsigned int rows = 24;
+static unsigned int cols = 82;
+static unsigned int rows = 26;
 
 /*
  * Default colour and shape of the mouse cursor

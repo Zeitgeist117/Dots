@@ -5,7 +5,7 @@ do
         "D")
                 mv "$file" ~/.trash ;;
         "w")
-			feh --bg-scale $file
+			feh --bg-fill $file
 
         esac
 done

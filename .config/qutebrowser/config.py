@@ -13,6 +13,28 @@
 # Change the argument to True to still load settings configured via autoconfig.yml
 config.load_autoconfig(False)
 
+# Backend to use to display websites. qutebrowser supports two different
+# web rendering engines / backends, QtWebEngine and QtWebKit (not
+# recommended). QtWebEngine is Qt's official successor to QtWebKit, and
+# both the default/recommended backend. It's based on a stripped-down
+# Chromium and regularly updated with security fixes and new features by
+# the Qt project: https://wiki.qt.io/QtWebEngine QtWebKit was
+# qutebrowser's original backend when the project was started. However,
+# support for QtWebKit was discontinued by the Qt project with Qt 5.6 in
+# 2016. The development of QtWebKit was picked up in an official fork:
+# https://github.com/qtwebkit/qtwebkit - however, the project seems to
+# have stalled again. The latest release (5.212.0 Alpha 4) from March
+# 2020 is based on a WebKit version from 2016, with many known security
+# vulnerabilities. Additionally, there is no process isolation and
+# sandboxing. Due to all those issues, while support for QtWebKit is
+# still available in qutebrowser for now, using it is strongly
+# discouraged.
+# Type: String
+# Valid values:
+#   - webengine: Use QtWebEngine (based on Chromium - recommended).
+#   - webkit: Use QtWebKit (based on WebKit, similar to Safari - many known security issues!).
+c.backend = 'webengine'
+
 # Which cookies to accept. With QtWebEngine, this setting also controls
 # other features with tracking capabilities similar to those of cookies;
 # including IndexedDB, DOM storage, filesystem API, service workers, and
@@ -114,19 +136,6 @@ config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:90.0) Gecko
 # Type: FormatString
 config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99 Safari/537.36', 'https://*.slack.com/*')
 
-# Which method of blocking ads should be used.  Support for Adblock Plus
-# (ABP) syntax blocklists using Brave's Rust library requires the
-# `adblock` Python package to be installed, which is an optional
-# dependency of qutebrowser. It is required when either `adblock` or
-# `both` are selected.
-# Type: String
-# Valid values:
-#   - auto: Use Brave's ABP-style adblocker if available, host blocking otherwise
-#   - adblock: Use Brave's ABP-style adblocker
-#   - hosts: Use hosts blocking
-#   - both: Use both hosts blocking and Brave's ABP-style adblocker
-c.content.blocking.method = 'both'
-
 # Load images automatically in web pages.
 # Type: Bool
 config.set('content.images', True, 'chrome-devtools://*')
@@ -151,6 +160,22 @@ config.set('content.javascript.enabled', True, 'chrome://*/*')
 # Type: Bool
 config.set('content.javascript.enabled', True, 'qute://*/*')
 
+# Allow websites to show notifications.
+# Type: BoolAsk
+# Valid values:
+#   - true
+#   - false
+#   - ask
+config.set('content.notifications.enabled', True, 'http://192.168.86.68')
+
+# Allow websites to show notifications.
+# Type: BoolAsk
+# Valid values:
+#   - true
+#   - false
+#   - ask
+config.set('content.notifications.enabled', True, 'https://www.reddit.com')
+
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
 c.content.user_stylesheets = '~/.config/qutebrowser/nord-dark-all-sites.css'
@@ -170,7 +195,7 @@ c.tabs.favicons.scale = 1
 
 # Padding (in pixels) around text for tabs.
 # Type: Padding
-c.tabs.padding = {'top': 6, 'right': 8, 'bottom': 6, 'left': 8}
+c.tabs.padding = {'bottom': 8, 'left': 8, 'right': 8, 'top': 8}
 
 # Width (in pixels) of the progress indicator (0 to disable).
 # Type: Int
@@ -205,11 +230,6 @@ c.url.searchengines = {'DEFAULT': 'https://searx.be/?q={}'}
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = 'file:///home/nightwing/.startpage/index.html'
-
-# Format to use for the window title. The same placeholders like for
-# `tabs.title.format` are defined.
-# Type: FormatString
-c.window.title_format = '{perc}{current_title}'
 
 # Text color of the completion widget. May be a single color to use for
 # all columns or a list of three colors, one for each column.
@@ -526,18 +546,36 @@ c.colors.tabs.selected.even.bg = '#282a36'
 # Type: QtColor
 c.colors.webpage.bg = 'black'
 
-# Default font size (in pixels) for regular text.
-# Type: Int
-c.fonts.web.size.default = 22
+# Render all web contents using a dark theme. Example configurations
+# from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
+# inversion": Set   `colors.webpage.darkmode.algorithm` accordingly.  -
+# "With selective image inversion": Set
+# `colors.webpage.darkmode.policy.images` to `smart`.  - "With selective
+# inversion of non-image elements": Set
+# `colors.webpage.darkmode.threshold.text` to 150 and
+# `colors.webpage.darkmode.threshold.background` to 205.  - "With
+# selective inversion of everything": Combines the two variants   above.
+# Type: Bool
+c.colors.webpage.darkmode.enabled = False
 
-# Default font size (in pixels) for fixed-pitch text.
-# Type: Int
-c.fonts.web.size.default_fixed = 16
+# Which algorithm to use for modifying how colors are rendered with
+# darkmode. The `lightness-cielab` value was added with QtWebEngine 5.14
+# and is treated like `lightness-hsl` with older QtWebEngine versions.
+# Type: String
+# Valid values:
+#   - lightness-cielab: Modify colors by converting them to CIELAB color space and inverting the L value. Not available with Qt < 5.14.
+#   - lightness-hsl: Modify colors by converting them to the HSL color space and inverting the lightness (i.e. the "L" in HSL).
+#   - brightness-rgb: Modify colors by subtracting each of r, g, and b from their maximum value.
+c.colors.webpage.darkmode.algorithm = 'brightness-rgb'
 
-# Minimum logical font size (in pixels) that is applied when zooming
-# out.
-# Type: Int
-c.fonts.web.size.minimum_logical = 12
+# Which pages to apply dark mode to. The underlying Chromium setting has
+# been removed in QtWebEngine 5.15.3, thus this setting is ignored
+# there. Instead, every element is now classified individually.
+# Type: String
+# Valid values:
+#   - always: Apply dark mode filter to all frames, regardless of content.
+#   - smart: Apply dark mode filter to frames based on background color.
+c.colors.webpage.darkmode.policy.page = 'always'
 
 # Bindings for normal mode
 config.bind('eM', 'hint links spawn mpv {hint-url}')

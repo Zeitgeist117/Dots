@@ -6,5 +6,9 @@
 
 config_version: 2
 settings:
-  content.media.video_capture:
-    https://inventaire.io: true
+  tabs.padding:
+    global:
+      bottom: 8
+      left: 8
+      right: 8
+      top: 8
