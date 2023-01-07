@@ -5,9 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "CascadiaCode:pixelsize=12:antialias=true:autohint=true";
+static char *font = "mono:pixelsize=12:antialias=true:autohint=true";
 static char *font2[] = { "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true" };
-static int borderpx = 0;
+static int borderpx = 2;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -75,10 +75,10 @@ static unsigned int cursorthickness = 2;
  * 0: disable (render all U25XX glyphs normally from the font).
  */
 const int boxdraw = 1;
-const int boxdraw_bold = 1;
+const int boxdraw_bold = 0;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 1;
+const int boxdraw_braille = 0;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -161,8 +161,8 @@ static unsigned int cursorshape = 2;
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 82;
-static unsigned int rows = 26;
+static unsigned int cols = 80;
+static unsigned int rows = 24;
 
 /*
  * Default colour and shape of the mouse cursor
@@ -245,7 +245,6 @@ static MouseShortcut mshortcuts[] = {
 static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
 static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
 static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
-
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */

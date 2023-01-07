@@ -32,7 +32,7 @@ features that make it literally the best terminal emulator ever:
 + Boxdraw
 + Ligatures
 + font2
-+ updated to latest version 0.8.4
++ updated to latest version 0.8.5
 
 ## Installation for newbs
 
@@ -82,16 +82,6 @@ To be clear about the color settings:
 - But if `wal` has run in your session, its colors will take priority.
 
 Note that when you run `wal`, it will negate the transparency of existing windows, but new windows will continue with the previously defined transparency.
-
-## Notes on Emojis and Special Characters
-
-If st crashes when viewing emojis, install
-[libxft-bgra](https://aur.archlinux.org/packages/libxft-bgra/) from the AUR.
-
-Note that some special characters may appear truncated if too wide. You might
-want to manually set your prefered emoji/special character font to a lower size
-in the `config.h` file to avoid this. By default, JoyPixels is used at a
-smaller size than the usual text.
 
 ## Contact
 
