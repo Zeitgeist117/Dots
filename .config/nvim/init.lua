@@ -208,29 +208,35 @@ g.markdown_syntax_conceal = 0
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.tex" }, command = "setlocal spell" }
+    { pattern = {"*.md", "*.wiki" }, command = "set filetype=markdown" }
 )
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.wiki" }, command = "set filetype=markdown" }
+    { pattern = {"*.md", "*.wiki" }, command = "set spell" }
 )
+
+-- vim.api.nvim_create_autocmd(
+--     { "BufRead", "BufNewFile" },
+--     { pattern = {"*.md", "*.wiki" }, command = "GoyoEnter" }
+-- )
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'GoyoEnter nested call',
+  desc = 'Settings md',
+  callback = function(event)
+	  vim.cmd('set filetype=markdown')
+	  vim.cmd('Pencil')
+
+  end
+})
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'GoyoLeave nested call',
   desc = 'Restore settings',
   callback = function(event)
+	  vim.cmd('set filetype=markdown')
 	  vim.cmd('PencilOff')
-	  vim.cmd('set filetype=markdown')
-  end
-})
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoEnter nested call',
-  desc = 'Settings md',
-  callback = function(event)
-	  vim.cmd('Pencil')
-	  vim.cmd('set filetype=markdown')
-
   end
 })
 
