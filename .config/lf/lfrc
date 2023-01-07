@@ -2,8 +2,14 @@
 # set hidden true
 set ignorecase true
 set icons true
+set drawbox
+set shell zsh
+set previewer ~/.config/lf/scope
+set cleaner ~/.config/lf/cleaner
 
 # Custom Functions
+
+# make file-dirs
 cmd mkdir ${{
   printf "Directory Name: "
   read ans
@@ -16,11 +22,36 @@ cmd mkfile ${{
   $EDITOR $ans
 }}
 
-cmd setwallpaper %cp "$f" ~/.config/wall.jpg && xwallpaper --zoom "$f"
-
+# trash command
 cmd trash ${{
   trash-put "$f"
 }}
+
+# bulkrename function
+cmd bulkrename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
 
 # Archive bindings
 cmd unarchive ${{
@@ -29,6 +60,8 @@ cmd unarchive ${{
       *.tar.gz) tar -xzvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
       *.tar) tar -xvf "$f" ;;
+	  *.rar) unrar e "$f" ;;
+	  *.7z) 7z e "$f" ;;
       *) echo "Unsupported format" ;;
   esac
 }}
@@ -52,6 +85,34 @@ cmd restore_trash ${{
   trash-restore
 }}
 
+# Yank path and name to clipboard
+cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip -i -selection clipboard
+cmd yank-path $printf '%s' "$fx" | xclip -i -selection clipboard
+cmd yank-basename $basename -a -- $fx | head -c-1 | xclip -i -selection clipboard
+
+cmd yank-basename-without-extension ${{
+    echo "$fx" |
+      xargs -r -d '\n' basename -a |
+      awk -e '{
+        for (i=length($0); i > 0; i--) {
+          if (substr($0, i, 1) == ".") {
+            if (i == 1) print $0
+            else print substr($0, 0, i-1)
+
+            break
+          }
+        }
+
+        if (i == 0)
+          print $0
+      }' |
+      if [ -n "$fs" ]; then cat; else tr -d '\n'; fi |
+      xclip -i -selection clipboard
+}}
+
+
+# cmd paste $cp-p --lf-paste $id
+
 # Bindings
 # Remove some defaults
 map m
@@ -60,27 +121,37 @@ map n
 map "'"
 map '"'
 map d
+map y
+map p
 
-map c $vscodium "$f"
+map c  "$f"
 
 map au unarchive
 
 # Basic Functions
 map . set hidden!
-map DD trash
-map p paste
-map x cut
-map y copy
+
+map pp paste
+map dd cut
+map yy copy
+map yp yank-path
+map yn yank-basename
+
 map <enter> open
 map R reload
+
+map J half-down
+map K half-up
+
 map mf mkfile
 map md mkdir
-map bg setwallpaper
+
 map C clear
 
-map dd trash
 map dr restore_trash
+map dD trash
 
+map ba bulkrename 
 # Movement
 map gd cd ~/documents
 map gD cd ~/downloads
@@ -90,4 +161,3 @@ map gr cd ~/repos
 map gv cd ~/videos/recordings
 map gs cd ~/.local/bin
 map gt cd ~/.local/share/Trash/files
-
