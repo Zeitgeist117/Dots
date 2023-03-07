@@ -1,0 +1,29 @@
+exec xsetroot -cursor_name left_ptr
+#startup_message off
+
+set winname title
+set wingravity center
+set transgravity center
+set border 2
+set font "Cascadia Code=12"
+set rpcolor_0=#000000 
+set rpcolor_1=#55af66 
+set rpcolor_2=#005555 
+set rpcolor_3=#224528 
+set rpcolor_4=#224528 
+set rpcolor_5=#ff8000 
+set rpcolor_6=#cc0000 
+set rpcolor_7=#220000
+
+
+escape Super_L
+bind t exec st
+bind f exec firefox
+bind d exec dmenu_run -c -l 20
+
+bind 1 exec rpws 1
+bind 2 exec rpws 2
+bind 3 exec rpws 3
+bind 4 exec rpws 4 
+bind 5 exec rpws 5 
+bind 6 exec rpws 6

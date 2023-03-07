@@ -1,0 +1,145 @@
+/* *.font: Cascadia Code-16 */
+*.font:TerminessTTF Nerd Font Mono-16
+
+/* *.alpha: 0.6 */
+!! moonify theme
+/* *.color0: #323437 */
+/* *.color1: #ff5454 */
+/* *.color2: #8cc85f */
+/* *.color3: #e3c78a */
+/* *.color4: #80a0ff */
+/* *.color5: #d183e8 */
+/* *.color6: #79dac8 */
+/* *.color7: #a1aab8 */
+/* *.color8: #7c8f8f */
+/* *.color9: #ff5189 */
+/* *.color10: #36c692 */
+/* *.color11: #bfbf97 */
+/* *.color12: #74b2ff */
+/* *.color13: #ae81ff */
+/* *.color14: #79dac8 */
+/* *.color15: #e2637f */
+/* *.foreground: #eeeeee */
+/* *.background: #282c34 */ 
+
+!! Catppuccin theme
+/* *.color0: #6E6C7E */
+/* *.color1: #F28FAD */
+/* *.color2: #ABE9B3 */
+/* *.color3: #FAE3B0 */
+/* *.color4: #96CDFB */
+/* *.color5: #F5C2E7 */
+/* *.color6: #89DCEB */
+/* *.color7: #D9E0EE */
+/* *.color8: #988BA2 */
+/* *.color9: #F28FAD */
+/* *.color10: #ABE9B3 */
+/* *.color11: #FAE3B0 */
+/* *.color12: #96CDFB */
+/* *.color13: #F5C2E7 */
+/* *.color14: #89DCEB */
+/* *.color15: #D9E0EE */
+/* *.background: #1E1E2E */
+/* *.foreground: #D9E0EE */
+
+! Eighties Dark !
+!*.background:   #2d2d2d
+!*.cursorColor:  #d3d0c8
+! *.color0:       #2d2d2d
+! *.color1:       #f2777a
+! *.color2:       #99cc99
+! *.color3:       #ffcc66
+! *.color4:       #6699cc
+! *.color5:       #cc99cc
+! *.color6:       #66cccc
+! *.color7:       #d3d0c8
+! *.color8:       #747369
+! *.color9:       #f2777a
+! *.color10:      #99cc99
+! *.color11:      #ffcc66
+! *.color12:      #6699cc
+! *.color13:      #cc99cc
+! *.color14:      #66cccc
+! *.color15:      #f2f0ec
+
+
+! Gruvbox Material !
+/* *background: #1e2122 */
+/* *foreground: #d4be98 */
+/*  *color0:  #282b2c */
+/*  *color8:  #32302f */
+/*  *color1:  #df736d */
+/*  *color9:  #d1807b */
+/*  *color2:  #a8b467 */
+/*  *color10: #a5b06b */
+/*  *color3:  #d28e63 */
+/*  *color11: #ccb380 */
+/*  *color4:  #6d8dad */
+/*  *color12: #748faa */
+/*  *color5:  #d0899d */
+/*  *color13: #cb8e9e */
+/*  *color6:  #8dae88 */
+/*  *color14: #89b482 */
+/*  *color7:  #c0b6a4 */
+/*  *color15: #c5b89f */
+
+! Dracula Xresources palette
+*.foreground:  #f8f8f2
+*.background:  #282A36 
+ *.color0:     #000000
+ *.color1:     #FF5555
+ *.color2:     #50FA7B
+ *.color3:     #F1FA8C
+ *.color4:     #BD93F9
+ *.color5:     #FF79C6
+ *.color6:     #8BE9FD
+ *.color7:     #BFBFBF
+ *.color8:     #4D4D4D
+ *.color9:     #FF6E67
+ *.color10:    #5AF78E
+ *.color11:    #F4F99D
+ *.color12:    #CAA9FA
+ *.color13:    #FF92D0
+ *.color14:    #9AEDFE
+ *.color15:    #E6E6E6
+
+! Iceberg Dark !
+!*.background: #161821
+!*.foreground: #c6c8d1
+!*.color0: #161821
+!*.color1: #e27878
+!*.color2: #b4be82
+!*.color3: #e2a478
+!*.color4: #84a0c6
+!*.color5: #a093c7
+!*.color6 :#89b8c2
+!*.color7: #c6c8d1
+!*.color8: #6b7089
+!*.color9: #e98989
+!*.color10: #c0ca8e
+!*.color11: #e9b189
+!*.color12: #91acd1
+!*.color13: #ada0d3
+!*.color14: #95c4ce
+!*.color15: #d2d4d
+
+! Gotham !
+/* *.foreground:   #98d1ce */
+/* *.background:   #0a0f14 */
+/* *.cursorColor:  #98d1ce */
+/* *.color0:       #0a0f14 */
+/* *.color1:       #c33027 */
+/* *.color2:       #26a98b */
+/* *.color3:       #edb54b */
+/* *.color4:       #195465 */
+/* *.color5:       #4e5165 */
+/* *.color6:       #33859d */
+/* *.color7:       #98d1ce */
+/* *.color8:       #10151b */
+/* *.color9:       #d26939 */
+/* *.color10:      #081f2d */
+/* *.color11:      #245361 */
+/* *.color12:      #093748 */
+/* *.color13:      #888ba5 */
+/* *.color14:      #599caa */
+/* *.color15:      #d3ebe9 */

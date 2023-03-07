@@ -1,0 +1,11 @@
+#! /bin/sh
+output='/home/nightwing/Pictures/Screenshots/%Y-%m-%d-%T.png'
+
+case "$1" in
+	"select") scrot "$output" -s -f || exit ;;
+	"window") scrot "$output" --focused --border || exit ;;
+	*) scrot "$output" || exit ;;
+esac
+
+echo "  Screenshot Taken " | dnote -loc 5
+

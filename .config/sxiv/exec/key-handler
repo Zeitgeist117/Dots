@@ -1,0 +1,11 @@
+#!/bin/sh
+while read file
+do
+        case "$1" in
+        "D")
+                mv "$file" ~/.trash ;;
+        "w")
+			feh --bg-scale $file
+
+        esac
+done

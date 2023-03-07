@@ -1,0 +1,74 @@
+2022-12-31 15:55:56		Plugins loaded: alias, buflist, charset, exec, fifo, fset, guile, irc, logger, lua, perl, python, relay, script, spell, trigger, typing, xfer
+2022-12-31 15:56:14	=!=	Unknown command "/matrix" (type /help for help)
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[core]
+2022-12-31 15:56:17		  away     command  filter   item     mute     quit     secure   upgrade  window 
+2022-12-31 15:56:17		  bar      cursor   help     key      plugin   reload   set      uptime 
+2022-12-31 15:56:17		  buffer   debug    history  layout   print    repeat   toggle   version
+2022-12-31 15:56:17		  color    eval     input    mouse    proxy    save     unset    wait   
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[alias]
+2022-12-31 15:56:17		  AAWAY    BYE      CLOSE    K        MSGBUF   REDRAW   UB       WC       WW     
+2022-12-31 15:56:17		  alias    C        EXIT     KB       MUB      SAY      UMODE    WI     
+2022-12-31 15:56:17		  ANICK    CHAT     IG       LEAVE    N        SIGNOFF  V        WII    
+2022-12-31 15:56:17		  BEEP     CL       J        M        Q        T        W        WM     
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[buflist]
+2022-12-31 15:56:17		  buflist
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[charset]
+2022-12-31 15:56:17		  charset
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[exec]
+2022-12-31 15:56:17		  exec
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[fifo]
+2022-12-31 15:56:17		  fifo
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[fset]
+2022-12-31 15:56:17		  fset
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[guile]
+2022-12-31 15:56:17		  guile
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[irc]
+2022-12-31 15:56:17		  admin       dcc         join        msg         quiet       server      unban     
+2022-12-31 15:56:17		  allchan     dehalfop    kick        names       quote       service     unquiet   
+2022-12-31 15:56:17		  allpv       deop        kickban     nick        reconnect   servlist    userhost  
+2022-12-31 15:56:17		  allserv     devoice     kill        notice      rehash      setname     users     
+2022-12-31 15:56:17		  auth        die         links       notify      remove      squery      version   
+2022-12-31 15:56:17		  autojoin    disconnect  list        op          restart     squit       voice     
+2022-12-31 15:56:17		  ban         halfop      lusers      oper        sajoin      stats       wallchops 
+2022-12-31 15:56:17		  cap         ignore      map         part        samode      summon      wallops   
+2022-12-31 15:56:17		  connect     info        me          ping        sanick      time        who       
+2022-12-31 15:56:17		  ctcp        invite      mode        pong        sapart      topic       whois     
+2022-12-31 15:56:17		  cycle       ison        motd        query       saquit      trace       whowas    
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[logger]
+2022-12-31 15:56:17		  logger
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[lua]
+2022-12-31 15:56:17		  lua
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[perl]
+2022-12-31 15:56:17		  perl
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[python]
+2022-12-31 15:56:17		  python
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[relay]
+2022-12-31 15:56:17		  relay
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[script]
+2022-12-31 15:56:17		  script
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[spell]
+2022-12-31 15:56:17		  spell
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[trigger]
+2022-12-31 15:56:17		  trigger
+2022-12-31 15:56:17		
+2022-12-31 15:56:17		[xfer]
+2022-12-31 15:56:17		  me  xfer
+2022-12-31 15:56:25		script: downloading list of scripts...
+2022-12-31 15:56:28		script: 307 scripts for WeeChat 3.7.1
