@@ -54,6 +54,7 @@ case $session in
     dwm    ) exec dwm;;
     bspwm  ) exec bspwm;;
     xmonad ) exec xmonad;;
+    qtile  ) exec startqt;;
     i3     ) exec i3;;
 	rp	   ) exec ratpoison ;;
 	gnome  ) export XDG_SESSION_TYPE=x11 && export GDK_BACKEND=x11 && exec gnome-session;;

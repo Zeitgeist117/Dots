@@ -20,6 +20,8 @@ vim.o.ve = all
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
+vim.cmd("filetype plugin on")
+vim.cmd("colo dracula")
 
 ----Key-Bindings----------------------------------------
 vim.g.mapleader = " "
@@ -35,14 +37,9 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
+	use 'Mofiqul/dracula.nvim'
+
 	use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} } }
-	use({
-		'dracula/vim',
-		as = 'dracula',
-		config = function()
-			vim.cmd('colorscheme dracula')
-		end
-	})
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 	use('nvim-treesitter/playground')
 	use('ThePrimeagen/harpoon')
@@ -70,16 +67,18 @@ require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'}, -- Optional
 		}
 	}
-	use 'windwp/windline.nvim'
 	use {
 		'goolord/alpha-nvim',
 		config = function ()
 			-- require'alpha'.setup(require'alpha.themes.dashboard'.config)
 		end
 	}
+	use 'windwp/windline.nvim'
+	use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 	use 'junegunn/goyo.vim'
 	use 'junegunn/limelight.vim'
 	use 'preservim/vim-pencil'
+	use 'preservim/vim-markdown'
 	use {
 		'vimwiki/vimwiki',
 		config = function()
@@ -92,12 +91,10 @@ require('packer').startup(function(use)
 			}
 		end
 	}
-	use 'preservim/vim-markdown'
+	-- use 'preservim/vim-markdown'
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-commentary'
-	use 'vim-pandoc/vim-pandoc'
-	use 'vim-pandoc/vim-pandoc-syntax'
-	use 'rrethy/vim-hexokinase'
+	-- use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 
 end)
 
@@ -142,7 +139,7 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
 vim.keymap.set("n", "<leader>g", '<CMD>Goyo<CR>')
 vim.keymap.set("n", "<leader>l", '<CMD>Limelight<CR>')
 vim.keymap.set("n", "<leader>o", '<CMD>Limelight!<CR>')
-vim.g.goyo_width = 150
+vim.g.goyo_width = 200
 
 ----Harpoon---------------------------------------------
 local mark = require("harpoon.mark")
@@ -166,6 +163,17 @@ vim.g.limelight_default_coefficient = 1
 
 ----Status-Bar------------------------------------------
 require('wlsample.bubble')
+
+
+----Buffer-Line-----------------------------------------
+vim.opt.termguicolors = true
+require("bufferline").setup{}
+
+vim.keymap.set("n", "<A-j>", '<CMD>BufferLineCycleNext<CR>')
+vim.keymap.set("n", "<A-k>", '<CMD>BufferLineCyclePrev<CR>')
+vim.keymap.set("n", "<A-w>", ':bw<CR>')
+
+
 
 ----Telescope-------------------------------------------
 local builtin = require('telescope.builtin')
@@ -201,17 +209,23 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 ----Vim-Wiki--------------------------------------------
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.markdown_syntax_conceal = 0
-vim.g.vimwiki_filetypes = {'markdown'}
+vim.g.vimwiki_filetypes = {'markdown.pandoc'}
 vim.g.vimwiki_global_ext = 0
 
-vim.api.nvim_create_autocmd(
-    { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.wiki" }, command = "set filetype=markdown" }
-)
+vim.g.markdown_syntax_conceal = 0
+-- vim.api.nvim_create_autocmd(
+--     { "BufRead", "BufNewFile" },
+--     { pattern = {"*.md", "*.wiki" }, command = "set filetype=markdown" }
+-- )
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
     { pattern = {"*.md", "*.wiki" }, command = "set spell" }
+)
+
+vim.api.nvim_create_autocmd(
+    { "BufRead", "BufNewFile" },
+    { pattern = {"*.md", "*.wiki" }, command = "Pencil" }
 )
 
 -- vim.api.nvim_create_autocmd(
@@ -219,24 +233,24 @@ vim.api.nvim_create_autocmd(
 --     { pattern = {"*.md", "*.wiki" }, command = "GoyoEnter" }
 -- )
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoEnter nested call',
-  desc = 'Settings md',
-  callback = function(event)
-	  vim.cmd('set filetype=markdown')
-	  vim.cmd('Pencil')
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'GoyoEnter nested call',
+--   desc = 'Settings md',
+--   callback = function(event)
+-- 	  vim.cmd('set filetype=markdown')
+-- 	  vim.cmd('Pencil')
 
-  end
-})
+--   end
+-- })
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoLeave nested call',
-  desc = 'Restore settings',
-  callback = function(event)
-	  vim.cmd('set filetype=markdown')
-	  vim.cmd('PencilOff')
-  end
-})
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'GoyoLeave nested call',
+--   desc = 'Restore settings',
+--   callback = function(event)
+-- 	  vim.cmd('set filetype=markdown')
+-- 	  vim.cmd('PencilOff')
+--   end
+-- })
 
 ----LSP---------------------------------------------
 
@@ -266,4 +280,7 @@ lsp.set_preferences({
 	sign_icons = {}
 })
 lsp.setup()
+
+--------------------------------------------------------------------
+
 
