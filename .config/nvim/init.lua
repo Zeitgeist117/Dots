@@ -25,10 +25,8 @@ vim.cmd("colo dracula")
 
 ----Key-Bindings----------------------------------------
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
 
 
 ----Packer---------------------------------------------
@@ -38,7 +36,10 @@ require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
 	use 'Mofiqul/dracula.nvim'
-
+	use {
+		"FeiyouG/command_center.nvim",
+		requires = { "nvim-telescope/telescope.nvim" }
+	}
 	use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} } }
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 	use('nvim-treesitter/playground')
@@ -68,6 +69,16 @@ require('packer').startup(function(use)
 		}
 	}
 	use {
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
+	use {
 		'goolord/alpha-nvim',
 		config = function ()
 			-- require'alpha'.setup(require'alpha.themes.dashboard'.config)
@@ -94,7 +105,10 @@ require('packer').startup(function(use)
 	-- use 'preservim/vim-markdown'
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-commentary'
-	-- use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+	use 'habamax/vim-godot'
+	use {'wfxr/minimap.vim', as = 'minimap'}
+	use 'nvim-tree/nvim-tree.lua'
+	use 'nvim-tree/nvim-web-devicons'
 
 end)
 
@@ -178,7 +192,7 @@ vim.keymap.set("n", "<A-w>", ':bw<CR>')
 ----Telescope-------------------------------------------
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+vim.keymap.set('n', '<C-g>', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', function()
 	builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
@@ -220,13 +234,21 @@ vim.g.markdown_syntax_conceal = 0
 
 vim.api.nvim_create_autocmd(
     { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.wiki" }, command = "set spell" }
-)
+    { pattern = {"*.md", "*.wiki" }, 
+		command = "set spell",
+		command = "Pencil",
+		command = "MinimapClose"
 
-vim.api.nvim_create_autocmd(
-    { "BufRead", "BufNewFile" },
-    { pattern = {"*.md", "*.wiki" }, command = "Pencil" }
+	}
 )
+-- vim.api.nvim_create_autocmd(
+--     { "BufRead", "BufNewFile" },
+--     { pattern = {"*.md", "*.wiki" }, command = "Pencil" }
+-- )
+-- vim.api.nvim_create_autocmd(
+--     { "BufRead", "BufNewFile" },
+--     { pattern = {"*.md", "*.wiki" }, command = "MinimapClose" }
+-- )
 
 -- vim.api.nvim_create_autocmd(
 --     { "BufRead", "BufNewFile" },
@@ -260,10 +282,12 @@ lsp.preset('recommended')
 
 lsp.ensure_installed({
 	'lua_ls',
+	'bashls',
 	'pyright',
 	'dhall_lsp_server',
 	'ltex',
 	'rust_analyzer',
+	'clangd',
 })
 require'lspconfig'.gdscript.setup{}
 
@@ -282,5 +306,24 @@ lsp.set_preferences({
 lsp.setup()
 
 --------------------------------------------------------------------
+
+-- vim.g.minimap_auto_start = 1
+-- vim.g.minimap_width = 10
+-- vim.g.minimap_auto_start_win_enter = 1
+-- vim.g.minimap_left = 0
+-- vim.g.minimap_block_filetypes = {'fugitive', 'nvim-tree', 'tagbar', 'fzf', 'telescope', 'NvimTree', 'markdown', 'vimwiki'}
+-- vim.g.minimap_block_buftypes = {'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', 'NvimTree', 'markdown', 'vimwiki'}
+-- vim.g.minimap_close_filetypes = {'startify', 'alpha', 'netrw', 'packer', 'NvimTree', 'markdown'}
+-- vim.g.minimap_highlight_range = 1
+-- vim.g.minimap_git_colors = 1
+-- vim.g.minimap_highlight_search = 1
+--------------------------------------------------------------------
+
+vim.keymap.set("n", "<leader>e", ':NvimTreeToggle<CR>')
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
+require("nvim-tree").setup({
+
+})
 
 
