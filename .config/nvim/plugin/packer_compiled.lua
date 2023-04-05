@@ -120,6 +120,11 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["command_center.nvim"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/command_center.nvim",
+    url = "https://github.com/FeiyouG/command_center.nvim"
+  },
   ["dracula.nvim"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/dracula.nvim",
@@ -150,6 +155,11 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
     url = "https://github.com/VonHeikemen/lsp-zero.nvim"
   },
+  ["lspkind.nvim"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
+    url = "https://github.com/onsails/lspkind.nvim"
+  },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
@@ -160,6 +170,11 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
+  minimap = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/minimap",
+    url = "https://github.com/wfxr/minimap.vim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -169,6 +184,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -215,6 +235,11 @@ _G.packer_plugins = {
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
+  ["vim-godot"] = {
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-godot",
+    url = "https://github.com/habamax/vim-godot"
+  },
   ["vim-markdown"] = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vim-markdown",
@@ -230,6 +255,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/vimwiki",
     url = "https://github.com/vimwiki/vimwiki"
+  },
+  ["which-key.nvim"] = {
+    config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0" },
+    loaded = true,
+    path = "/home/nightwing/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   },
   ["windline.nvim"] = {
     loaded = true,
@@ -247,6 +278,10 @@ time([[Config for vimwiki]], false)
 time([[Config for alpha-nvim]], true)
 try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "alpha-nvim")
 time([[Config for alpha-nvim]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

@@ -8,4 +8,5 @@ exec dunst &
 exec dnoted &
 exec xclip &
 exec syncthing &
+exec keepassxc &
 exec protonmail-bridge &
