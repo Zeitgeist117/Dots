@@ -15,7 +15,7 @@ else
     icon="" 
 fi
 
-[ $(pamixer --get-mute) = true ] && echo "          " | dnote -loc 5 -pbar $vol 100 && exit
+[ $(pamixer --get-mute) = true ] && echo "          " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100 && exit
 
 # echo "$icon $vol%"
 echo "   $icon $vol%   " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100

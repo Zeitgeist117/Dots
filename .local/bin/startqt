@@ -1,3 +1,5 @@
+#!/bin/sh
+
 exec picom --experimental-backends &
 exec ~/.fehbg &
 exec conky --pause=3 -c /home/nightwing/.config/conky/todo.conf &

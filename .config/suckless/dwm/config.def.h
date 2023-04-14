@@ -174,9 +174,9 @@ static Key keys[] = {
 	/* { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") }, */
 	/* { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") }, */
 
-	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t && getvol") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5 && getvol") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5 && getvol") },
+	{ 0, XF86XK_AudioPlay,			spawn,		SHCMD("pamixer -t && getvol") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 5 && getvol") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 5 && getvol") },
 
 	{ 0, XF86XK_Launch6,	   spawn,  {.v = scrwcmd } },
 	{ 0|ShiftMask, XF86XK_Launch6,	   spawn,  {.v = scrcmd } },
