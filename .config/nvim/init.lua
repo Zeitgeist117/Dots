@@ -106,7 +106,6 @@ require('packer').startup(function(use)
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-commentary'
 	use 'habamax/vim-godot'
-	use {'wfxr/minimap.vim', as = 'minimap'}
 	use 'nvim-tree/nvim-tree.lua'
 	use 'nvim-tree/nvim-web-devicons'
 
@@ -287,7 +286,6 @@ lsp.ensure_installed({
 	'dhall_lsp_server',
 	'ltex',
 	'rust_analyzer',
-	'clangd',
 })
 require'lspconfig'.gdscript.setup{}
 
