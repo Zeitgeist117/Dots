@@ -115,7 +115,7 @@ cmd yank-basename-without-extension ${{
 
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
-	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f gobble zathura $fx >/dev/null 2>&1 ;;
         text/*|application/json|inode/x-empty) $EDITOR $fx;;
 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
 	image/svg+xml) display -- $f ;;
@@ -127,8 +127,9 @@ cmd open ${{
 		done &
 		;;
 	audio/*) mpv --audio-display=no $f ;;
-	video/*|application/vnd.rn-realmedia) setsid -f gobble mpv $f -quiet >/dev/null 2>&1 ;;
-	application/pdf|application/vnd.djvu|application/epub/cbz/cbr*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	application/pdf|application/vnd.djvu|application/epub*) setsid -f gobble zathura $fx >/dev/null 2>&1 ;;
+	# video/*|application/vnd.rn-realmedia) setsid -f gobble mpv $f -quiet >/dev/null 2>&1 ;;
+	# application/pdf|application/vnd.djvu|application/epub|application/cbz|application/cbr) setsid -f zathura $fx >/dev/null 2>&1 ;;
         # *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
 }}

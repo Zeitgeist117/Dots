@@ -9,4 +9,4 @@ exec dnoted &
 exec xclip &
 exec syncthing &
 exec keepassxc &
-exec protonmail-bridge &
+#exec protonmail-bridge &

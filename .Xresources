@@ -1,5 +1,5 @@
-/* *.font: Cascadia Code-16 */
-*.font:TerminessTTF Nerd Font Mono-16
+*.font: Cascadia Code-20
+!!*.font:TerminessTTF Nerd Font Mono-16
 
 /* *.alpha: 0.6 */
 !! moonify theme

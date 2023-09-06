@@ -22,6 +22,7 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.cmd("filetype plugin on")
 vim.cmd("colo dracula")
+vim.cmd[[ iabbrev todo • ]]
 
 ----Key-Bindings----------------------------------------
 vim.g.mapleader = " "
@@ -152,7 +153,6 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
 vim.keymap.set("n", "<leader>g", '<CMD>Goyo<CR>')
 vim.keymap.set("n", "<leader>l", '<CMD>Limelight<CR>')
 vim.keymap.set("n", "<leader>o", '<CMD>Limelight!<CR>')
-vim.g.goyo_width = 200
 
 ----Harpoon---------------------------------------------
 local mark = require("harpoon.mark")
@@ -303,18 +303,6 @@ lsp.set_preferences({
 })
 lsp.setup()
 
---------------------------------------------------------------------
-
--- vim.g.minimap_auto_start = 1
--- vim.g.minimap_width = 10
--- vim.g.minimap_auto_start_win_enter = 1
--- vim.g.minimap_left = 0
--- vim.g.minimap_block_filetypes = {'fugitive', 'nvim-tree', 'tagbar', 'fzf', 'telescope', 'NvimTree', 'markdown', 'vimwiki'}
--- vim.g.minimap_block_buftypes = {'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', 'NvimTree', 'markdown', 'vimwiki'}
--- vim.g.minimap_close_filetypes = {'startify', 'alpha', 'netrw', 'packer', 'NvimTree', 'markdown'}
--- vim.g.minimap_highlight_range = 1
--- vim.g.minimap_git_colors = 1
--- vim.g.minimap_highlight_search = 1
 --------------------------------------------------------------------
 
 vim.keymap.set("n", "<leader>e", ':NvimTreeToggle<CR>')

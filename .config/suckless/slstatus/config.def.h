@@ -66,8 +66,9 @@ static const struct arg args[] = {
 	//{ wifi_perc, "W: (%3s%% on ", "wlp8s0" },
     //{ netspeed_rx, "%sB/s  ", "enp0s3" },
 	/* { run_command, "%s ", "~/.config/suckless/slstatus/components/music.sh"}, */
-	{ cpu_perc, "^d^ ^b#44475a^^c#f8f8f2^  ^b#50fa7b^^c#282A36^ %s%% ",   NULL},
+	{ cpu_perc, "^d^ ^b#44475a^^c#f8f8f2^ 󰻠 ^b#50fa7b^^c#282A36^ %s%% ",   NULL},
 	{ ram_perc, "^d^ ^b#44475a^^c#f8f8f2^  ^b#f1fa8c^^c#282A36^ %s%% ",   NULL},
 	{ datetime, "^d^ ^b#44475a^^c#f8f8f2^  ^b#ffb86c^^c#282A36^ %s ",    "%a %b %d"},
-	{ datetime, "^d^ ^b#44475a^^c#f8f8f2^  ^b#FF5555^^c#282A36^ %s ",    "%r"},
+	{ datetime, "^d^ ^b#44475a^^c#f8f8f2^  ^b#FF5555^^c#282A36^ %s ",    "%r"},
+	{ run_command, "%s ", "~/.config/suckless/slstatus/components/bat.sh"},
 };

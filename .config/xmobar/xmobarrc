@@ -60,6 +60,6 @@ Config { font            = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:h
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#f1fa8c><fc=#f1fa8c><action=`alacritty -e btop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#ff5555><fc=#ff5555><action=`alacritty -e btop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#5af78e><fc=#5af78e>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#ff79c6><fc=#ff79c6>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#caa9fa><fc=#caa9fa><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
+       , template = " %UnsafeStdinReader% }{ <box type=Bottom width=2 mb=2 color=#f1fa8c><fc=#f1fa8c><action=`alacritty -e btop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#ff5555><fc=#ff5555><action=`alacritty -e btop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#5af78e><fc=#5af78e>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#ff79c6><fc=#ff79c6>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#caa9fa><fc=#caa9fa><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box>"
        }
 

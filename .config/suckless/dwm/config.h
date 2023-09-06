@@ -11,8 +11,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "TerminessTTF Nerd Font Mono:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
-static const char dmenufont[]       = "Fira Code Nerd Font:size=11";
+static const char *fonts[]          = { "Cascadia Code:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
 static const char col_gray3[]       = "#f8f8f2";
@@ -28,12 +27,12 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spnews", "-g", "144x41", "newsboat", NULL };
-const char *spcmd2[] = {"st", "-n", "spranger", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"st", "-n", "spmd", "-g", "144x41", "-e", "nvim", "/home/nightwing/Notes/wiki/index.wiki", NULL };
-const char *spcmd4[] = {"st", "-n", "spnc", "-g", "144x41", "-e", "ncmpcpp", NULL };
-const char *spcmd5[] = {"st", "-n", "sppm", "-g", "144x41", "-e", "pulsemixer", NULL };
-const char *spcmd6[] = {"st", "-n", "spbt", "-g", "144x41", "-e", "btop", NULL };
+const char *spcmd1[] = {"st", "-n", "spnews", "-g", "50x15", "newsboat", NULL };
+const char *spcmd2[] = {"st", "-n", "spranger", "-g", "50x15", "-e", "ranger", NULL };
+const char *spcmd3[] = {"st", "-n", "spmd", "-g", "50x15", "-e", "nvim", "/home/nightwing/Notes/wiki/index.wiki", NULL };
+const char *spcmd4[] = {"st", "-n", "spnc", "-g", "50x15", "-e", "ncmpcpp", NULL };
+const char *spcmd5[] = {"st", "-n", "sppm", "-g", "50x15", "-e", "pulsemixer", NULL };
+const char *spcmd6[] = {"st", "-n", "spbt", "-g", "50x15", "-e", "btop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spnews",      spcmd1},
@@ -96,13 +95,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run","-c", "-l", "20", NULL };
+static const char *dmenucmd[] = { "dmenu_run","-p", "󰘧", "-c", "-l", "20", NULL };
 static const char *wmenucmd[] = { "watchmenu", NULL };
 static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *emacscmd[]  = { "emacsclient", "-c", "-a","'emacs'", NULL };
+static const char *emacscmd[]  = { "emacsclient", "-c", "-a", "emacs", NULL };
 static const char *qbrowser[]  = { "qutebrowser", NULL };
-static const char *ecmd[] = { "firefox", NULL };
+static const char *ecmd[] = { "brave", NULL };
 static const char *scrwcmd[] = { "scr", "select",  NULL };
 static const char *scrcmd[] = { "scr",  NULL };
 
@@ -177,6 +176,9 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t && getvol") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 5 && getvol") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 5 && getvol") },
+
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("brightnessctl s 10%+") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("brightnessctl s 10%-") },
 
 	{ 0, XK_Print,	   spawn,  {.v = scrwcmd } },
 	{ 0|ShiftMask, XK_Print,	   spawn,  {.v = scrcmd } },
