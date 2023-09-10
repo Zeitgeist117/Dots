@@ -4,7 +4,7 @@ import:
 
 font:
   normal:
-    family: Cascadia Code
+    family: JetBrainsMono 
     # style: Light
   # bold:
     # family: TerminessTTF Nerd Font Mono

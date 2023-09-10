@@ -66,10 +66,7 @@ bindkey -M visual '^[[P' vi-delete
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 # default apps
-export EDITOR="nvim"
+export EDITOR="emacs"
 export TERMINAL="st"
-export BROWSER="firefox"
+export BROWSER="brave"
 export LC_ALL=en_US.UTF-8
-
-
-if [ -e /home/nightwing/.nix-profile/etc/profile.d/nix.sh ]; then . /home/nightwing/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

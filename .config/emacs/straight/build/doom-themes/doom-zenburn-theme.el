@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/themes/themes/doom-zenburn-theme.el

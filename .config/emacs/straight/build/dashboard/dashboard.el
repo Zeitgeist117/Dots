@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/emacs-dashboard/dashboard.el

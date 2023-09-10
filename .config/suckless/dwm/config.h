@@ -27,12 +27,12 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spnews", "-g", "50x15", "newsboat", NULL };
-const char *spcmd2[] = {"st", "-n", "spranger", "-g", "50x15", "-e", "ranger", NULL };
-const char *spcmd3[] = {"st", "-n", "spmd", "-g", "50x15", "-e", "nvim", "/home/nightwing/Notes/wiki/index.wiki", NULL };
-const char *spcmd4[] = {"st", "-n", "spnc", "-g", "50x15", "-e", "ncmpcpp", NULL };
-const char *spcmd5[] = {"st", "-n", "sppm", "-g", "50x15", "-e", "pulsemixer", NULL };
-const char *spcmd6[] = {"st", "-n", "spbt", "-g", "50x15", "-e", "btop", NULL };
+const char *spcmd1[] = {"st", "-n", "spnews", "-g", "100x30", "newsboat", NULL };
+const char *spcmd2[] = {"st", "-n", "spranger", "-g", "100x30", "-e", "ranger", NULL };
+const char *spcmd3[] = {"st", "-n", "spmd", "-g", "100x30", "-e", "nvim", "/home/nightwing/Notes/wiki/index.wiki", NULL };
+const char *spcmd4[] = {"st", "-n", "spnc", "-g", "100x30", "-e", "ncmpcpp", NULL };
+const char *spcmd5[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
+const char *spcmd6[] = {"st", "-n", "spbt", "-g", "100x30", "-e", "btop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spnews",      spcmd1},

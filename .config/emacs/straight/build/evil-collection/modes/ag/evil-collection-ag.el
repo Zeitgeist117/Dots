@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/ag/evil-collection-ag.el

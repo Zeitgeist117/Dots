@@ -1,4 +1,4 @@
-*.font: Cascadia Code-20
+*.font: Source Code Pro-20
 !!*.font:TerminessTTF Nerd Font Mono-16
 
 /* *.alpha: 0.6 */

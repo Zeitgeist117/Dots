@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/frame-local/frame-local.el

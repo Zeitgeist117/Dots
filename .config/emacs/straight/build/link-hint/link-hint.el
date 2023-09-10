@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/link-hint.el/link-hint.el

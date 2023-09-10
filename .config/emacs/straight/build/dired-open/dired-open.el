@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/dired-hacks/dired-open.el

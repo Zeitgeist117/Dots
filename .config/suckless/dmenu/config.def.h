@@ -12,7 +12,6 @@ static const char *fonts[] = {
 	"JoyPixels:pixelsize=15",
 };
 static const char *prompt      = "󰘧";      /* -p  option; prompt to the left of input field */
-static int colorprompt = 1;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
 	[SchemeNorm] = { "#f8f8f2", "#282A36" },

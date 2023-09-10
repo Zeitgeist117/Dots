@@ -1,0 +1,1 @@
+/home/nightwing/.config/emacs/straight/repos/emacs-neotree/neotree.el
