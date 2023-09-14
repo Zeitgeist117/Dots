@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/popup/evil-collection-popup.el

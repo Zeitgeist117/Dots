@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/themes/themes/doom-city-lights-theme.el

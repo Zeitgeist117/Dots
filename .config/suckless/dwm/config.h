@@ -11,7 +11,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Cascadia Code:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
+static const char *fonts[]          = { "JetBrains Mono:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
 static const char col_gray3[]       = "#f8f8f2";
@@ -96,14 +96,15 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-p", "󰘧", "-c", "-l", "20", NULL };
-static const char *wmenucmd[] = { "watchmenu", NULL };
 static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *filecmd[]  = { "pcmanfm", NULL };
+static const char *mailcmd[]  = { "thunderbird", NULL };
 static const char *emacscmd[]  = { "emacsclient", "-c", "-a", "emacs", NULL };
-static const char *qbrowser[]  = { "qutebrowser", NULL };
 static const char *ecmd[] = { "brave", NULL };
 static const char *scrwcmd[] = { "scr", "select",  NULL };
 static const char *scrcmd[] = { "scr",  NULL };
+static const char *ywcmd[] = { "ywatch",  NULL };
 
 
 #include <X11/XF86keysym.h>
@@ -114,9 +115,10 @@ static const char *scrcmd[] = { "scr",  NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,						XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,						XK_apostrophe, spawn,          {.v = emacscmd } },
-	{ MODKEY,						XK_q,	   spawn,          {.v = qbrowser } },
+	{ MODKEY,			XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,			XK_apostrophe, spawn,          {.v = emacscmd } },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mailcmd} },
+	{ MODKEY,                       XK_q,      spawn,          {.v = filecmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -129,14 +131,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_w,      spawn,          {.v = wmenucmd } },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,						XK_v,      spawn,	       {.v = ecmd} },
-	{ MODKEY,						XK_e,      spawn,          {.v = pmenucmd} },
-	{ MODKEY,			            XK_y,      setlayout,      {.v = &layouts[6]} },
+	{ MODKEY,			XK_v,      spawn,	       {.v = ecmd} },
+	{ MODKEY,			XK_e,      spawn,          {.v = pmenucmd} },
+	{ MODKEY|ShiftMask,		XK_y,      setlayout,      {.v = &layouts[6]} },
+	{ MODKEY,        		XK_y,      spawn,          {.v = ywcmd} },
 	{ MODKEY|ControlMask,           XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -148,16 +150,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
-	{ MODKEY,						XK_bracketleft,		shiftview,	   {.i = -1} },
-	{ MODKEY,						XK_bracketright,	shiftview,	   {.i = +1} },
-	{ MODKEY,						Button4,	shiftview, {.i = +1} },
-	{ MODKEY,						Button5,	shiftview, {.i = -1} },
-	{ MODKEY,            			XK_c,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_x,	   togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			XK_z,	   togglescratch,  {.ui = 2 } },
-	{ MODKEY,            			XK_n,	   togglescratch,  {.ui = 3 } },
-	{ MODKEY,            			XK_p,	   togglescratch,  {.ui = 4 } },
-	{ MODKEY,            			XK_g,	   togglescratch,  {.ui = 5 } },
+	{ MODKEY,			XK_bracketleft,		shiftview,	   {.i = -1} },
+	{ MODKEY,			XK_bracketright,	shiftview,	   {.i = +1} },
+	{ MODKEY,			Button4,	shiftview, {.i = +1} },
+	{ MODKEY,			Button5,	shiftview, {.i = -1} },
+	{ MODKEY,            		XK_c,  	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,            		XK_x,	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,            		XK_z,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,            		XK_n,	   togglescratch,  {.ui = 3 } },
+	{ MODKEY,            		XK_p,	   togglescratch,  {.ui = 4 } },
+	{ MODKEY,            		XK_g,	   togglescratch,  {.ui = 5 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

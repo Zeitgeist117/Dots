@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/timer-list/evil-collection-timer-list.el

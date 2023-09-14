@@ -1,7 +1,0 @@
-# gtraceroute
-
-> यह आदेश `-p linux traceroute` का उपनाम है।
-
-- मूल आदेश के लिए दस्तावेज़ देखें:
-
-`tldr -p linux traceroute`

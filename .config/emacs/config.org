@@ -3,19 +3,20 @@
 #+DESCRIPTION: Zeitgeist's personal Emacs config
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
-* TABLE OF CONTENTS :toc:
-- [[#important-startup-programs][Important Startup programs]]
-  - [[#package-manager][Package Manager]]
+* TABLE OF CONTENTS                                                     :toc:
+- [[#important-startup][Important Startup]]
+  - [[#add-scripts-to-directory-path][Add scripts to directory path]]
+  - [[#sourcing-scripts][Sourcing Scripts]]
   - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
   - [[#sane-defaults][Sane Defaults]]
   - [[#general-keybindings][General keybindings]]
-- [[#buffer-move][Buffer Move]]
+- [[#git][Git]]
 - [[#fonts][Fonts]]
   - [[#zooming-in-and-out][Zooming in and out]]
   - [[#all-the-icons][ALL THE ICONS]]
   - [[#rainbow-mode][Rainbow mode]]
 - [[#gui-shit][GUI shit]]
-  - [[#turing-off-toolbars-and-scrollbars][turing off toolbars and scrollbars]]
+  - [[#turning-off-toolbars-and-scrollbars][turning off toolbars and scrollbars]]
   - [[#line-numbers-and-truncated-lines][Line numbers and truncated lines]]
 - [[#which-key][Which Key]]
 - [[#ivy-counsel][IVY (counsel)]]
@@ -23,6 +24,8 @@
   - [[#enabling-table-of-contents][Enabling table of contents]]
   - [[#org-bullets][Org bullets]]
   - [[#org-tempo][Org Tempo]]
+  - [[#biblio][Biblio]]
+  - [[#org-roam][Org Roam]]
 - [[#projectile][Projectile]]
 - [[#language-support][LANGUAGE SUPPORT]]
   - [[#diminish][Diminish]]
@@ -37,33 +40,27 @@
   - [[#tabs][Tabs]]
 - [[#other-applications][Other applications]]
   - [[#elfeed-rss-reader][Elfeed (rss reader)]]
+  - [[#erc-irc-chat][ERC (irc chat)]]
 - [[#theming][Theming]]
   - [[#color-scheme][color scheme]]
   - [[#modeline][Modeline]]
   - [[#dashboard][Dashboard]]
 
-* Important Startup programs
-
-** Package Manager
-
+* Important Startup
+programs
+** Add scripts to directory path
 #+begin_src emacs-lisp
-      (defvar bootstrap-version)
-      (let ((bootstrap-file
-	     (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	    (bootstrap-version 6))
-	(unless (file-exists-p bootstrap-file)
-	  (with-current-buffer
-	      (url-retrieve-synchronously
-	       "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-	       'silent 'inhibit-cookies)
-	    (goto-char (point-max))
-	    (eval-print-last-sexp)))
-	(load bootstrap-file nil 'nomessage))
-
-      (straight-use-package 'use-package)
-(use-package straight
-  :custom
-  (straight-use-package-by-default t))
+(add-to-list 'load-path "~/.config/emacs/scripts/")
+#+end_src
+** Sourcing Scripts
+#+begin_src emacs-lisp
+(require 'elpaca-setup)
+;;(require 'straight-setup)
+(require 'buffer-move)
+(require 'package)
+(package-initialize)
+(add-to-list 'package-archives
+      '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 #+end_src
 
 ** Load Evil Mode (for my sanity)
@@ -74,7 +71,7 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-left t)
+  (setq evil-vsplit-window-right t)
   (evil-mode))  
 (use-package evil-collection
   :after evil
@@ -112,7 +109,15 @@
 (tool-bar-mode -1)           ;; Disable the tool bar
 (setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
 (setq ring-bell-function 'ignore)
-
+(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files"))) ;; change backup saves location to trash folder
+(setq split-width-threshold nil)
+;; Remove messages from the *Messages* buffer.
+(setq-default message-log-max nil)
+;; Kill both buffers on startup.
+(kill-buffer "*Messages*")
+;; Empty the *scratch* buffer.
+(setq initial-scratch-message "")
+(kill-buffer "*scratch*")
 #+end_src
 ** General keybindings
 
@@ -184,6 +189,29 @@
     "e R" '(eww-reload :which-key "Reload current page in EWW")
     "e s" '(eshell :which-key "Eshell")
     "e w" '(eww :which-key "EWW emacs web wowser"))
+
+  (zg/leader-keys
+    "g" '(:ignore t :wk "Git")    
+    "g /" '(magit-displatch :wk "Magit dispatch")
+    "g ." '(magit-file-displatch :wk "Magit file dispatch")
+    "g b" '(magit-branch-checkout :wk "Switch branch")
+    "g c" '(:ignore t :wk "Create") 
+    "g c b" '(magit-branch-and-checkout :wk "Create branch and checkout")
+    "g c c" '(magit-commit-create :wk "Create commit")
+    "g c f" '(magit-commit-fixup :wk "Create fixup commit")
+    "g C" '(magit-clone :wk "Clone repo")
+    "g f" '(:ignore t :wk "Find") 
+    "g f c" '(magit-show-commit :wk "Show commit")
+    "g f f" '(magit-find-file :wk "Magit find file")
+    "g f g" '(magit-find-git-config-file :wk "Find gitconfig file")
+    "g F" '(magit-fetch :wk "Git fetch")
+    "g g" '(magit-status :wk "Magit status")
+    "g i" '(magit-init :wk "Initialize git repo")
+    "g l" '(magit-log-buffer-file :wk "Magit buffer log")
+    "g r" '(vc-revert :wk "Git revert file")
+    "g s" '(magit-stage-file :wk "Git stage file")
+    "g t" '(git-timemachine :wk "Git time machine")
+    "g u" '(magit-stage-file :wk "Git unstage file"))
 
    (zg/leader-keys
     "h" '(:ignore t :wk "Help")
@@ -270,92 +298,39 @@
     "w J" '(buf-move-down :wk "Buffer move down")
     "w K" '(buf-move-up :wk "Buffer move up")
     "w L" '(buf-move-right :wk "Buffer move right"))
+   
 
-   (zg/leader-keys
-     "c" '(:ignore t :wk "Centaur tabs")
-     "c k" '(centaur-tabs--kill-this-buffer-dont-ask :wk "kill current buffer without confirmation"))
 )
 #+end_src
-* Buffer Move
-so we can move buffers around
-
+* Git
 #+begin_src emacs-lisp
-(require 'windmove)
+(use-package git-timemachine
+  :after git-timemachine
+  :hook (evil-normalize-keymaps . git-timemachine-hook)
+  :config
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+)
 
-;;;###autoload
-(defun buf-move-up ()
-  "Swap the current buffer and the buffer above the split.
-If there is no split, ie now window above the current one, an
-error is signaled."
-;;  "Switches between the current buffer, and the buffer above the
-;;  split, if possible."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'up))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No window above this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
-
-;;;###autoload
-(defun buf-move-down ()
-"Swap the current buffer and the buffer under the split.
-If there is no split, ie now window under the current one, an
-error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'down))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (or (null other-win) 
-            (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
-        (error "No window under this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
-
-;;;###autoload
-(defun buf-move-left ()
-"Swap the current buffer and the buffer on the left of the split.
-If there is no split, ie now window on the left of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'left))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No left split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
-
-;;;###autoload
-(defun buf-move-right ()
-"Swap the current buffer and the buffer on the right of the split.
-If there is no split, ie now window on the right of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'right))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No right split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
-
-
+(use-package magit)
 #+end_src
+
 * Fonts
 Defining all the fonts so it looks kool an so i kan reed
 
 #+begin_src emacs-lisp
-(set-frame-font "Source Code Pro 20")
+(set-face-attribute 'default nil
+  :font "JetBrains Mono"
+  :height 200
+  :weight 'medium)
+(set-face-attribute 'variable-pitch nil
+  :font "Ubuntu"
+  :height 220
+  :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+  :font "JetBrains Mono"
+  :height 200
+  :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
 ;; Your font must have an italic face available.
@@ -363,11 +338,6 @@ Defining all the fonts so it looks kool an so i kan reed
   :slant 'italic)
 (set-face-attribute 'font-lock-keyword-face nil
   :slant 'italic)
-;; This sets the default font on all graphical frames created after restarting Emacs.
-;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-;; are not right unless I also add this method of setting the default font.
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-20"))
-
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
 #+end_src
@@ -403,7 +373,7 @@ touch the rainbow, taste the rainbow
 * GUI shit
 gooey shit
 
-** turing off toolbars and scrollbars
+** turning off toolbars and scrollbars
 #+begin_src emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -479,7 +449,6 @@ which fucking keys do i use, is this moonlight sonata?
                                'ivy-rich-switch-buffer-transformer))
 #+end_src
 * Org Mode
-
 ** Enabling table of contents
 #+begin_src emacs-lisp
 (use-package toc-org
@@ -489,12 +458,12 @@ which fucking keys do i use, is this moonlight sonata?
 
 ** Org bullets
 #+begin_src emacs-lisp
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(use-package org-superstar)
+(setq
+    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+end_src
-
 
 ** Org Tempo 
 an org mode package that is installed with emacs but not enabled by default that lets you do cool shit faster like all the source code blocks in this config for example:
@@ -512,10 +481,24 @@ an org mode package that is installed with emacs but not enabled by default that
 | <s                           | '#+BEGIN_SRC' … '#+END_SRC'             |
 | <v                           | '#+BEGIN_VERSE' … '#+END_VERSE'         |
 
-
 #+begin_src emacs-lisp 
 (require 'org-tempo)
 #+end_src
+
+
+
+** Biblio 
+#+begin_src emacs-lisp
+(use-package biblio)
+#+end_src
+
+
+** Org Roam
+#+begin_src emacs-lisp
+(use-package org-roam)
+#+end_src
+
+
 * Projectile
 projekts in muh emaks
 #+begin_src emacs-lisp
@@ -524,6 +507,7 @@ projekts in muh emaks
   :config
   (projectile-mode 1))
 #+end_src
+
 * LANGUAGE SUPPORT
 Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWAVE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL.  Other languages will require you to install additional modes.
 
@@ -619,6 +603,7 @@ file managment
   (setq dired-open-extensions '(("gif" . "sxiv")
                                 ("jpg" . "sxiv")
                                 ("png" . "sxiv")
+                                ("pdf" . "zathura")
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
 
@@ -664,15 +649,15 @@ file tree on the side
   :demand
   :config
  (centaur-tabs-mode t)
+ (setq centaur-tabs-group-buffer-group -1)
  :bind
   (:map evil-normal-state-map
-        ("g t" . centaur-tabs-forward)
-        ("g T" . centaur-tabs-backward))
+        ("K" . centaur-tabs-forward)
+        ("J" . centaur-tabs-backward))
   )
  (setq centaur-tabs-set-icons t)
 #+end_src
 * Other applications
-
 ** Elfeed (rss reader)
 #+begin_src emacs-lisp
 (use-package elfeed
@@ -695,7 +680,13 @@ file tree on the side
   :config
   (setq elfeed-goodies/entry-pane-size 0.5))
 #+end_src
+** ERC (irc chat)
+#+begin_src emacs-lisp
+(setq
+ erc-nick "zeitgeist"     ; Our IRC nick
+ erc-user-full-name "zeitgeist") ; Our /whois name
 
+#+end_src
 * Theming
 r/unixporn
 
@@ -709,13 +700,12 @@ the building blocks of rice
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   ;; Sets the default theme to load!!! 
-  (load-theme 'doom-one t)
+  (load-theme 'doom-dracula t)
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(load-theme 'doom-dracula t)
 
 #+end_src
 
@@ -754,4 +744,3 @@ the building blocks of rice
   :config
   (dashboard-setup-startup-hook))
 #+end_src
-	

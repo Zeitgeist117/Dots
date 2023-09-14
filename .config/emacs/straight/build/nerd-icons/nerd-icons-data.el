@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/nerd-icons.el/nerd-icons-data.el

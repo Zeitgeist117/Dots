@@ -1,7 +1,0 @@
-# gmv
-
-> Dit commando is een alias van `-p linux mv`.
-
-- Bekijk de documentatie van het originele commando:
-
-`tldr -p linux mv`

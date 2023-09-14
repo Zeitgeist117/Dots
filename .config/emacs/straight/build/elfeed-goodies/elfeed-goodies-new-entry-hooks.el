@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/elfeed-goodies/elfeed-goodies-new-entry-hooks.el

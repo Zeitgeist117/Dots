@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/eshell/evil-collection-eshell.el

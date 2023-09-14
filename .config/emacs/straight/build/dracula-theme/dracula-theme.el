@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/emacs/dracula-theme.el

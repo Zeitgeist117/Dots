@@ -1,6 +1,6 @@
 mpd_port = 6600
 mpd_crossfade_time = 2
- 
+mpd_music_dir = ~/Music
 visualizer_data_source = /tmp/mpd.fifo
 visualizer_output_name = "my_fifo"
 visualizer_in_stereo = no

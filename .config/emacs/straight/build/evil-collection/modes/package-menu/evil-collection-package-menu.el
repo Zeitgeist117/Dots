@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/package-menu/evil-collection-package-menu.el

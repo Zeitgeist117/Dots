@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/rainbow-mode/rainbow-mode.el

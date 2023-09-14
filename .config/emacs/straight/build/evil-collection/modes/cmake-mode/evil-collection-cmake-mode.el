@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/evil-collection/modes/cmake-mode/evil-collection-cmake-mode.el

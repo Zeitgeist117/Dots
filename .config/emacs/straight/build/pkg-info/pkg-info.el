@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/pkg-info/pkg-info.el

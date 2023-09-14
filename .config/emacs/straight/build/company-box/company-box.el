@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/company-box/company-box.el

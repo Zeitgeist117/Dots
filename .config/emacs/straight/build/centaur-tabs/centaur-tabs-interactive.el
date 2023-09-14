@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/centaur-tabs/centaur-tabs-interactive.el

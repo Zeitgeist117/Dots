@@ -1,7 +1,0 @@
-# gpathchk
-
-> यह आदेश `-p linux pathchk` का उपनाम है।
-
-- मूल आदेश के लिए दस्तावेज़ देखें:
-
-`tldr -p linux pathchk`

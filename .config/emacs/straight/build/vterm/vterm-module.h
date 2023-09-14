@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/emacs-libvterm/vterm-module.h

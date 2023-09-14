@@ -51,4 +51,4 @@ fi
 # 	col="" && echo " charge me" | dnote -loc 5
 # fi
 
-echo "^b#282A36^ ^b#44475a^^c#f8f8f2^  $icon  ^b#50fa7b^^c#282A36^ $batt% " 
+echo "^b#282A36^ ^b#44475a^^c#f8f8f2^ $icon ^b#50fa7b^^c#282A36^ $batt% " 

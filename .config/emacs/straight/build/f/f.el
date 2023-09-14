@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/f.el/f.el

@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/vterm-toggle/vterm-toggle.el

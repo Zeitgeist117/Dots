@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# displays a notif for 7s of the video being played
+echo \
+"Playing -" "`xclip -o -sel clip | xargs yt-dlp -e`" | dnote -loc 5 
+
+# plays the link in mpv
+mpv --fs `xclip -o -sel clip`

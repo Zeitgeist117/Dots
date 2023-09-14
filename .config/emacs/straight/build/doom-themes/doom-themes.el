@@ -1,1 +1,0 @@
-/home/nightwing/.config/emacs/straight/repos/themes/doom-themes.el
