@@ -1,0 +1,60 @@
+#!/bin/bash -e
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+if [ $# -eq 0 ]
+then
+	echo "Please state the cbr/cbz files you want to convert to pdf"
+else
+
+	for i in "$@"
+	do
+		file=$i
+		filetype=${i: -3}
+
+		mkdir .comicconvert -p
+
+		if [[ "$filetype" == "cbr" ]]
+		then
+			filename=${file%.cbr}
+			rarfile="$filename.rar"
+			pdffile="$filename.pdf"
+
+			cp "$file" "$rarfile"
+			unrar e "$rarfile" .comicconvert/
+			rm "$rarfile"
+
+		elif [[ "$filetype" == "cbz" ]]
+		then
+
+			filename=${file%.cbz}
+			zipfile="$filename.zip"
+			pdffile="$filename.pdf"
+
+			cp "$file" "$zipfile"
+			unzip -j "$zipfile" -d .comicconvert/
+			rm "$zipfile"
+		fi			
+		
+		echo $pdffile
+		# Normalize
+		find .comicconvert/ -iname "*.webp" -exec dwebp {} -o {}.jpg \;
+		find .comicconvert/ -iname "*.png" -exec convert {} {}.jpg \;
+		# Downcase
+		find .comicconvert/ -name '*.*' -exec sh -c 'a=$(echo "$0" | sed -r "s/([^.]*)\$/\L\1/");[ "$a" != "$0" ] && mv "$0" "$a" ' {} \;
+		img2pdf -o "$pdffile" .comicconvert/*.jpg
+
+		rm -rf .comicconvert/
+	done
+fi

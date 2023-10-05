@@ -1,7 +1,7 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-PS1='''╭─[%B%n% %b]─[%B%M% %b]─[%~% ]
-╰─[λ] '''
+PS1='''┌─[%B%n% %b]─[%B%M% %b]─[%~% ]
+└─[λ] '''
 # ╭─nightwing@Archknight ~
 # ╰─
 # ZSH_THEME="powerlevel10k/powerlevel10k"

@@ -11,7 +11,7 @@ visualizer_type = spectrum
 #visualizer_look = "◈░"
 #visualizer_look = "┃┃"
 #visualizer_look = ●┃
-#visualizer_look = "█┇"
+visualizer_look = "█┇"
 #visualizer_look = "▒░"
 #visualizer_look = "▋▍"
 #visualizer_look = "▋█"
@@ -21,7 +21,7 @@ visualizer_type = spectrum
 #visualizer_look = "▋☰"
 #visualizer_look = "☰⛆"
 #visualizer_look = "☰▓"
-visualizer_look = "●▉"
+# visualizer_look = "●▉"
 visualizer_color = white, 5, 3
 
 startup_screen = "media_library"

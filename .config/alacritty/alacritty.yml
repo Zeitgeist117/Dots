@@ -1,22 +1,19 @@
-
 import:
   - ~/.config/alacritty/dracula.yml
 
 font:
   normal:
     family: JetBrainsMono 
-    # style: Light
-  # bold:
-    # family: TerminessTTF Nerd Font Mono
-    # style: Medium
-  # italic:
-    # family: TerminessTTF Nerd Font Mono
-    # style: "Light italic"
-size: 11
+    style: Light
+  bold:
+    family: JetBrainsMono 
+    style: Medium
+  italic:
+    family: JetBrainsMono 
+    style: Light italic
+size: 8 
 
 key_bindings:
   - {key: C, mods: Alt, action: Copy}
   - {key: V, mods: Alt, action: Paste}
 
-window:
-  opacity: 0.8

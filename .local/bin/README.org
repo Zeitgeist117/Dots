@@ -1,0 +1,77 @@
+#+TITLE: Scripts
+
+* Scripts
+These are some bash scripts that I use with my window manager of choice DWM.
+
+** Volume Script
+
+This simply uses [[https://github.com/cdemoulins/pamixer][pamixer]] to read the current volume and display it when the script is triggered.
+It can be used in a status bar like slstatus, dwm blocks or even a custom xsetroot command.
+
+*** Finding the volume
+#+begin_src bash :tangle getvol
+#!/bin/sh
+vol="$(pamixer --get-volume)"
+#+end_src
+Makes a variable "vol" and have it equal the output of the "get-volume" flag of pamixer so we can use it easily.
+
+*** Icons that change with the volume
+#+begin_src bash :tangle getvol
+if [ "$vol" -gt "70" ]; then
+	icon="󰕾"
+elif [ "$vol" -gt "30" ]; then
+	icon="󰖀"
+elif [ "$vol" -gt "0" ]; then
+	icon="󰕿"
+else
+    icon="" 
+fi
+#+end_src
+Add some nerd font icon flare. Simply put make a new variable called "icon" and change the value of that variable depending on the value of "vol".
+
+*** Notifications 
+**** Using Dnote
+I like using notifications to view my volume cause I don't need it in the bar all time, I generally leave the volume at a level that I like for the most part.
+#+begin_example bash
+[ $(pamixer --get-mute) = true ] && echo "          " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100 && exit
+
+echo "   $icon $vol%   " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100
+#+end_example
+
+Ok so I'm weird and instead of using dunst like everyone else a sort of suckless notification utility called dnote which was made by a github user [[https://github.com/kolunmi/][kolumni]] but from the looks of things, has since deleted it. I do have an older version of this in the suckless directory of this repo if you would like to see what it is and full credit goes to him, I'm just using it. How it works is simply that you echo somthing like some text or the output of a command and then pipe it into dnote while the dnote daemon "dnoted" is running, you can give it different flags like in this example "-loc" for location on the screen, "-pbar" for progress bar for which you must specify a fraction, so on and so forth.
+
+
+That was a lot, I get carried away sometimes. The tldr is obscure notification program.
+
+**** Using Dunst
+I don't know how to use dunst...
+
+#+begin_src bash :tangle getvol
+[ $(pamixer --get-mute) = true ] && dunstify -a "changevolume" -t 1000 -r 9993 -i "volume-mute" " Muted" && exit
+
+
+dunstify -a "changevolume" -r 9993 -i "volume" -h int:value:"$vol" "$icon ${vol}%" -t 1000
+#+end_src
+
+*** Using the script
+
+#+begin_example bash
+pamixer -i 5 && getvol
+#+end_example
+Simply run the script in tandem with any volume change command. I have the command above set to a keypress in my dwm config.h so that whenever the volume changes it tells me. I found this a much simpler solution than figuring out signals in dwmblocks.
+
+** Screenshots
+Using a minimal utility called scrot for screenshots.
+
+#+begin_src bash :tangle scr
+#! /bin/sh
+output='/home/nightwing/Pictures/Screenshots/%Y-%m-%d-%T.png'
+
+case "$1" in
+	"select") scrot "$output" -s -f || exit ;;
+	"window") scrot "$output" --focused --border || exit ;;
+	*) scrot "$output" || exit ;;
+esac
+
+echo "  Screenshot Taken " | dnote -loc 5
+#+end_src

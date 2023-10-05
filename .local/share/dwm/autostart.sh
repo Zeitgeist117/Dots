@@ -4,9 +4,11 @@ exec ~/.fehbg &
 exec slstatus &
 exec /usr/bin/emacs --daemon &
 exec nm-applet & 
+exec mpd &
 exec dunst &
 exec dnoted &
 exec xclip &
 exec syncthing &
 exec keepassxc &
-#exec protonmail-bridge &
+exec musnify-mpd &
+exec protonmail-bridge &

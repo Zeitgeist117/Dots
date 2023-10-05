@@ -11,7 +11,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Cascadia Code:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
+static const char *fonts[]          = { "JetBrains Mono:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
 static const char col_gray1[]       = "#282A36";
 static const char col_gray2[]       = "#282A36";
 static const char col_gray3[]       = "#f8f8f2";
@@ -27,24 +27,18 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spnews", "-g", "100x30", "newsboat", NULL };
-const char *spcmd2[] = {"st", "-n", "spranger", "-g", "100x30", "-e", "ranger", NULL };
-const char *spcmd3[] = {"st", "-n", "spmd", "-g", "100x30", "-e", "nvim", "/home/nightwing/Notes/wiki/index.wiki", NULL };
-const char *spcmd4[] = {"st", "-n", "spnc", "-g", "100x30", "-e", "ncmpcpp", NULL };
-const char *spcmd5[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
-const char *spcmd6[] = {"st", "-n", "spbt", "-g", "100x30", "-e", "btop", NULL };
+const char *spcmd1[] = {"st", "-n", "spnc", "-g", "100x30", "-e", "ncmpcpp", NULL };
+const char *spcmd2[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
+const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x30", "-e", "btop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
-	{"spnews",      spcmd1},
-	{"spranger",    spcmd2},
-	{"spmd",		spcmd3},
-	{"spnc",		spcmd4},
-	{"sppm",		spcmd5},
-	{"spbt",		spcmd6},
+	{"spnc",		spcmd1},
+	{"sppm",		spcmd2},
+	{"spbt",		spcmd3},
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", ""};
+static const char *tags[] = { "▣", "▣", "▣", "▣", "▣", "▣", "▣"};
 
 /*Window Rules*/
 static const Rule rules[] = {
@@ -59,12 +53,9 @@ static const Rule rules[] = {
 	{ NULL,		                NULL,       "Event Tester", 0,         0,          -1 }, /* xev */
 	{ "MEGAsync",               NULL,       NULL,           0,         1,          -1 },
 	{ "Proton Mail Bridge",     NULL,       NULL,           0,         1,          -1 },
-	{ NULL,		                "spnews",	NULL,	        SPTAG(0),  1,		   -1 },
-	{ NULL,		                "spranger",	NULL,	        SPTAG(1),  1,		   -1 },
-	{ NULL,		                "spmd",		NULL,	        SPTAG(2),  1,		   -1 },
-	{ NULL,		                "spnc",		NULL,	        SPTAG(3),  1,		   -1 },
-	{ NULL,		                "sppm",		NULL,	        SPTAG(4),  1,		   -1 },
-	{ NULL,		                "spbt",		NULL,	        SPTAG(5),  1,		   -1 },
+	{ NULL,		                "spnc",		NULL,	        SPTAG(0),  1,		   -1 },
+	{ NULL,		                "sppm",		NULL,	        SPTAG(1),  1,		   -1 },
+	{ NULL,		                "spbt",		NULL,	        SPTAG(2),  1,		   -1 },
 };
 
 /* layout(s) */
@@ -97,13 +88,14 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-p", "󰘧", "-c", "-l", "20", NULL };
 static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 static const char *filecmd[]  = { "pcmanfm", NULL };
 static const char *mailcmd[]  = { "thunderbird", NULL };
 static const char *emacscmd[]  = { "emacsclient", "-c", "-a", "emacs", NULL };
 static const char *ecmd[] = { "brave", NULL };
 static const char *scrwcmd[] = { "scr", "select",  NULL };
 static const char *scrcmd[] = { "scr",  NULL };
+static const char *ywcmd[] = { "ywatch",  NULL };
 
 
 #include <X11/XF86keysym.h>
@@ -116,6 +108,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,			XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,			XK_apostrophe, spawn,          {.v = emacscmd } },
+	{ MODKEY,			XK_y,      spawn,          {.v = ywcmd } },
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mailcmd} },
 	{ MODKEY,                       XK_q,      spawn,          {.v = filecmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -133,10 +126,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,			XK_v,      spawn,	       {.v = ecmd} },
 	{ MODKEY,			XK_e,      spawn,          {.v = pmenucmd} },
-	{ MODKEY,			XK_y,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY|ControlMask,           XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -150,14 +141,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,			XK_bracketleft,		shiftview,	   {.i = -1} },
 	{ MODKEY,			XK_bracketright,	shiftview,	   {.i = +1} },
+	{ MODKEY|ShiftMask,		XK_h,	shiftview,	   {.i = -1} },
+	{ MODKEY|ShiftMask,		XK_l,	shiftview,	   {.i = +1} },
 	{ MODKEY,			Button4,	shiftview, {.i = +1} },
 	{ MODKEY,			Button5,	shiftview, {.i = -1} },
-	{ MODKEY,            		XK_c,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            		XK_x,	   togglescratch,  {.ui = 1 } },
-	{ MODKEY,            		XK_z,	   togglescratch,  {.ui = 2 } },
-	{ MODKEY,            		XK_n,	   togglescratch,  {.ui = 3 } },
-	{ MODKEY,            		XK_p,	   togglescratch,  {.ui = 4 } },
-	{ MODKEY,            		XK_g,	   togglescratch,  {.ui = 5 } },
+	{ MODKEY,            		XK_n,	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,            		XK_p,	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,            		XK_g,	   togglescratch,  {.ui = 2 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -169,13 +159,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	/*Audio Keys*/
-	/* { 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") }, */
-	/* { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") }, */
-	/* { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") }, */
-
 	{ 0, XF86XK_AudioMute,			spawn,		SHCMD("pamixer -t && getvol") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 5 && getvol") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 5 && getvol") },
+
+	/*Media Keys*/
+	{ 0, XF86XK_AudioPlay,	spawn,		SHCMD("mpc toggle") },
+	{ 0, XF86XK_AudioNext,	spawn,		SHCMD("mpc next") },
+	{ 0, XF86XK_AudioPrev,	spawn,		SHCMD("mpc prev") },
 
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("brightnessctl s 10%+") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("brightnessctl s 10%-") },

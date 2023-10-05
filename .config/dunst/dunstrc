@@ -30,10 +30,10 @@
     height = 300
 
     # Position the notification in the top right corner
-    origin = top-right
+    origin = top-center
 
     # Offset from the origin
-    offset = 10x50
+    offset = 10x40
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -47,6 +47,7 @@
     # for example dunstify -h int:value:12
     progress_bar = true
 
+    highlight = "#f8f8f2"
     # Set the progress bar height. This includes the frame, so make sure
     # it's at least twice as big as the frame width.
     progress_bar_height = 10
@@ -118,7 +119,7 @@
 
     ### Text ###
 
-    font = TerminessTTF Nerd Font Mono 18
+    font = JetBrains Mono Medium 18
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -162,7 +163,7 @@
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    alignment = center
 
     # Vertical alignment of message text and icon.
     # Possible values are "top", "center" and "bottom".

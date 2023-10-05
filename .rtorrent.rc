@@ -37,7 +37,7 @@
 
 # Default directory to save the downloaded torrents.
 #
-directory.default.set = ./Tertiary
+directory.default.set = ./Downloads
 
 # Default session directory. Make sure you don't run multiple instance
 # of rTorrent using the same session directory. Perhaps using a

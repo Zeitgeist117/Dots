@@ -3,8 +3,8 @@
 #+DESCRIPTION: Zeitgeist's personal Emacs config
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
-* TABLE OF CONTENTS                                                     :toc:
-- [[#important-startup][Important Startup]]
+* TABLE OF CONTENTS :toc:
+- [[#important-startup-programs][Important Startup Programs]]
   - [[#add-scripts-to-directory-path][Add scripts to directory path]]
   - [[#sourcing-scripts][Sourcing Scripts]]
   - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
@@ -26,6 +26,9 @@
   - [[#org-tempo][Org Tempo]]
   - [[#biblio][Biblio]]
   - [[#org-roam][Org Roam]]
+  - [[#org-present][Org Present]]
+  - [[#org-babel-settings][Org Babel Settings]]
+  - [[#org-latex][Org latex]]
 - [[#projectile][Projectile]]
 - [[#language-support][LANGUAGE SUPPORT]]
   - [[#diminish][Diminish]]
@@ -40,14 +43,13 @@
   - [[#tabs][Tabs]]
 - [[#other-applications][Other applications]]
   - [[#elfeed-rss-reader][Elfeed (rss reader)]]
-  - [[#erc-irc-chat][ERC (irc chat)]]
+  - [[#weechat-irc-chat][Weechat? (irc chat)]]
 - [[#theming][Theming]]
   - [[#color-scheme][color scheme]]
   - [[#modeline][Modeline]]
   - [[#dashboard][Dashboard]]
 
-* Important Startup
-programs
+* Important Startup Programs
 ** Add scripts to directory path
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/.config/emacs/scripts/")
@@ -228,7 +230,9 @@ programs
      "m t" '(org-todo :wk "Org todo")
      "m B" '(org-babel-tangle :wk "Org babel tangle")
      "m T" '(org-todo-list :wk "Org todo list")
-     "m x" '(org-toggle-checkbox :wk "Org toggle checkbox"))
+     "m x" '(org-toggle-checkbox :wk "Org toggle checkbox")
+     "m m" '(org-roam-node-find :wk "Org Roam find node")
+     "m I" '(org-roam-node-insert :wk "Org Roam insert node"))
 
    (zg/leader-keys
      "m b" '(:ignore t :wk "Tables")
@@ -236,10 +240,8 @@ programs
 
    (zg/leader-keys
      "m" '(:ignore t :wk "Org")
-     "m d" '(:ignore t :wk "Date/deadline")
      "m a" '(org-agenda :wk "Org agenda")
      "m e" '(org-export-dispatch :wk "Org export dispatch")
-     "m i" '(org-toggle-item :wk "Org toggle item")
      "m t" '(org-todo :wk "Org todo")
      "m B" '(org-babel-tangle :wk "Org babel tangle")
      "m T" '(org-todo-list :wk "Org todo list")
@@ -321,15 +323,15 @@ Defining all the fonts so it looks kool an so i kan reed
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
-  :height 200
+  :height 180
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
   :font "Ubuntu"
-  :height 220
+  :height 180
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
   :font "JetBrains Mono"
-  :height 200
+  :height 180
   :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
@@ -490,14 +492,26 @@ an org mode package that is installed with emacs but not enabled by default that
 ** Biblio 
 #+begin_src emacs-lisp
 (use-package biblio)
+(setq biblio-download-directory "~/Downloads/")
 #+end_src
 
 
 ** Org Roam
 #+begin_src emacs-lisp
 (use-package org-roam)
+(setq org-roam-directory (file-truename "~/Notes/roam"))
+(setq org-roam-db-autosync-mode t)
 #+end_src
 
+** Org Present
+#+begin_src emacs-lisp
+(use-package org-present)
+
+#+end_src
+
+** Org Babel Settings
+
+** Org latex
 
 * Projectile
 projekts in muh emaks
@@ -652,10 +666,11 @@ file tree on the side
  (setq centaur-tabs-group-buffer-group -1)
  :bind
   (:map evil-normal-state-map
-        ("K" . centaur-tabs-forward)
-        ("J" . centaur-tabs-backward))
+        ("C-k" . centaur-tabs-forward)
+        ("C-j" . centaur-tabs-backward))
   )
- (setq centaur-tabs-set-icons t)
+(setq centaur-tabs-set-icons t)
+(setopt centaur-tabs-buffer-groups-function (lambda () '("All")))
 #+end_src
 * Other applications
 ** Elfeed (rss reader)
@@ -665,12 +680,6 @@ file tree on the side
   (setq elfeed-search-feed-face ":foreground #ffffff :weight bold"
         elfeed-feeds (quote
                        (
-                        ("https://news.ycombinator.com/rss" hacker news)
-                        ("https://kbd.news/rss2.php" Keyboard Builders Digest)
-                        ("https://odysee.com/$/rss/@rossmanngroup:a" Louis Rossmann)
-                        ("https://odysee.com/$/rss/@AlphaNerd:8" Mental Outlaw)
-                        ("https://odysee.com/$/rss/@SomeOrdinaryGamers:a" Some Ordinary Gamers)
-                        ("https://odysee.com/$/rss/@lotuseaters_com:1" The Lotus Eaters)
                         ))))
  
 
@@ -678,14 +687,14 @@ file tree on the side
   :init
   (elfeed-goodies/setup)
   :config
-  (setq elfeed-goodies/entry-pane-size 0.5))
+  )
+
 #+end_src
-** ERC (irc chat)
+** Weechat? (irc chat)
 #+begin_src emacs-lisp
 (setq
  erc-nick "zeitgeist"     ; Our IRC nick
  erc-user-full-name "zeitgeist") ; Our /whois name
-
 #+end_src
 * Theming
 r/unixporn

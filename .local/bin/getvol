@@ -1,9 +1,5 @@
 #!/bin/sh
-
 vol="$(pamixer --get-volume)"
-function send_notification() {
-	volume=$(pamixer --get-volume)
-}
 
 if [ "$vol" -gt "70" ]; then
 	icon="󰕾"
@@ -15,7 +11,7 @@ else
     icon="" 
 fi
 
-[ $(pamixer --get-mute) = true ] && echo "          " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100 && exit
+[ $(pamixer --get-mute) = true ] && dunstify -a "changevolume" -t 1000 -r 9993 -i "volume-mute" " Muted" && exit
 
-# echo "$icon $vol%"
-echo "   $icon $vol%   " | dnote -exp 1 -id 1 -loc 5 -pbar $vol 100
+
+dunstify -a "changevolume" -r 9993 -i "volume" -h int:value:"$vol" "$icon ${vol}%" -t 1000

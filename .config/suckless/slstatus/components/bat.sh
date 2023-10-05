@@ -1,54 +1,51 @@
 #!/bin/sh
+# Prints all batteries, their percentage remaining and an emoji corresponding
+# to charge status (🔌 for plugged up, 🔋 for discharging on battery, etc.).
 
-batt="$(cat /sys/class/power_supply/BAT1/capacity)"
+notify() {
+    notify-send -i battery-good-symbolic \
+        -h string:x-canonical-private-synchronous:battery \
+        "Battery" "$1" -t 4000
+}
 
+# Loop through all attached batteries and format the info
+for battery in /sys/class/power_supply/BAT?*; do
+    # If non-first battery, print a space separator.
+    [ -n "${capacity+x}" ] && printf " "
 
-if [ "$batt" = "100" ]; then
-	icon="󰁹"
-elif [ "$batt" -gt "90" ]; then
-	icon="󰂂"
-elif [ "$batt" -gt "80" ]; then
-	icon="󰂁"
-elif [ "$batt" -gt "70" ]; then
-	icon="󰂀"
-elif [ "$batt" -gt "60" ]; then
-	icon="󰁿"
-elif [ "$batt" -gt "50" ]; then
-	icon="󰁾"
-elif [ "$batt" -gt "40" ]; then
-	icon="󰁽"
-elif [ "$batt" -gt "30" ]; then
-	icon="󰁼"
-elif [ "$batt" -gt "20" ]; then
-	icon="󰁻"
-elif [ "$batt" -gt "10" ]; then
-	icon="󰁺"
-else 
-	icon="󰂃" #&& echo " charge me" | dnote -loc 5
-fi
+    capacity="$(cat "$battery/capacity" 2>&1)"
+    if [ "$capacity" -gt 90 ]; then
+        status=" "
+	color="50fa7b"
+    elif [ "$capacity" -gt 60 ]; then
+        status=" "
+	color="50fa7b"
+    elif [ "$capacity" -gt 40 ]; then
+        status=" "
+	color="50fa7b"
+    elif [ "$capacity" -gt 10 ]; then
+        status=" "
+	color="50fa7b"
+    else
+        status=" "
+	color="50fa7b"
+    fi
 
-# if [ "$batt" -gt "100" ]; then
-# 	col="#50fa7b"
-# elif [ "$batt" -gt "90" ]; then
-# 	col="#50fa7b"
-# elif [ "$batt" -gt "80" ]; then
-# 	col=""
-# elif [ "$batt" -gt "70" ]; then
-# 	col=""
-# elif [ "$batt" -gt "60" ]; then
-# 	col=""
-# elif [ "$batt" -gt "50" ]; then
-# 	col=""
-# elif [ "$batt" -gt "40" ]; then
-# 	col=""
-# elif [ "$batt" -gt "30" ]; then
-# 	col=""
-# elif [ "$batt" -gt "20" ]; then
-# 	col=""
-# elif [ "$batt" -gt "10" ]; then
-# 	col=""
-# else 
-# 	col="" && echo " charge me" | dnote -loc 5
-# fi
+    # Sets up the status and capacity
+    case "$(cat "$battery/status" 2>&1)" in
+        Full) status=" " ;;
+        Discharging)
+            if [ "$capacity" -le 20 ]; then
+                status="$status"
+            fi
+            ;;
+        Charging) status="󰚥 " ;;
+        "Not charging") status=" " ;;
+        Unknown) status="? $status" ;;
+        *) exit 1 ;;
+    esac
 
-echo "^b#282A36^ ^b#44475a^^c#f8f8f2^ $icon ^b#50fa7b^^c#282A36^ $batt% " 
+    # Prints the info
+    # echo "$status$capacity%"
+    echo "^b#282A36^ ^b#44475a^^c#f8f8f2^ $status^b#$color^^c#282A36^ $capacity% ^b#282A36^" 
+done && echo

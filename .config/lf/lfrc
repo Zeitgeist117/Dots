@@ -19,7 +19,7 @@ cmd mkdir ${{
 cmd mkfile ${{
   printf "File Name: "
   read ans
-  $EDITOR $ans
+  gobble emacsclient $ans
 }}
 
 # trash command
@@ -52,6 +52,21 @@ cmd bulkrename ${{
     lf -remote "send $id unselect"
 }}
 
+# Drag and drop
+cmd dragon %dragon-drop -a -x $fx
+cmd dragon-stay %dragon-drop -a $fx
+cmd dragon-individual %dragon-drop $fx
+cmd cpdragon %cpdragon
+cmd mvdragon %mvdragon
+cmd dlfile %dlfile
+
+# Dragon Mapping
+map dr dragon
+map ds dragon-stay
+map di dragon-individual
+map dm mvdragon
+map dc cpdragon
+map dl dlfile
 
 # Archive bindings
 cmd unarchive ${{
@@ -113,33 +128,33 @@ cmd yank-basename-without-extension ${{
 
 
 
-# cmd open ${{
-#     case $(file --mime-type "$(readlink -f $f)" -b) in
-# 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) gobble zathura $fx ;;
-#         text/*|application/json|inode/x-empty) gobble $EDITOR $fx;;
-# 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
-# 	image/svg+xml) display -- $f ;;
-# 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|avif\|tif\|ico\)\(_large\)*$" |
-# 		setsid -f gobble sxiv -aio 2>/dev/null | while read -r file; do
-# 			[ -z "$file" ] && continue
-# 			lf -remote "send select \"$file\""
-# 			lf -remote "send toggle"
-# 		done &
-# 		;;
-# 	audio/*) mpv --audio-display=no $f ;;
-# 	application/pdf|application/vnd.djvu|application/epub*) setsid -f gobble zathura $fx >/dev/null 2>&1 ;;
-# 	video/*|application/vnd.rn-realmedia) setsid -f gobble mpv $f -quiet >/dev/null 2>&1 ;;
-# 	application/pdf|application/vnd.djvu|application/epub|application/cbz|application/cbr)gobble zathura $fx ;;
-#         # *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
-#     esac
-# }}
+ cmd open ${{
+     case $(file --mime-type "$(readlink -f $f)" -b) in
+ 	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) gobble zathura $fx ;;
+         text/*|application/json|inode/x-empty) gobble emacsclient -c $fx;;
+ 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+ 	image/svg+xml) display -- $f ;;
+ 	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|avif\|tif\|ico\)\(_large\)*$" |
+ 		setsid -f gobble sxiv -aio 2>/dev/null | while read -r file; do
+ 			[ -z "$file" ] && continue
+ 			lf -remote "send select \"$file\""
+ 			lf -remote "send toggle"
+ 		done &
+ 		;;
+ 	audio/*) mpv --audio-display=no $f ;;
+ 	application/pdf|application/vnd.djvu|application/epub*) setsid -f gobble zathura $fx >/dev/null 2>&1 ;;
+ 	video/*|application/vnd.rn-realmedia) setsid -f gobble mpv $f -quiet >/dev/null 2>&1 ;;
+ 	application/pdf|application/vnd.djvu|application/epub|application/cbz|application/cbr) gobble zathura $fx ;;
+         # *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+     esac
+ }}
 
-cmd open ${{
-    case $(file --mime-type "$f" -bL) in
-        text/*|application/json) gobble $EDITOR "$f";;
-        *) gobble xdg-open "$f" ;;
-    esac
-}}
+#cmd open ${{
+#    case $(file --mime-type "$f" -bL) in
+#        text/*|application/json) gobble emacsclient -c "$f";;
+#        *) xdg-open "$f" ;;
+#    esac
+#}}
 
 
 
