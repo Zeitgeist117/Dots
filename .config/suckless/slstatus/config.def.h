@@ -71,15 +71,3 @@ static const struct arg args[] = {
 	{ datetime, "^d^ ^b#44475a^^c#f8f8f2^  ^b#FF5555^^c#282A36^ %s ",    "%r"},
 	{ run_command, "%s ", "~/.config/suckless/slstatus/components/bat.sh"},
 };
-
-/* static const struct arg args[] = { */
-/* 	/\* function format          argument *\/ */
-/* 	//{ datetime, "%s",           "%F %T" }, */
-/* 	//{ wifi_perc, "W: (%3s%% on ", "wlp8s0" }, */
-/*     //{ netspeed_rx, "%sB/s  ", "enp0s3" }, */
-/* 	{ cpu_perc, " 󰻠 %s%% ",   NULL}, */
-/* 	{ ram_perc, " 󰍛 %s%% ",   NULL}, */
-/* 	{ datetime, "  %s ",    "%a %b %d"}, */
-/* 	{ datetime, "  %s ",    "%r"}, */
-/* 	{ run_command, "%s ", "~/.config/suckless/slstatus/components/bat.sh"}, */
-/* }; */

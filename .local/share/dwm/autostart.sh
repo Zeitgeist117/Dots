@@ -11,4 +11,4 @@ exec xclip &
 exec syncthing &
 exec keepassxc &
 exec musnify-mpd &
-exec protonmail-bridge &
+#exec protonmail-bridge &
