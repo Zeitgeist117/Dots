@@ -1,21 +1,20 @@
-import: 
-  ~/.config/alacritty/dracula.yml
-					
 window:
   opacity: 0.9
 font:
   normal:
     family: JetBrainsMono 
-    style: Light
+    style: Medium
   bold:
     family: JetBrainsMono 
     style: Medium
   italic:
     family: JetBrainsMono 
     style: Light italic
-size: 8 
+size: 6
 
 key_bindings:
   - {key: C, mods: Alt, action: Copy}
   - {key: V, mods: Alt, action: Paste}
 
+import:
+  - /home/nightwing/.config/alacritty/dracula.yml

@@ -16,7 +16,7 @@ myStartupHook :: X ()
 myStartupHook = do -- | TRIED REMOVING @exec@ FROM THE FOLLOWING COMMANDS, MODIFIED TRAYER'S COMMAND SLIGHTLY; SEE IF THIS WORKS...
     spawnOnce "picom --experimental-backends &"
     spawnOnce "~/.fehbg &"
-    spawn "sleep 1 && trayer -l --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --tint 0x292d3e --height 22 &"
+    -- spawn "sleep 1 && trayer -l --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --tint 0x292d3e --height 22 &"
     spawnOnce "nm-applet &"
     -- spawnOnce "syncthing &"
     spawnOnce "mpd &"
@@ -40,7 +40,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- Key Binds
 
 main :: IO ()
-main = xmonad . ewmh =<< xmobar myConfig
+main = xmonad $ ewmhFullscreen $ ewmh $ myConfig
 
 myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
 myConfig = def
@@ -51,9 +51,8 @@ myConfig = def
     , workspaces = ["1","2","3","4","5","6","7","8","9"] 
     }
   `additionalKeysP`
-    [ ("M-S-z", spawn "xscreensaver-command -lock")
-    ,("M-C-s", unGrab *> spawn "scrot -s"       )
-    ,("M-q"  , spawn myBrowser                  ) -- Launches Web Browser
+    [("M-<Space>", spawn "dmenu_run -c -l 20"	)
+    ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal
 
