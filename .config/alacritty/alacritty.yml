@@ -1,6 +1,8 @@
-import:
-  - ~/.config/alacritty/dracula.yml
-
+import: 
+  ~/.config/alacritty/dracula.yml
+					
+window:
+  opacity: 0.9
 font:
   normal:
     family: JetBrainsMono 

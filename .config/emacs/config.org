@@ -3,6 +3,54 @@
 #+DESCRIPTION: Zeitgeist's personal Emacs config
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
+
+* TOC :toc:
+- [[#important-startup-programs][Important Startup Programs]]
+  - [[#add-scripts-to-directory-path][Add scripts to directory path]]
+  - [[#sourcing-scripts][Sourcing Scripts]]
+  - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
+  - [[#sane-defaults][Sane Defaults]]
+  - [[#general-keybindings][General keybindings]]
+- [[#git][Git]]
+- [[#fonts][Fonts]]
+  - [[#zooming-in-and-out][Zooming in and out]]
+  - [[#all-the-icons][ALL THE ICONS]]
+  - [[#rainbow-mode][Rainbow mode]]
+- [[#gui-shit][GUI shit]]
+  - [[#turning-off-toolbars-and-scrollbars][turning off toolbars and scrollbars]]
+  - [[#line-numbers-and-truncated-lines][Line numbers and truncated lines]]
+- [[#which-key][Which Key]]
+- [[#ivy-counsel][IVY (counsel)]]
+- [[#org-mode][Org Mode]]
+  - [[#enabling-table-of-contents][Enabling table of contents]]
+  - [[#org-bullets][Org bullets]]
+  - [[#org-tempo][Org Tempo]]
+  - [[#biblio][Biblio]]
+  - [[#org-roam][Org Roam]]
+  - [[#org-present][Org Present]]
+  - [[#org-agenda][Org Agenda]]
+  - [[#org-babel-settings][Org Babel Settings]]
+  - [[#org-latex][Org latex]]
+- [[#projectile][Projectile]]
+- [[#language-support][LANGUAGE SUPPORT]]
+  - [[#diminish][Diminish]]
+  - [[#flycheck][Flycheck]]
+  - [[#company][Company]]
+- [[#vterm][Vterm]]
+  - [[#vterm-toggle][Vterm-Toggle]]
+- [[#sudo-edit][Sudo Edit]]
+- [[#file-mangagment][File Mangagment]]
+  - [[#dired][Dired]]
+  - [[#neotree][Neotree]]
+  - [[#tabs][Tabs]]
+- [[#other-applications][Other applications]]
+  - [[#elfeed-rss-reader][Elfeed (rss reader)]]
+- [[#theming][Theming]]
+  - [[#color-scheme][color scheme]]
+  - [[#transparency][Transparency]]
+  - [[#modeline][Modeline]]
+  - [[#dashboard][Dashboard]]
+
 * Important Startup Programs
 ** Add scripts to directory path
 #+begin_src emacs-lisp
@@ -203,6 +251,13 @@
      "m B" '(org-babel-tangle :wk "Org babel tangle")
      "m T" '(org-todo-list :wk "Org todo list")
      "m d t" '(org-time-stamp :wk "Org time stamp"))
+
+   
+   (zg/leader-keys
+	"c" '(:ignore t :wk "Schedule") 
+	"c s" '(org-schedule :wk "Set Org Schedule")
+	"c d" '(org-deadline :wk "Set Org Deadline")
+	 )
 
    (zg/leader-keys
      "p" '(projectile-command-map :wk "Projectile"))
@@ -463,6 +518,14 @@ an org mode package that is installed with emacs but not enabled by default that
 ** Org Present
 #+begin_src emacs-lisp
 (use-package org-present)
+
+#+end_src
+
+** Org Agenda
+
+#+begin_src emacs-lisp
+(setq org-agenda-files 
+	  '("~/Notes/Tasks.org"))
 
 #+end_src
 

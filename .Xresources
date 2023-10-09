@@ -1,7 +1,7 @@
 *.font: Source Code Pro-20
 !!*.font:TerminessTTF Nerd Font Mono-16
 
-/* *.alpha: 0.6 */
+!!*.alpha: 0.9
 !! moonify theme
 /* *.color0: #323437 */
 /* *.color1: #ff5454 */
