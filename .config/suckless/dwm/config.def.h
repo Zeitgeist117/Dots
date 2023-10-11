@@ -30,13 +30,11 @@ typedef struct {
 const char *spcmd1[] = {"st", "-n", "spnc", "-g", "100x30", "-e", "ncmpcpp", NULL };
 const char *spcmd2[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
 const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x30", "-e", "btop", NULL };
-const char *spcmd4[] = {"easyeffects", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spnc",		spcmd1},
 	{"sppm",		spcmd2},
 	{"spbt",		spcmd3},
-	{"spee",        spcmd4},
 };
 
 /* tagging */
@@ -58,7 +56,6 @@ static const Rule rules[] = {
 	{ NULL,		                "spnc",		NULL,	        SPTAG(0),  1,		   -1 },
 	{ NULL,		                "sppm",		NULL,	        SPTAG(1),  1,		   -1 },
 	{ NULL,		                "spbt",		NULL,	        SPTAG(2),  1,		   -1 },
-	{ NULL,		                "spee",		NULL,	        SPTAG(3),  1,		   -1 },
 };
 
 /* layout(s) */
@@ -151,7 +148,6 @@ static Key keys[] = {
 	{ MODKEY,            		XK_n,	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            		XK_p,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            		XK_g,	   togglescratch,  {.ui = 2 } },
-	{ MODKEY|ShiftMask,         XK_e,      togglescratch,  {.ui = 3 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -195,5 +191,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
-

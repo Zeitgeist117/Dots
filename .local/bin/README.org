@@ -1,4 +1,5 @@
 #+TITLE: Scripts
+#+auto_tangle: t
 
 * Scripts
 These are some bash scripts that I use with my window manager of choice DWM.
