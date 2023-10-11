@@ -1,3 +1,4 @@
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.config/lf/:$PATH"
+export PATH="$HOME/.src/eww/target/release/:$PATH"
