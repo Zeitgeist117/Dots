@@ -40,19 +40,20 @@ myConfig = def
     { modMask    = mod4Mask  -- Rebind Mod to the Super key
     , startupHook = myStartupHook
     , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook scratchpads
+    , keys = \c -> mkKeymap c myKeymap
     , XMonad.workspaces = ["1","2","3","4","5","6","7","8","9"]
     , focusedBorderColor = "#f8f8f2"
     , normalBorderColor = "#282A36"
     , borderWidth = 3
     }
-
+-- Remove default keybindings
   `removeKeysP`
     [("M-p")
     ,("M-<Space>")
     ,("M-p")
     ]
-  `additionalKeysP`
-    [("M-<Space>", spawn "dmenu_run -c -l 20"	)
+
+myKeymap = [("M-<Space>", spawn "dmenu_run -c -l 20"	)
     ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal
