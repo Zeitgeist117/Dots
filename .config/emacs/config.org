@@ -66,7 +66,6 @@
 (add-to-list 'package-archives
       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 #+end_src
-
 ** Load Evil Mode (for my sanity)
 
 #+begin_src emacs-lisp
@@ -271,7 +270,8 @@
     "t o" '(org-mode :wk "Toggle org mode")
     "t r" '(rainbow-mode :wk "Toggle rainbow mode")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
-    "t v" '(vterm-toggle :wk "Toggle vterm"))
+    "t v" '(vterm-toggle :wk "Toggle vterm")
+    "t d" '(darkroom-mode :wk "Toggle darkroom"))
 
    (zg/leader-keys
     "s" '(:ignore t :wk "Search")
@@ -473,9 +473,9 @@ which fucking keys do i use, is this moonlight sonata?
 ** Org bullets
 #+begin_src emacs-lisp
 (use-package org-superstar)
-(setq
-    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
-)
+;; (setq
+;;     org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+;; )
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+end_src
 
@@ -530,6 +530,14 @@ an org mode package that is installed with emacs but not enabled by default that
 #+end_src
 
 ** Org Babel Settings
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
+:defer t
+:hook (org-mode . org-auto-tangle-mode)
+:config
+(setq org-auto-tangle-default t))
+
+#+end_src
 
 ** Org latex
 

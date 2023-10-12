@@ -18,14 +18,11 @@ myStartupHook = do
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
-    -- spawn "sleep 1 && trayer -l --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --tint 0x292d3e --height 22 &"
-    -- spawnOnce "nm-applet"
-    -- spawnOnce "syncthing &"
+    spawnOnce "syncthing &"
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
     setWMName "LG3D"
 
--- Variables
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
 myBrowser = "brave" :: String
@@ -33,7 +30,6 @@ myExplorer = "pcmanfm" :: String
 
 
 
--- Key Binds
 
 main :: IO ()
 main = xmonad $ ewmhFullscreen $ ewmh $ myConfig
