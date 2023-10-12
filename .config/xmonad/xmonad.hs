@@ -22,7 +22,7 @@ myStartupHook = do
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
     setWMName "LG3D"
-    return () >> checkKeymap myConfig myKeymap
+  --  return () >> checkKeymap myConfig myKeymap
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
@@ -38,14 +38,12 @@ myConfig = def
     { modMask    = mod4Mask  -- Rebind Mod to the Super key
     , startupHook = myStartupHook
     , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook scratchpads
-    , keys = \c -> mkKeymap c myKeymap
     , XMonad.workspaces = ["1","2","3","4","5","6","7","8","9"]
     , focusedBorderColor = "#f8f8f2"
     , normalBorderColor = "#282A36"
     , borderWidth = 3
     }
-
-myKeymap =
+  `additionalKeysP`
     [("M-<Space>", spawn "dmenu_run -c -l 20"	)
     ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
@@ -58,6 +56,8 @@ myKeymap =
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer"      )
     ,("M-g"  , namedScratchpadAction scratchpads "btop"      )
     ]
+
+
 
 scratchpads :: [NamedScratchpad]
 scratchpads = [ NS "ncmpcpp" "st -n ncmpcpp -g 100x30 -e ncmpcpp" (title =? "ncmpcpp") centerFloating
