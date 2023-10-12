@@ -1,4 +1,3 @@
-#+TITLE: Xmonad Config
 #+PROPERTY: header-args :tangle xmonad.hs
 * Table of Contents :toc:
   - [[#imports][Imports]]
