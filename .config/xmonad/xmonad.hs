@@ -22,7 +22,7 @@ myStartupHook = do
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
     setWMName "LG3D"
-  --  return () >> checkKeymap myConfig myKeymap
+    return () >> checkKeymap myConfig myKeymap
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
@@ -38,26 +38,33 @@ myConfig = def
     { modMask    = mod4Mask  -- Rebind Mod to the Super key
     , startupHook = myStartupHook
     , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook scratchpads
+    , keys = \c -> mkKeymap c myKeymap
     , XMonad.workspaces = ["1","2","3","4","5","6","7","8","9"]
     , focusedBorderColor = "#f8f8f2"
     , normalBorderColor = "#282A36"
     , borderWidth = 3
     }
-  `additionalKeysP`
+
+myKeymap =
     [("M-<Space>", spawn "dmenu_run -c -l 20"	)
+    ,("M-q"  , spawn "xmonad --recompile ;; xmonad --restart" ) -- Restart Xmonad
     ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal
     ,("M-'"  , spawn "emacsclient -c"           )
     ,("M-w"  , kill			        )
+    ,("M-h"  , sendMessage Shrink		        )
+    ,("M-l"  , sendMessage Expand		        )
     ,("M-S-h"  , prevWS		        )
     ,("M-S-l"  , nextWS		        )
+    ,("M-j"  , windows W.focusDown		        )
+    ,("M-k"  , windows W.focusUp		        )
+    ,("M-S-j"  , windows W.swapDown		        )
+    ,("M-S-k"  , windows W.swapUp		        )
     ,("M-n"  , namedScratchpadAction scratchpads "ncmpcpp"      )
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer"      )
     ,("M-g"  , namedScratchpadAction scratchpads "btop"      )
     ]
-
-
 
 scratchpads :: [NamedScratchpad]
 scratchpads = [ NS "ncmpcpp" "st -n ncmpcpp -g 100x30 -e ncmpcpp" (title =? "ncmpcpp") centerFloating
