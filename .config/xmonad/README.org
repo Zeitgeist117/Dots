@@ -1,5 +1,11 @@
 #+TITLE: Xmonad Config
 #+PROPERTY: header-args :tangle xmonad.hs
+* Table of Contents :toc:
+  - [[#imports][Imports]]
+  - [[#autostart][Autostart]]
+  - [[#common-variables][Common Variables]]
+  - [[#main-config][Main Config]]
+  - [[#keybindings][Keybindings]]
 
 ** Imports
 #+begin_src haskell
@@ -35,7 +41,7 @@ myStartupHook = do
 #+end_src
 
 
-
+** Common Variables
 #+begin_src haskell
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
@@ -44,6 +50,7 @@ myExplorer = "pcmanfm" :: String
 
 #+end_src
 
+** Main Config
 #+begin_src haskell
 main :: IO ()
 main = xmonad $ ewmhFullscreen $ ewmh $ myConfig
