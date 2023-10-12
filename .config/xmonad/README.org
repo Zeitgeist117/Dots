@@ -1,5 +1,5 @@
 #+PROPERTY: header-args :tangle xmonad.hs
-* Table of Contents :toc:
+* Xmonad Config    :toc:
   - [[#imports][Imports]]
   - [[#autostart][Autostart]]
   - [[#common-variables][Common Variables]]
