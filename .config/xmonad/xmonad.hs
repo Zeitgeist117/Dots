@@ -46,24 +46,24 @@ myConfig = def
     }
 
 myKeymap =
-    [("M-<Space>", spawn "dmenu_run -c -l 20"	)
+    [("M-<Space>", spawn "dmenu_run -c -l 20"	              )
     ,("M-q"  , spawn "xmonad --recompile ;; xmonad --restart" ) -- Restart Xmonad
-    ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
-    ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
-    ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal
-    ,("M-'"  , spawn "emacsclient -c"           )
-    ,("M-w"  , kill			        )
-    ,("M-h"  , sendMessage Shrink		        )
-    ,("M-l"  , sendMessage Expand		        )
-    ,("M-S-h"  , prevWS		        )
-    ,("M-S-l"  , nextWS		        )
-    ,("M-j"  , windows W.focusDown		        )
-    ,("M-k"  , windows W.focusUp		        )
-    ,("M-S-j"  , windows W.swapDown		        )
-    ,("M-S-k"  , windows W.swapUp		        )
-    ,("M-n"  , namedScratchpadAction scratchpads "ncmpcpp"      )
-    ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer"      )
-    ,("M-g"  , namedScratchpadAction scratchpads "btop"      )
+    ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
+    ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
+    ,("M-<Return>"  , spawn myTerminal                        ) -- Lauches Terminal
+    ,("M-'"  , spawn "emacsclient -c"                         ) -- Launches Emacs Client
+    ,("M-w"  , kill			                                  ) -- Kills Window
+    ,("M-h"  , sendMessage Shrink		                      ) -- Makes window smaller
+    ,("M-l"  , sendMessage Expand		                      ) -- Makes it Bigger
+    ,("M-S-h"  , prevWS		                                  ) -- Move to previous workspace (ie from 2 to 1)
+    ,("M-S-l"  , nextWS		                                  ) -- Move to next workspace (ie from 1 to 2)
+    ,("M-j"  , windows W.focusDown		                      ) -- change window focus
+    ,("M-k"  , windows W.focusUp		                      ) -- same thing different direction
+    ,("M-S-j"  , windows W.swapDown		                      ) -- move window in layout/stack
+    ,("M-S-k"  , windows W.swapUp		                      ) -- move in the other direction
+    ,("M-n"  , namedScratchpadAction scratchpads "ncmpcpp"    ) -- Launches a scratchpad of my favourite music player N Curses Music Player Client ++
+    ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer" ) -- Launches scratchpad of pulsemixer to make quick and easy audio changes
+    ,("M-g"  , namedScratchpadAction scratchpads "btop"       ) -- Launches scratchpad of btop to quickly see whats happening and kill processess
     ]
 
 scratchpads :: [NamedScratchpad]
