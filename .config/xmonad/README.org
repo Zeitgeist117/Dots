@@ -1,6 +1,5 @@
 #+TITLE: Xmonad Config
 #+PROPERTY: header-args :tangle xmonad.hs
-#+auto-tangle: t
 
 
 #+begin_src haskell
