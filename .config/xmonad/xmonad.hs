@@ -22,6 +22,7 @@ myStartupHook = do
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
     setWMName "LG3D"
+    return () >> checkKeymap myConfig myKeymap
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
@@ -46,14 +47,9 @@ myConfig = def
     , normalBorderColor = "#282A36"
     , borderWidth = 3
     }
--- Remove default keybindings
-  `removeKeysP`
-    [("M-p")
-    ,("M-<Space>")
-    ,("M-p")
-    ]
 
-myKeymap = [("M-<Space>", spawn "dmenu_run -c -l 20"	)
+myKeymap =
+    [("M-<Space>", spawn "dmenu_run -c -l 20"	)
     ,("M-v"  , spawn myBrowser                  ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                 ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal          ) -- Lauches Terminal

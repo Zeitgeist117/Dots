@@ -130,6 +130,7 @@
   (zg/leader-keys
     "g" '(:ignore t :wk "Git")    
     "g /" '(magit-displatch :wk "Magit dispatch")
+	"g p" '(magit-push :wk "Magit push")
     "g ." '(magit-file-displatch :wk "Magit file dispatch")
     "g b" '(magit-branch-checkout :wk "Switch branch")
     "g c" '(:ignore t :wk "Create") 
