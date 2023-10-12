@@ -31,7 +31,6 @@
   - [[#org-present][Org Present]]
   - [[#org-agenda][Org Agenda]]
   - [[#org-babel-settings][Org Babel Settings]]
-  - [[#org-latex][Org latex]]
 - [[#projectile][Projectile]]
 - [[#language-support][LANGUAGE SUPPORT]]
   - [[#diminish][Diminish]]
@@ -501,13 +500,11 @@ an org mode package that is installed with emacs but not enabled by default that
 #+end_src
 
 
-
 ** Biblio 
 #+begin_src emacs-lisp
 (use-package biblio)
 (setq biblio-download-directory "~/Downloads/")
 #+end_src
-
 
 ** Org Roam
 #+begin_src emacs-lisp
@@ -519,7 +516,6 @@ an org mode package that is installed with emacs but not enabled by default that
 ** Org Present
 #+begin_src emacs-lisp
 (use-package org-present)
-
 #+end_src
 
 ** Org Agenda
@@ -527,7 +523,6 @@ an org mode package that is installed with emacs but not enabled by default that
 #+begin_src emacs-lisp
 (setq org-agenda-files 
 	  '("~/Notes/Tasks.org"))
-
 #+end_src
 
 ** Org Babel Settings
@@ -537,10 +532,7 @@ an org mode package that is installed with emacs but not enabled by default that
 :hook (org-mode . org-auto-tangle-mode)
 :config
 (setq org-auto-tangle-default t))
-
 #+end_src
-
-** Org latex
 
 * Projectile
 projekts in muh emaks
