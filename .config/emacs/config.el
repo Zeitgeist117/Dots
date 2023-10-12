@@ -1,63 +1,5 @@
-#+TITLE: Emacs Config
-#+AUTHOR: Zeitgeist117
-#+DESCRIPTION: Zeitgeist's personal Emacs config
-#+STARTUP: showeverything
-#+OPTIONS: toc:2
-
-* TOC :toc:
-- [[#important-startup-programs][Important Startup Programs]]
-  - [[#add-scripts-to-directory-path][Add scripts to directory path]]
-  - [[#sourcing-scripts][Sourcing Scripts]]
-  - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
-  - [[#sane-defaults][Sane Defaults]]
-  - [[#general-keybindings][General keybindings]]
-- [[#git][Git]]
-- [[#fonts][Fonts]]
-  - [[#zooming-in-and-out][Zooming in and out]]
-  - [[#all-the-icons][ALL THE ICONS]]
-  - [[#rainbow-mode][Rainbow mode]]
-- [[#gui-shit][GUI shit]]
-  - [[#turning-off-toolbars-and-scrollbars][turning off toolbars and scrollbars]]
-  - [[#line-numbers-and-truncated-lines][Line numbers and truncated lines]]
-- [[#which-key][Which Key]]
-- [[#ivy-counsel][IVY (counsel)]]
-- [[#org-mode][Org Mode]]
-  - [[#enabling-table-of-contents][Enabling table of contents]]
-  - [[#org-bullets][Org bullets]]
-  - [[#org-tempo][Org Tempo]]
-  - [[#biblio][Biblio]]
-  - [[#org-roam][Org Roam]]
-  - [[#org-present][Org Present]]
-  - [[#org-agenda][Org Agenda]]
-  - [[#org-babel-settings][Org Babel Settings]]
-  - [[#org-latex][Org latex]]
-- [[#projectile][Projectile]]
-- [[#language-support][LANGUAGE SUPPORT]]
-  - [[#diminish][Diminish]]
-  - [[#flycheck][Flycheck]]
-  - [[#company][Company]]
-- [[#vterm][Vterm]]
-  - [[#vterm-toggle][Vterm-Toggle]]
-- [[#sudo-edit][Sudo Edit]]
-- [[#file-mangagment][File Mangagment]]
-  - [[#dired][Dired]]
-  - [[#neotree][Neotree]]
-  - [[#tabs][Tabs]]
-- [[#other-applications][Other applications]]
-  - [[#elfeed-rss-reader][Elfeed (rss reader)]]
-- [[#theming][Theming]]
-  - [[#color-scheme][color scheme]]
-  - [[#transparency][Transparency]]
-  - [[#modeline][Modeline]]
-  - [[#dashboard][Dashboard]]
-
-* Important Startup Programs
-** Add scripts to directory path
-#+begin_src emacs-lisp
 (add-to-list 'load-path "~/.config/emacs/scripts/")
-#+end_src
-** Sourcing Scripts
-#+begin_src emacs-lisp
+
 (require 'elpaca-setup)
 ;;(require 'straight-setup)
 (require 'buffer-move)
@@ -65,10 +7,6 @@
 (package-initialize)
 (add-to-list 'package-archives
       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-#+end_src
-** Load Evil Mode (for my sanity)
-
-#+begin_src emacs-lisp
 
 (use-package evil
   :init
@@ -91,10 +29,6 @@
 ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
 
-#+end_src
-
-** Sane Defaults
-#+begin_src emacs-lisp
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
 (electric-pair-mode 1)       ;; Turns on automatic parens pairing
@@ -124,10 +58,7 @@
 ;; (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
-#+end_src
-** General keybindings
 
-#+begin_src emacs-lisp
 (use-package general
   :config
   (general-evil-setup)
@@ -149,8 +80,8 @@
   (zg/leader-keys
     "f" '(:ignore t :wk "Files")    
     "f c" '((lambda () (interactive)
-              (find-file "~/.config/emacs/config.org")) 
-            :wk "Open emacs config.org")
+              (find-file "~/.config/emacs/README.org")) 
+            :wk "Open emacs README.org")
     "f e" '((lambda () (interactive)
               (dired "~/.config/emacs/")) 
             :wk "Open user-emacs-directory in dired")
@@ -315,9 +246,7 @@
    
 
 )
-#+end_src
-* Git
-#+begin_src emacs-lisp
+
 (use-package git-timemachine
   :after git-timemachine
   :hook (evil-normalize-keymaps . git-timemachine-hook)
@@ -327,12 +256,7 @@
 )
 
 (use-package magit)
-#+end_src
 
-* Fonts
-Defining all the fonts so it looks kool an so i kan reed
-
-#+begin_src emacs-lisp
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
   :height 180
@@ -354,57 +278,32 @@ Defining all the fonts so it looks kool an so i kan reed
   :slant 'italic)
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
-#+end_src
-** Zooming in and out
 
-#+begin_src emacs-lisp
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
-#+end_src
-** ALL THE ICONS
-This is an icon set that can be used with dashboard, dired, ibuffer and other emacs programs
 
-#+begin_src emacs-lisp
 (use-package all-the-icons
   :ensure t
   :if (display-graphic-p))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
-#+end_src
 
-** Rainbow mode
-touch the rainbow, taste the rainbow
-#+begin_src emacs-lisp
 (use-package rainbow-mode
   :diminish
   :hook 
   ((org-mode prog-mode) . rainbow-mode))
-#+end_src
 
-* GUI shit
-gooey shit
-
-** turning off toolbars and scrollbars
-#+begin_src emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-#+end_src
 
-** Line numbers and truncated lines
-#+begin_src emacs-lisp
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 (global-visual-line-mode t)
-#+end_src
 
-* Which Key
-which fucking keys do i use, is this moonlight sonata?
-
-#+begin_src emacs-lisp
 (use-package which-key
   :init
     (which-key-mode 1)
@@ -421,13 +320,7 @@ which fucking keys do i use, is this moonlight sonata?
 	  which-key-max-description-length 25
 	  which-key-allow-imprecise-window-fit nil
 	  which-key-separator " → " ))
-#+end_src
-* IVY (counsel)
-+ ivy is a completion mechanism for emacs 
-+ counsel is a collection of ivy enhannced versions of common emacs commands.
-+ ivy-rich allows you to add descriptionsa alongside commands in M-x
 
-#+begin_src emacs-lisp
 (use-package counsel
   :after ivy
   :diminish
@@ -461,120 +354,53 @@ which fucking keys do i use, is this moonlight sonata?
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
-#+end_src
-* Org Mode
-** Enabling table of contents
-#+begin_src emacs-lisp
+
 (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
-#+end_src
 
-** Org bullets
-#+begin_src emacs-lisp
 (use-package org-superstar)
 ;; (setq
 ;;     org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
 ;; )
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-#+end_src
 
-** Org Tempo 
-an org mode package that is installed with emacs but not enabled by default that lets you do cool shit faster like all the source code blocks in this config for example:
-
-| Type the below and press TAB | Expands to...                           |
-|------------------------------+-----------------------------------------|
-| <a                           | '#+BEGIN_EXPORT ascii' … '#+END_EXPORT  |
-| <c                           | '#+BEGIN_CENTER' … '#+END_CENTER'       |
-| <C                           | '#+BEGIN_COMMENT' … '#+END_COMMENT'     |
-| <e                           | '#+BEGIN_EXAMPLE' … '#+END_EXAMPLE'     |
-| <E                           | '#+BEGIN_EXPORT' … '#+END_EXPORT'       |
-| <h                           | '#+BEGIN_EXPORT html' … '#+END_EXPORT'  |
-| <l                           | '#+BEGIN_EXPORT latex' … '#+END_EXPORT' |
-| <q                           | '#+BEGIN_QUOTE' … '#+END_QUOTE'         |
-| <s                           | '#+BEGIN_SRC' … '#+END_SRC'             |
-| <v                           | '#+BEGIN_VERSE' … '#+END_VERSE'         |
-
-#+begin_src emacs-lisp 
 (require 'org-tempo)
-#+end_src
 
-
-
-** Biblio 
-#+begin_src emacs-lisp
 (use-package biblio)
 (setq biblio-download-directory "~/Downloads/")
-#+end_src
 
-
-** Org Roam
-#+begin_src emacs-lisp
 (use-package org-roam)
 (setq org-roam-directory (file-truename "~/Notes/roam"))
 (setq org-roam-db-autosync-mode t)
-#+end_src
 
-** Org Present
-#+begin_src emacs-lisp
 (use-package org-present)
 
-#+end_src
-
-** Org Agenda
-
-#+begin_src emacs-lisp
 (setq org-agenda-files 
 	  '("~/Notes/Tasks.org"))
 
-#+end_src
-
-** Org Babel Settings
-#+begin_src emacs-lisp
 (use-package org-auto-tangle
 :defer t
 :hook (org-mode . org-auto-tangle-mode)
 :config
 (setq org-auto-tangle-default t))
 
-#+end_src
-
-** Org latex
-
-* Projectile
-projekts in muh emaks
-#+begin_src emacs-lisp
 (use-package projectile
   :diminish
   :config
   (projectile-mode 1))
-#+end_src
 
-* LANGUAGE SUPPORT
-Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWAVE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL.  Other languages will require you to install additional modes.
-
-#+begin_src emacs-lisp
 (use-package haskell-mode)
 (use-package lua-mode)
 
-#+end_src
-** Diminish
-#+begin_src emacs-lisp
 (use-package diminish)
-#+end_src
-** Flycheck
-check it bro, ur code aint lookin so fly
-#+begin_src emacs-lisp
+
 (use-package flycheck
 :ensure t
 :defer t
 :diminish
 :init (global-flycheck-mode))
-#+end_src
-** Company
-[[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete anything".  Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part.
 
-#+begin_src emacs-lisp
 (use-package company
   :defer 2
   :diminish
@@ -590,22 +416,12 @@ check it bro, ur code aint lookin so fly
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
-#+end_src
 
-* Vterm
-Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm.  By default, the shell is set to 'fish' but could change it to 'bash' or 'zsh' if you prefer.
-
-#+begin_src emacs-lisp
 (use-package vterm
 :config
 (setq shell-file-name "/bin/sh"
       vterm-max-scrollback 5000))
-#+end_src
 
-** Vterm-Toggle 
-[[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
-
-#+begin_src emacs-lisp
 (use-package vterm-toggle
   :after vterm
   :config
@@ -624,22 +440,13 @@ Vterm is a terminal emulator within Emacs.  The 'shell-file-name' setting sets t
                   ;;(dedicated . t) ;dedicated is supported in emacs27
                   (reusable-frames . visible)
                   (window-height . 0.3))))
-#+end_src
 
-* Sudo Edit
-sudo edit is a package that lets you edit files that require sudo privileges or switch over to editing with sudo privileges
-
-#+begin_src emacs-lisp
 (use-package sudo-edit
   :config
     (zg/leader-keys
       "f u" '(sudo-edit-find-file :wk "Sudo find file")
       "f U" '(sudo-edit :wk "Sudo edit file")))
-#+end_src
-* File Mangagment
-** Dired
-file managment
-#+begin_src emacs-lisp
+
 (use-package dired-open
   :config
   (setq dired-open-extensions '(("gif" . "sxiv")
@@ -660,11 +467,7 @@ file managment
 )
 
 ;; (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
-#+end_src
-** Neotree 
-file tree on the side
 
-#+begin_src emacs-lisp
 (use-package neotree
   :config
   (setq neo-smart-open t
@@ -683,10 +486,6 @@ file tree on the side
                  (setq auto-hscroll-mode nil)))))
 ;; show hidden files
 
-#+end_src
-
-** Tabs
-#+begin_src emacs-lisp
 (use-package centaur-tabs
   :demand
   :config
@@ -699,10 +498,7 @@ file tree on the side
   )
 (setq centaur-tabs-set-icons t)
 (setopt centaur-tabs-buffer-groups-function (lambda () '("All")))
-#+end_src
-* Other applications
-** Elfeed (rss reader)
-#+begin_src emacs-lisp
+
 (use-package elfeed
   :config
   (setq elfeed-search-feed-face ":foreground #ffffff :weight bold"
@@ -717,14 +513,6 @@ file tree on the side
   :config
   )
 
-#+end_src
-
-* Theming
-r/unixporn
-
-** color scheme
-the building blocks of rice
-#+begin_src emacs-lisp
 (use-package dracula-theme)
 
 (use-package doom-themes
@@ -738,17 +526,8 @@ the building blocks of rice
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-
-#+end_src
-
-** Transparency
-#+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 
-
-#+end_src
-** Modeline
-#+begin_src emacs-lisp
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -757,10 +536,7 @@ the building blocks of rice
         doom-modeline-bar-width 5    ;; sets right bar width
         doom-modeline-persp-name t   ;; adds perspective name to modeline
         doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
-#+end_src
 
-** Dashboard
-#+begin_src emacs-lisp
 (use-package dashboard
   :ensure t 
   :init
@@ -780,4 +556,3 @@ the building blocks of rice
                                     (bookmarks . "book")))
   :config
   (dashboard-setup-startup-hook))
-#+end_src

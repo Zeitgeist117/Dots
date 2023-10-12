@@ -1,6 +1,6 @@
 (org-babel-load-file
  (expand-file-name
-  "config.org"
+  "config.el"
   user-emacs-directory))
 
 (custom-set-faces
