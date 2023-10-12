@@ -1,4 +1,3 @@
-#+TITLE: Scripts
 #+auto_tangle: t
 
 * Scripts
