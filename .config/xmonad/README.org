@@ -21,6 +21,8 @@ import XMonad.Actions.CycleWS
 import XMonad.Util.NamedScratchpad
 import XMonad.StackSet as W
 import XMonad.ManageHook
+import XMonad.Actions.Submap
+import XMonad.Util.NamedActions
 #+end_src
 
 ** Autostart
@@ -91,6 +93,12 @@ myKeymap =
     ,("M-n"  , namedScratchpadAction scratchpads "ncmpcpp"    ) -- Launches a scratchpad of my favourite music player N Curses Music Player Client ++
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer" ) -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop"       ) -- Launches scratchpad of btop to quickly see whats happening and kill processess
+    ,("<XF86AudioPlay>",  spawn "mpc toggle"                  ) -- toggle play/pause mpd
+    ,("<XF86AudioPrev>",  spawn "mpc prev"                    ) -- skip to previous song mpd
+    ,("<XF86AudioNext>",  spawn "mpc next"                    ) -- skip to next song mpd
+    ,("<XF86AudioMute>",  spawn "pamixer -t && getvol"        ) -- toggle mute
+    ,("<XF86AudioLowerVolume>", spawn "pamixer -d 5 && getvol") -- decrease volume by 5%
+    ,("<XF86AudioRaiseVolume>", spawn "pamixer -i 5 && getvol") -- increase volume by 5%
     ]
 #+end_src
 
