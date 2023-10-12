@@ -29,9 +29,6 @@ myTerminal = "kitty" :: String
 myBrowser = "brave" :: String
 myExplorer = "pcmanfm" :: String
 
-
-
-
 main :: IO ()
 main = xmonad $ ewmhFullscreen $ ewmh $ myConfig
   { layoutHook = spacingWithEdge 5 $ Tall 1 (3/100) (1/2) ||| Full  -- leave gaps at the top and right
