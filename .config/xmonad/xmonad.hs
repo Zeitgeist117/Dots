@@ -11,9 +11,11 @@ import XMonad.Actions.CycleWS
 import XMonad.Util.Scratchpad
 import XMonad.Util.NamedScratchpad
 import XMonad.StackSet as W
+import qualified Data.Map as M
 import XMonad.ManageHook
 import XMonad.Actions.Submap
 import XMonad.Util.NamedActions
+import XMonad.Hooks.ManageHelpers
 
 myStartupHook :: X ()
 myStartupHook = do 
@@ -32,27 +34,41 @@ myBrowser = "brave" :: String
 myExplorer = "pcmanfm" :: String
 
 main :: IO ()
-main = xmonad $ ewmh myConfig
+main = xmonad $ myConfig
   { layoutHook = spacingWithEdge 5 $ Tall 1 (3/100) (1/2) ||| Full
 }
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
+myManageHook :: ManageHook
+myManageHook = composeAll
+    [ isFullscreen --> doFullFloat
+    , manageDocks
+    , namedScratchpadManageHook scratchpads
+    -- , className =? "mpv" --> doFullFloat
+    ]
+
 myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
 myConfig = ewmh def
     { modMask    = mod4Mask  -- Rebind Mod to the Super key
     , startupHook = myStartupHook
-    , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook scratchpads
-    -- , handleEventHook = ewmhFullscreenHandleEvent <+> handleEventHook def
+    , manageHook = myManageHook
     , XMonad.workspaces = myWorkspaces
     , focusedBorderColor = "#f8f8f2"
     , normalBorderColor = "#282A36"
     , borderWidth = 3
     }`additionalKeysP` myKeymap  --calls the keymap without getting rid of the defaults cause i don't wont to reconfigure everything
 
+toggleFull = withFocused (\windowId -> do
+    { floats <- gets (W.floating . windowset);
+        if windowId `M.member` floats
+        then withFocused $ windows . W.sink
+        else withFocused $ windows . (flip W.float $ W.RationalRect 0 0 1 1) })
+
 myKeymap =
-    [("M-<Space>", spawn "dmenu_run -c -l 20"	             )
+    [("M-<Space>", spawn "dmenu_run -c -l 20"                 )
     ,("M-S-<Space>"  , sendMessage NextLayout                 )
+    ,("M-f"  , toggleFull                                     ) -- Toggles Fullscreen
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
     ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
