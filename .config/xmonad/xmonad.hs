@@ -8,6 +8,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Spacing
 import XMonad.Actions.CycleWS
+import XMonad.Util.Scratchpad
 import XMonad.Util.NamedScratchpad
 import XMonad.StackSet as W
 import XMonad.ManageHook
@@ -16,6 +17,7 @@ import XMonad.Util.NamedActions
 
 myStartupHook :: X ()
 myStartupHook = do 
+    setWMName "XMonad"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
@@ -23,7 +25,6 @@ myStartupHook = do
     spawnOnce "syncthing &"
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
-    setWMName "LG3D"
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
@@ -31,26 +32,27 @@ myBrowser = "brave" :: String
 myExplorer = "pcmanfm" :: String
 
 main :: IO ()
-main = xmonad $ ewmhFullscreen $ ewmh $ myConfig
-  { layoutHook = spacingWithEdge 5 $ Tall 1 (3/100) (1/2) ||| Full  -- leave gaps at the top and right
+main = xmonad $ ewmh myConfig
+  { layoutHook = spacingWithEdge 5 $ Tall 1 (3/100) (1/2) ||| Full
 }
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
-myConfig = def
+myConfig = ewmh def
     { modMask    = mod4Mask  -- Rebind Mod to the Super key
     , startupHook = myStartupHook
     , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook scratchpads
-    -- , keys = keys def <+> myKeymap
+    -- , handleEventHook = ewmhFullscreenHandleEvent <+> handleEventHook def
     , XMonad.workspaces = myWorkspaces
     , focusedBorderColor = "#f8f8f2"
     , normalBorderColor = "#282A36"
     , borderWidth = 3
-    }`additionalKeysP` myKeymap --calls the keymap without getting rid of the defaults cause i don't wont to reconfigure everything
+    }`additionalKeysP` myKeymap  --calls the keymap without getting rid of the defaults cause i don't wont to reconfigure everything
 
 myKeymap =
-    [("M-<Space>", spawn "dmenu_run -c -l 20"	              )
+    [("M-<Space>", spawn "dmenu_run -c -l 20"	             )
+    ,("M-S-<Space>"  , sendMessage NextLayout                 )
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
     ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
@@ -60,7 +62,7 @@ myKeymap =
     ,("M-h"  , sendMessage Shrink		                      ) -- Makes window smaller
     ,("M-l"  , sendMessage Expand		                      ) -- Makes it Bigger
     ,("M-S-h"  , prevWS		                                  ) -- Move to previous workspace (ie from 2 to 1)
-    ,("M-S-l"  , nextWS		                                  ) -- Move to next workspace (ie from 1 to 2)
+    ,("M-S-l"  , nextWS		                                  ) -- Move to previous workspace (ie from 2 to 1)
     ,("M-j"  , windows W.focusDown		                      ) -- change window focus
     ,("M-k"  , windows W.focusUp		                      ) -- same thing different direction
     ,("M-S-j"  , windows W.swapDown		                      ) -- move window in layout/stack
@@ -74,6 +76,8 @@ myKeymap =
     ,("<XF86AudioMute>",  spawn "pamixer -t && getvol"        ) -- toggle mute
     ,("<XF86AudioLowerVolume>", spawn "pamixer -d 5 && getvol") -- decrease volume by 5%
     ,("<XF86AudioRaiseVolume>", spawn "pamixer -i 5 && getvol") -- increase volume by 5%
+    ,("<Print>",  spawn "scr select"                          ) --screenshot selection with scrot script
+    ,("S-<Print>",  spawn "scr"                               ) --screenshot of whole screen with scrot script
     ]
 
 scratchpads :: [NamedScratchpad]

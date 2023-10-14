@@ -33,4 +33,4 @@
 	 (R . t)
 	 (C . t)
 	 (calc . t)))
- '(package-selected-packages '(darkroom arxiv-mode biblio)))
+ '(package-selected-packages '(mugur darkroom arxiv-mode biblio)))

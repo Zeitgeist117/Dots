@@ -336,15 +336,15 @@ Defining all the fonts so it looks kool an so i kan reed
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
-  :height 180
+  :height 160
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
   :font "Ubuntu"
-  :height 180
+  :height 160
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
   :font "JetBrains Mono"
-  :height 180
+  :height 160
   :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
@@ -765,7 +765,7 @@ the building blocks of rice
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "/home/nightwing/.config/emacs/images/emacs-dash.txt")  ;; use custom image as banner
   (setq dashboard-center-content t) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 3)
+  (setq dashboard-items '((recents . 5)
                           (agenda . 3)
                           ;; (bookmarks . 3)
                           (projects . 3)))
