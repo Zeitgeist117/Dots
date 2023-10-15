@@ -1,3 +1,0 @@
-#!/bin/bash
-wid=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d ' ' -f 5)
-wmctrl -i -r "$wid" -b toggle,fullscreen
