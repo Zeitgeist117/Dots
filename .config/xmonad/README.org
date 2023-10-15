@@ -27,6 +27,7 @@ import XMonad.ManageHook
 import XMonad.Actions.Submap
 import XMonad.Util.NamedActions
 import XMonad.Hooks.ManageHelpers
+import XMonad.Layout.NoBorders
 #+end_src
 
 ** Autostart
@@ -53,11 +54,11 @@ myExplorer = "pcmanfm" :: String
 #+end_src
 
 ** Main Config
-*** Main Hook
+*** Layouts
 #+begin_src haskell
 main :: IO ()
 main = xmonad $ myConfig
-  { layoutHook = spacingWithEdge 5 $ Tall 1 (3/100) (1/2) ||| Full
+  { layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 }
 #+end_src
 
@@ -74,7 +75,6 @@ myManageHook = composeAll
     [ isFullscreen --> doFullFloat
     , manageDocks
     , namedScratchpadManageHook scratchpads
-    -- , className =? "mpv" --> doFullFloat
     ]
 #+end_src
 
@@ -92,21 +92,12 @@ myConfig = ewmh def
     }`additionalKeysP` myKeymap  --calls the keymap without getting rid of the defaults cause i don't wont to reconfigure everything
 #+end_src
 
-*** Fullscreen
-#+begin_src haskell
-toggleFull = withFocused (\windowId -> do
-    { floats <- gets (W.floating . windowset);
-        if windowId `M.member` floats
-        then withFocused $ windows . W.sink
-        else withFocused $ windows . (flip W.float $ W.RationalRect 0 0 1 1) })  
-#+end_src
 
 ** Keybindings
 #+begin_src haskell
 myKeymap =
     [("M-<Space>", spawn "dmenu_run -c -l 20"                 )
     ,("M-S-<Space>"  , sendMessage NextLayout                 )
-    ,("M-f"  , toggleFull                                     ) -- Toggles Fullscreen
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
     ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
