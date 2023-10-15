@@ -25,18 +25,19 @@ myStartupHook = do
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
+    spawnOnce "xset r rate 190 35"
     spawnOnce "syncthing &"
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "kitty" :: String
-myBrowser = "brave" :: String
+myBrowser = "firefox" :: String
 myExplorer = "pcmanfm" :: String
 
 main :: IO ()
 main = xmonad $ myConfig
-  { layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+  { layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 }
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]

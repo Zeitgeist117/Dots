@@ -35,4 +35,4 @@
 	 (R . t)
 	 (C . t)
 	 (calc . t)))
- '(package-selected-packages '(mugur darkroom arxiv-mode biblio)))
+ '(package-selected-packages '(klondike mugur darkroom arxiv-mode biblio)))
