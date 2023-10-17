@@ -42,8 +42,8 @@ main = xmonad $ myConfig
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
-myManageHook :: ManageHook
-myManageHook = composeAll
+-- myManageHook :: ManageHook
+myManageHook = manageDocks <+> composeAll
     [ isFullscreen --> doFullFloat
     , manageDocks
     , namedScratchpadManageHook scratchpads
@@ -86,8 +86,9 @@ myKeymap =
     ,("<XF86AudioMute>",  spawn "pamixer -t && getvol"        ) -- toggle mute
     ,("<XF86AudioLowerVolume>", spawn "pamixer -d 5 && getvol") -- decrease volume by 5%
     ,("<XF86AudioRaiseVolume>", spawn "pamixer -i 5 && getvol") -- increase volume by 5%
-    ,("<Print>",  spawn "scr select"                          ) --screenshot selection with scrot script
-    ,("S-<Print>",  spawn "scr"                               ) --screenshot of whole screen with scrot script
+    ,("M-s",  spawn "scr select"                          ) --screenshot selection with scrot script
+    ,("M-S-s",  spawn "scr"                               ) --screenshot of whole screen with scrot script
+    ,("M-y"  , spawn "ywatch" ) -- Restart Xmonad
     ]
 
 scratchpads :: [NamedScratchpad]

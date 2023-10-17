@@ -260,15 +260,15 @@
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
-  :height 160
+  :height 140
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
   :font "Ubuntu"
-  :height 160
+  :height 140
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
   :font "JetBrains Mono"
-  :height 160
+  :height 140
   :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
@@ -355,6 +355,8 @@
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
+
+(use-package darkroom)
 
 (use-package toc-org
     :commands toc-org-enable

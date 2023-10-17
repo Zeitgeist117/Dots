@@ -22,8 +22,7 @@
  ;; If there is more than one, they won't work right.
  '(elfeed-feeds nil)
  '(flycheck-checker-error-threshold nil)
- '(org-agenda-files
-   '("~/Notes/Tasks.org" "/home/nightwing/.dotfiles/.config/emacs/README.org"))
+ '(org-agenda-files '("/home/nightwing/Notes/Tasks.org"))
  '(org-babel-load-languages
    '((awk . t)
 	 (emacs-lisp . t)
