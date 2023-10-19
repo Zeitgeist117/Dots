@@ -5,11 +5,8 @@
 #+begin_src haskell
 import XMonad
 import XMonad.Util.EZConfig
-import XMonad.Util.Ungrab
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.DynamicLog
 import XMonad.Util.SpawnOnce
-import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
@@ -19,17 +16,13 @@ import XMonad.Util.NamedScratchpad
 import XMonad.StackSet as W
 import qualified Data.Map as M
 import XMonad.ManageHook
-import XMonad.Actions.Submap
-import XMonad.Util.NamedActions
 import XMonad.Hooks.ManageHelpers
-import XMonad.Layout.NoBorders
 #+end_src
 
 ** Autostart
 #+begin_src haskell 
 myStartupHook :: X ()
 myStartupHook = do 
-    -- setWMName "XMonad"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
@@ -50,7 +43,6 @@ myExplorer = "pcmanfm" :: String
 
 ** Main Config
 #+begin_src haskell
--- myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
 main = xmonad $ ewmhFullscreen $ ewmh $ def
     { modMask = mod4Mask
     , startupHook = myStartupHook
@@ -65,7 +57,7 @@ main = xmonad $ ewmhFullscreen $ ewmh $ def
 
 *** Layouts
 #+begin_src haskell
-myLayout = -- spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+myLayout = 
   avoidStruts
   . spacing windowSpacing
   . gaps    windowGaps
@@ -84,7 +76,6 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 *** Window Rules
 #+begin_src haskell
--- myManageHook :: ManageHook
 myManageHook = manageDocks <+> composeAll
     [ isFullscreen --> doFullFloat
     , manageDocks

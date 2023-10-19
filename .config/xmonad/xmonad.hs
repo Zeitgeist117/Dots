@@ -1,10 +1,7 @@
 import XMonad
 import XMonad.Util.EZConfig
-import XMonad.Util.Ungrab
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.DynamicLog
 import XMonad.Util.SpawnOnce
-import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
@@ -14,14 +11,10 @@ import XMonad.Util.NamedScratchpad
 import XMonad.StackSet as W
 import qualified Data.Map as M
 import XMonad.ManageHook
-import XMonad.Actions.Submap
-import XMonad.Util.NamedActions
 import XMonad.Hooks.ManageHelpers
-import XMonad.Layout.NoBorders
 
 myStartupHook :: X ()
 myStartupHook = do 
-    -- setWMName "XMonad"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
@@ -36,7 +29,6 @@ myTerminal = "alacritty" :: String
 myBrowser = "firefox" :: String
 myExplorer = "pcmanfm" :: String
 
--- myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
 main = xmonad $ ewmhFullscreen $ ewmh $ def
     { modMask = mod4Mask
     , startupHook = myStartupHook
@@ -48,7 +40,7 @@ main = xmonad $ ewmhFullscreen $ ewmh $ def
     , borderWidth = 3
     } `additionalKeysP` myKeymap
 
-myLayout = -- spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+myLayout = 
   avoidStruts
   . spacing windowSpacing
   . gaps    windowGaps
@@ -60,7 +52,6 @@ myLayout = -- spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithE
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
--- myManageHook :: ManageHook
 myManageHook = manageDocks <+> composeAll
     [ isFullscreen --> doFullFloat
     , manageDocks
