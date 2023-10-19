@@ -197,7 +197,7 @@ map md mkdir
 
 map C clear
 
-map dr restore_trash
+map tr restore_trash
 map dD trash
 
 map ba bulkrename 

@@ -7,6 +7,7 @@ import XMonad.Util.SpawnOnce
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Spacing
+import XMonad.Layout.Gaps
 import XMonad.Actions.CycleWS
 import XMonad.Util.Scratchpad
 import XMonad.Util.NamedScratchpad
@@ -20,25 +21,42 @@ import XMonad.Layout.NoBorders
 
 myStartupHook :: X ()
 myStartupHook = do 
-    setWMName "XMonad"
+    -- setWMName "XMonad"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
-    spawnOnce "xset r rate 190 35"
+    spawnOnce "xset r rate 160 35"
     spawnOnce "syncthing &"
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
 
 myTerminal, myBrowser, myExplorer :: String
-myTerminal = "kitty" :: String
+myTerminal = "alacritty" :: String
 myBrowser = "firefox" :: String
 myExplorer = "pcmanfm" :: String
 
-main :: IO ()
-main = xmonad $ myConfig
-  { layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
-}
+-- myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
+main = xmonad $ ewmhFullscreen $ ewmh $ def
+    { modMask = mod4Mask
+    , startupHook = myStartupHook
+    , layoutHook = myLayout
+    , manageHook = myManageHook
+    , XMonad.workspaces = myWorkspaces
+    , focusedBorderColor = "#f8f8f2"
+    , normalBorderColor = "#282A36"
+    , borderWidth = 3
+    } `additionalKeysP` myKeymap
+
+myLayout = -- spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+  avoidStruts
+  . spacing windowSpacing
+  . gaps    windowGaps
+  $ windowTall ||| Full
+  where
+    windowSpacing = 5
+    windowGaps    = [(U, 8), (D, 8), (R, 10), (L, 10)]
+    windowTall    = Tall 1 (3/100) (1/2)
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
@@ -47,24 +65,15 @@ myManageHook = manageDocks <+> composeAll
     [ isFullscreen --> doFullFloat
     , manageDocks
     , namedScratchpadManageHook scratchpads
+    , className =? "mpv" --> doFloat
     ]
-
-myConfig :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
-myConfig = ewmh def
-    { modMask    = mod4Mask  -- Rebind Mod to the Super key
-    , startupHook = myStartupHook
-    , manageHook = myManageHook
-    , XMonad.workspaces = myWorkspaces
-    , focusedBorderColor = "#f8f8f2"
-    , normalBorderColor = "#282A36"
-    , borderWidth = 3
-    }`additionalKeysP` myKeymap  --calls the keymap without getting rid of the defaults cause i don't wont to reconfigure everything
 
 myKeymap =
     [("M-<Space>", spawn "dmenu_run -c -l 20"                 )
     ,("M-S-<Space>"  , sendMessage NextLayout                 )
+    ,("M-S-p"  , spawn "passmenu -c -l 20 -p pass"	          ) -- Launches pass menu, a built in dmenu wrapper for the pass gpg password manager
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
-    ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
+    ,("M-b"  , spawn myBrowser                                ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal                        ) -- Lauches Terminal
     ,("M-'"  , spawn "emacsclient -c"                         ) -- Launches Emacs Client
