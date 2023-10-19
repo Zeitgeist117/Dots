@@ -1,0 +1,181 @@
+{
+  "yags-general": {
+    "img": "https://e4p7c9i3.stackpathcdn.com/wp-content/uploads/2019/05/tumblr_p320aq1osj1vjxiz1o1_1280.gif?iv=344",
+    "title": "Welcome Zeitgeist",
+    "displayImg": true,
+    "font": "Quicksand",
+    "enableFonts": false,
+    "fontSize": 1
+  },
+  "yags-search": {
+    "placeholder": "Searx",
+    "engine": "duckduckgo",
+    "forwardingLookup": {
+      "/": "/",
+      "deepl": "https://deepl.com/",
+      "reddit": "https://reddit.com/",
+      "maps": "https://maps.google.com/"
+    }
+  },
+  "yags-theme": {
+    "inverted": false,
+    "color": {
+      "name": "custom",
+      "bg": {
+        "shade": "#20222B",
+        "base": "#282A36",
+        "surface": "#303241",
+        "highlight": "#383B4C"
+      },
+      "fg": {
+        "shade": "#90908D",
+        "base": "#B3B3B1",
+        "surface": "#D6D6D5",
+        "highlight": "#F9F9F9"
+      },
+      "primary": {
+        "bg": "#9F9F56",
+        "base": "#F8F8F2",
+        "fg": "#FFFFFF"
+      },
+      "secondary": {
+        "bg": "#AA0000",
+        "base": "#FF5555",
+        "fg": "#FFFFFF"
+      },
+      "palette": {
+        "red": "#E06C75",
+        "green": "#98C379",
+        "yellow": "#E5C07B",
+        "blue": "#61AFEF",
+        "purple": "#C678DD",
+        "cyan": "#56B6C2",
+        "orange": "#FFBB7C"
+      }
+    },
+    "space": {
+      "smallest": "0.125rem",
+      "small": "0.5rem",
+      "medium": "1rem",
+      "large": "1.5rem",
+      "largest": "3rem"
+    }
+  },
+  "yags-surface": {
+    "shadow": {
+      "amount": 3,
+      "blur": 0,
+      "offset": 0,
+      "shadow": "0px 0px 0px rgb(159, 159, 86), 0px 0px 0px rgb(164.5, 79.5, 43), 0px 0px 0px rgb(170, 0, 0)"
+    },
+    "borderRadius": 0,
+    "maxWidth": 1600
+  },
+  "yags-bookmarks": [
+    {
+      "id": "tWQrvyegshG88b7Z",
+      "label": "Social",
+      "bookmarks": [
+        {
+          "id": "Q2dlmaeRZDEhD9Qa",
+          "label": "Reddit",
+          "url": "https://www.reddit.com/"
+        }
+      ]
+    },
+    {
+      "id": "xkcDqF4ESKitnrhS",
+      "label": "Watch",
+      "bookmarks": [
+        {
+          "id": "Fkl9s6mX9Tv0s2Jr",
+          "label": "Invidious",
+          "url": "https://invidious.perennialte.ch/feed/subscriptions"
+        },
+        {
+          "id": "KiHsu4MUsoqlKOYo",
+          "label": "Youtube",
+          "url": "https://www.youtube.com/"
+        },
+        {
+          "id": "7qAYuH5ldlqntSXu",
+          "label": "Odysee",
+          "url": "https://odysee.com/"
+        },
+        {
+          "id": "FYWWUw2jbJRgFHgG",
+          "label": "YesMovies",
+          "url": "https://yesmovies.mn/"
+        }
+      ]
+    },
+    {
+      "id": "Xkf5i41H7vXnDBkH",
+      "label": "E-Mail",
+      "bookmarks": [
+        {
+          "id": "PsvsgrJ96dNiRE4n",
+          "label": "Proton Mail",
+          "url": "https://mail.proton.me/u/0/inbox/tC6O0kCJMw1W0SlBM0-4NDVdJtZeCqTucpffIhflc0gg_yO39D1rgCP4eC_2WWAtMIFZ8Q7sYdjdSnFs5rexqw=="
+        },
+        {
+          "id": "FTVFNIF2M98MXjBv",
+          "label": "Outlook",
+          "url": "https://outlook.live.com/mail/0/"
+        },
+        {
+          "id": "AChQmerv365wTEJD",
+          "label": "Mail.com",
+          "url": "google.com"
+        }
+      ]
+    },
+    {
+      "id": "sFlTDIc4gbqVsDQ4",
+      "label": "Server",
+      "bookmarks": [
+        {
+          "id": "z1MpYrJxdM9xaNyr",
+          "label": "Portainer",
+          "url": "https://10.1.1.80:9443/#!/2/docker/containers"
+        },
+        {
+          "id": "Lm5uvYMGI7aSIPBl",
+          "label": "Heimdall",
+          "url": "https://10.1.1.80:32772/"
+        },
+        {
+          "id": "lXr5hk3r8ToFTZxj",
+          "label": "Jellyfin",
+          "url": "http://10.1.1.80:8096/"
+        },
+        {
+          "id": "S2EMFzML6MZKyo53",
+          "label": "FreshRSS",
+          "url": "http://10.1.1.80:32771/i/?rid=64ce32548e0dd"
+        }
+      ]
+    },
+    {
+      "id": "CCMX75JUhaYvaKCz",
+      "label": "Utils",
+      "bookmarks": [
+        {
+          "id": "eHoD9eNOrWk2axMP",
+          "label": "Pihole",
+          "url": "http://10.1.1.160/admin/"
+        },
+        {
+          "id": "RwZ633hm9ilanWEo",
+          "label": "Syncthing Local",
+          "url": "http://127.0.0.1:8384/#settings-gui"
+        },
+        {
+          "id": "IXzBXDRcuwzF33SF",
+          "label": "Syncthing Server",
+          "url": "http://10.1.1.80:8384/"
+        }
+      ]
+    }
+  ]
+}
