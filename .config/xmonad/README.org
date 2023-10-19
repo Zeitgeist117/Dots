@@ -1,5 +1,11 @@
 #+PROPERTY: header-args :tangle xmonad.hs
-* Xmonad Config
+* Xmonad Config :toc:
+  - [[#imports][Imports]]
+  - [[#autostart][Autostart]]
+  - [[#common-variables][Common Variables]]
+  - [[#main-config][Main Config]]
+  - [[#keybindings][Keybindings]]
+  - [[#scratchpads][Scratchpads]]
 
 ** Imports
 #+begin_src haskell
