@@ -2,13 +2,13 @@ window:
   opacity: 0.9
 font:
   normal:
-    family: JetBrainsMono 
+    family: IBMPlexMono 
     style: Medium
   bold:
-    family: JetBrainsMono 
+    family: IBMPlexMono 
     style: Medium
   italic:
-    family: JetBrainsMono 
+    family: IBMPlexMono 
     style: Light italic
 
   size: 14

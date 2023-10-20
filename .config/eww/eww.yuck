@@ -1,11 +1,11 @@
-(defwindow example
-           :monitor 0
-           :stacking "bg"
-           :reserve (struts :distance "60px" :side "top")
-           :wm-ignore true
-           :geometry (geometry :x "0%"
-                               :y "20px"
-                               :width "90%"
-                               :height "30px"
-                               :anchor "top center")
-  "example content")
+(defwindow powermenu
+	:monitor 0
+	:stacking "fg"
+	:windowtype "normal"
+	:wm-ignore true
+	:geometry (geometry
+				:width "10%"
+				:height "10%")
+	(powermenu_layout))
+(defwidget powermenu_layout []
+  (label :text "Hello, World!"))

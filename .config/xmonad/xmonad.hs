@@ -12,11 +12,17 @@ import XMonad.StackSet as W
 import qualified Data.Map as M
 import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.DynamicLog  -- Add this import for XMobar integration
+import XMonad.Hooks.ManageDocks -- Add this import for XMobar integration
+import XMonad.Hooks.UrgencyHook -- Add this import for XMobar integration
+import XMonad.Hooks.SetWMName  -- Add this import for WM_NAME
+import XMonad.Hooks.WorkspaceHistory -- Add this import for workspace history
 
 myStartupHook :: X ()
 myStartupHook = do 
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
+    spawnOnce "eww daemon"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
     spawnOnce "xset r rate 160 35"
@@ -29,7 +35,7 @@ myTerminal = "alacritty" :: String
 myBrowser = "firefox" :: String
 myExplorer = "pcmanfm" :: String
 
-main = xmonad $ ewmhFullscreen $ ewmh $ def
+main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
     { modMask = mod4Mask
     , startupHook = myStartupHook
     , layoutHook = myLayout
@@ -64,7 +70,7 @@ myKeymap =
     ,("M-S-<Space>"  , sendMessage NextLayout                 )
     ,("M-S-p"  , spawn "passmenu -c -l 20 -p pass"	          ) -- Launches pass menu, a built in dmenu wrapper for the pass gpg password manager
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
-    ,("M-b"  , spawn myBrowser                                ) -- Launches Web Browser
+    ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
     ,("M-e"  , spawn myExplorer                               ) -- Launches File Explorer
     ,("M-<Return>"  , spawn myTerminal                        ) -- Lauches Terminal
     ,("M-'"  , spawn "emacsclient -c"                         ) -- Launches Emacs Client
