@@ -12,11 +12,11 @@ import XMonad.StackSet as W
 import qualified Data.Map as M
 import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.DynamicLog  -- Add this import for XMobar integration
-import XMonad.Hooks.ManageDocks -- Add this import for XMobar integration
-import XMonad.Hooks.UrgencyHook -- Add this import for XMobar integration
-import XMonad.Hooks.SetWMName  -- Add this import for WM_NAME
-import XMonad.Hooks.WorkspaceHistory -- Add this import for workspace history
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.WorkspaceHistory
 
 myStartupHook :: X ()
 myStartupHook = do 

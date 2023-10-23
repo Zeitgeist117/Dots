@@ -556,6 +556,7 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
 #+begin_src emacs-lisp
 (use-package haskell-mode)
 (use-package lua-mode)
+(use-package yuck-mode)
 
 #+end_src
 ** Diminish
