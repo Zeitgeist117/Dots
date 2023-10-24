@@ -3,9 +3,8 @@ return {
 	{"dracula/vim", 
 	name = "dracula",
 	priority = 1000,
-	config = function()
-		vim.cmd("colo dracula")
-	end},
+	},
+	"morhetz/gruvbox",
 
 
 	{"numToStr/Comment.nvim",

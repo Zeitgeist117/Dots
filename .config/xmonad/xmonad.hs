@@ -17,6 +17,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
+import XMonad.Layout.NoBorders
 
 myStartupHook :: X ()
 myStartupHook = do 
@@ -32,13 +33,13 @@ myStartupHook = do
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "alacritty" :: String
-myBrowser = "firefox" :: String
+myBrowser = "thorium-browser" :: String
 myExplorer = "pcmanfm" :: String
 
 main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
     { modMask = mod4Mask
     , startupHook = myStartupHook
-    , layoutHook = myLayout
+    , layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
     , manageHook = myManageHook
     , XMonad.workspaces = myWorkspaces
     , focusedBorderColor = "#f8f8f2"
@@ -46,15 +47,7 @@ main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
     , borderWidth = 3
     } `additionalKeysP` myKeymap
 
-myLayout = 
-  avoidStruts
-  . spacing windowSpacing
-  . gaps    windowGaps
-  $ windowTall ||| Full
-  where
-    windowSpacing = 5
-    windowGaps    = [(U, 8), (D, 8), (R, 10), (L, 10)]
-    windowTall    = Tall 1 (3/100) (1/2)
+
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 

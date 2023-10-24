@@ -19,4 +19,4 @@ key_bindings:
 # env:
 #   TERM: alacritty-direct
 import:
-  - /home/nightwing/.config/alacritty/dracula.yml
+  - /home/nightwing/.config/alacritty/gruvbox_dark.yaml

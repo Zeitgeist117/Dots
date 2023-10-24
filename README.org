@@ -1,1 +1,5 @@
 * Dotfiles
+
+** DWM 
+
+[[file:.img/dwm.png]]

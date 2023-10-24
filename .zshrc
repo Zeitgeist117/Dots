@@ -2,11 +2,7 @@
 autoload -U colors && colors	# Load colors
 PS1='''┌─[%B%n% %b]─[%B%M% %b]─[%~% ]
 └─[λ] '''
-# ╭─nightwing@Archknight ~
-# ╰─
-# ZSH_THEME="powerlevel10k/powerlevel10k"
 
-setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 
@@ -68,10 +64,11 @@ source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.
 
 # default apps
 # export EDITOR="emacsclient -c"    
-# export VISUAL="emacsclient -c"
+# export VISUAL="emacsclient -c"    
 export EDITOR="nvim"    
-export VISUAL="nvim"
+export VISUAL="nvim"    
 export TERMINAL="alacritty"
-export BROWSER="firefox"
+export EXPLORER="pcmanfm"
+export BROWSER="thorium-browser"
 export MANPAGER="nvim +Man!"
 export LC_ALL=en_US.UTF-8
