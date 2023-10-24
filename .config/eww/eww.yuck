@@ -1,4 +1,12 @@
-(defwindow bar
-		   :monitor 0
-		   :geometry (geometry
-					  :x ""))
+(defwindow example
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "5px"
+                               :width "99%"
+                               :height "30px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "30px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+  "place holder statusbar please ignore i know it is ugly i don't know how the fuck eww works yet i am retarded")
