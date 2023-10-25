@@ -1,12 +1,11 @@
 * Dotfiles
 
-** DWM 
-
-[[file:.img/dwm.png]]
-
-
 ** XMonad
 
 [[file:.img/x1.png]]
 [[file:.img/x2.png]]
 [[file:.img/x3.png]]
+
+** DWM 
+
+[[file:.img/dwm.png]]

@@ -29,7 +29,6 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
 import XMonad.Layout.NoBorders
-
 #+end_src
 
 ** Autostart
