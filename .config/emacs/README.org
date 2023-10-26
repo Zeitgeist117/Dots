@@ -37,6 +37,7 @@
   - [[#diminish][Diminish]]
   - [[#flycheck][Flycheck]]
   - [[#company][Company]]
+  - [[#lsp][LSP]]
 - [[#vterm][Vterm]]
   - [[#vterm-toggle][Vterm-Toggle]]
 - [[#sudo-edit][Sudo Edit]]
@@ -591,6 +592,11 @@ check it bro, ur code aint lookin so fly
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
+#+end_src
+
+** LSP
+#+begin_src emacs-lisp
+
 #+end_src
 
 * Vterm

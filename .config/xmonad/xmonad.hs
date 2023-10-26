@@ -42,8 +42,10 @@ main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
     , layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
     , manageHook = myManageHook
     , XMonad.workspaces = myWorkspaces
-    , focusedBorderColor = "#f8f8f2"
-    , normalBorderColor = "#282A36"
+    -- , focusedBorderColor = "#f8f8f2"
+    -- , normalBorderColor = "#282A36"
+    , focusedBorderColor = "#d4be98"
+    , normalBorderColor = "#1e2122"
     , borderWidth = 3
     } `additionalKeysP` myKeymap
 

@@ -421,6 +421,8 @@
   :diminish
   :hook (company-mode . company-box-mode))
 
+
+
 (use-package vterm
 :config
 (setq shell-file-name "/bin/sh"

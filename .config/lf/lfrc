@@ -16,7 +16,7 @@ cmd mkdir ${{
   mkdir $ans
 }}
 
-cmd touch ${{
+cmd mkfile ${{
   printf "File Name: "
   read ans
   nvim $ans
