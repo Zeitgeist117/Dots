@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Util.EZConfig
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.SpawnOnce
+import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
@@ -13,33 +14,45 @@ import qualified Data.Map as M
 import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.WorkspaceHistory
 import XMonad.Layout.NoBorders
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.StatusBar
+import XMonad.Util.Loggers
 
 myStartupHook :: X ()
 myStartupHook = do 
+    spawnOnce "xrandr --output 'eDP-1' --off"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
+    spawnOnce "xmobar ~/.config/xmobar/xmobarrc &"
     spawnOnce "eww daemon"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
+    spawnOnce "xrdb .Xresources"
     spawnOnce "xset r rate 160 35"
     spawnOnce "syncthing &"
     spawnOnce "mpd"
     spawnOnce "easyeffects --gapplication-service"
+    spawnOnce "echo Xmobar started successfully"
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "alacritty" :: String
 myBrowser = "thorium-browser" :: String
 myExplorer = "pcmanfm" :: String
 
-main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
+main = xmonad 
+  . ewmhFullscreen 
+  . ewmh 
+  . xmobarProp
+  $ myConfig
+
+myConfig = def
     { modMask = mod4Mask
     , startupHook = myStartupHook
-    , layoutHook = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+    , layoutHook = myLayout
     , manageHook = myManageHook
     , XMonad.workspaces = myWorkspaces
     -- , focusedBorderColor = "#f8f8f2"
@@ -49,7 +62,7 @@ main = xmonad $ ewmhFullscreen $ ewmh $ xmobarProp $ def
     , borderWidth = 3
     } `additionalKeysP` myKeymap
 
-
+myLayout = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| spacingWithEdge 5 (Full) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
