@@ -2,36 +2,38 @@
 * Xmonad Config :toc:
   - [[#imports][Imports]]
   - [[#autostart][Autostart]]
-  - [[#common-variables][Common Variables]]
   - [[#main-config][Main Config]]
   - [[#keybindings][Keybindings]]
-  - [[#scratchpads][Scratchpads]]
 
 ** Imports
 #+begin_src haskell
 import XMonad
-import XMonad.Util.EZConfig
+
+import System.IO
+
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Util.SpawnOnce
-import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
-import XMonad.Layout.Spacing
-import XMonad.Layout.Gaps
-import XMonad.Actions.CycleWS
-import XMonad.Util.Scratchpad
-import XMonad.Util.NamedScratchpad
-import XMonad.StackSet as W
-import qualified Data.Map as M
-import XMonad.ManageHook
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.WorkspaceHistory
-import XMonad.Layout.NoBorders
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.StatusBar
+
+import XMonad.Util.SpawnOnce
+import XMonad.Util.Run
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.EZConfig
+import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Loggers
+
+import XMonad.Layout.Spacing
+import XMonad.Layout.NoBorders
+import XMonad.Actions.CycleWS
+
+import XMonad.StackSet as W
+import XMonad.ManageHook
 #+end_src
 
 ** Autostart
@@ -41,32 +43,22 @@ myStartupHook = do
     spawnOnce "xrandr --output 'eDP-1' --off"
     spawnOnce "picom --experimental-backends &"
     spawnOnce "/usr/bin/emacs --daemon &"
-    spawnOnce "xmobar ~/.config/xmobar/xmobarrc &"
-    spawnOnce "eww daemon"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
     spawnOnce "xrdb .Xresources"
     spawnOnce "xset r rate 160 35"
     spawnOnce "syncthing &"
     spawnOnce "mpd"
-    spawnOnce "easyeffects --gapplication-service"
-    spawnOnce "echo Xmobar started successfully"
-#+end_src
-
-** Common Variables
-#+begin_src haskell
-myTerminal, myBrowser, myExplorer :: String
-myTerminal = "alacritty" :: String
-myBrowser = "thorium-browser" :: String
-myExplorer = "pcmanfm" :: String
+    -- spawnOnce "easyeffects --gapplication-service"
 #+end_src
 
 ** Main Config
 #+begin_src haskell
-main = xmonad 
+main :: IO ()
+main = do  
+  xmonad 
   . ewmhFullscreen 
   . ewmh 
-  . xmobarProp
   $ myConfig
 
 myConfig = def
@@ -83,11 +75,18 @@ myConfig = def
     } `additionalKeysP` myKeymap
 #+end_src
 
+*** Common Variables
+#+begin_src haskell
+myTerminal, myBrowser, myExplorer :: String
+myTerminal = "alacritty" :: String
+myBrowser = "thorium-browser" :: String
+myExplorer = "pcmanfm" :: String
+#+end_src
+
 *** Layouts
 #+begin_src haskell
 myLayout = spacingWithEdge 5 (Tall 1 (3/100) (1/2)) ||| spacingWithEdge 5 (Full) ||| Full ||| spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 #+end_src
-
 
 *** Workspaces
 #+begin_src haskell
@@ -104,6 +103,15 @@ myManageHook = manageDocks <+> composeAll
     ]
 #+end_src
 
+*** Scratchpads
+#+begin_src haskell
+scratchpads :: [NamedScratchpad]
+scratchpads = [ NS "ncmpcpp" "st -n ncmpcpp -g 100x30 -e ncmpcpp" (title =? "ncmpcpp") centerFloating
+              , NS "pulsemixer" "st -n pulsemixer -g 100x30 -e pulsemixer" (title =? "pulsemixer") centerFloating
+              , NS "btop" "st -n btop -g 100x30 -e btop" (title =? "btop") centerFloating
+              ]where
+    centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
+#+end_src
 
 ** Keybindings
 #+begin_src haskell
@@ -140,12 +148,3 @@ myKeymap =
     ]
 #+end_src
 
-** Scratchpads
-#+begin_src haskell
-scratchpads :: [NamedScratchpad]
-scratchpads = [ NS "ncmpcpp" "st -n ncmpcpp -g 100x30 -e ncmpcpp" (title =? "ncmpcpp") centerFloating
-              , NS "pulsemixer" "st -n pulsemixer -g 100x30 -e pulsemixer" (title =? "pulsemixer") centerFloating
-              , NS "btop" "st -n btop -g 100x30 -e btop" (title =? "btop") centerFloating
-              ]where
-    centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
-#+end_src
