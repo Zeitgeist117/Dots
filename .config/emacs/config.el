@@ -396,6 +396,7 @@
 (use-package haskell-mode)
 (use-package lua-mode)
 (use-package yuck-mode)
+(use-package markdown-mode)
 
 (use-package diminish)
 

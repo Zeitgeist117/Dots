@@ -1,5 +1,6 @@
 window:
   opacity: 0.9
+  dynamic_padding: true
 font:
   normal:
     family: IBMPlexMono 
@@ -10,12 +11,10 @@ font:
   italic:
     family: IBMPlexMono 
     style: Light italic
-
   size: 14
 key_bindings:
   - {key: C, mods: Alt, action: Copy}
   - {key: V, mods: Alt, action: Paste}
-
 # env:
 #   TERM: alacritty-direct
 import:
