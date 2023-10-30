@@ -1,12 +1,12 @@
-Config { font = "xft:DejaVu Sans Mono:size=11:antialias=true"
-       , additionalFonts = [ "xft:FontAwesome:size=10" ]
+Config { font = "xft:IBM Plex Mono:size=14:antialias=true"
+       , additionalFonts = [ "xft:FontAwesome:size=14" ]
        , borderColor = "#1e2122"
        , border = NoBorder
        , bgColor = "#1e2122"
        , fgColor = "#d4be98"
        , position = Top
        , lowerOnStart = True
-       , commands = [ Run Date "%a %b %_d %Y %H:%M" "date" 10
+       , commands = [ Run Date " [%H:%M] [%a %b %_d]" "date" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"

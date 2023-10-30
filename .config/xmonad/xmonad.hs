@@ -21,6 +21,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Magnifier
 import XMonad.Layout.ThreeColumns
 
+import Data.Maybe (fromJust, isJust)
 import XMonad.Actions.CycleWS
 import XMonad.StackSet as W
 
@@ -35,18 +36,10 @@ myStartupHook = do
     spawnOnce "xset r rate 160 35"
     spawnOnce "syncthing &"
     spawnOnce "mpd"
-    setWMName "LG3D"
     -- spawnOnce "easyeffects --gapplication-service"
 
 main :: IO ()
-main = do
-  xmproc <- spawnPipe ("xmobar -x 0 ~/.config/xmobar/xmobarrc")
-  xmonad
-     . ewmhFullscreen
-     . ewmh
-     -- . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey
-     $ myConfig
-
+main = xmonad . ewmhFullscreen . ewmh =<< xmobar myConfig
 myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
@@ -55,7 +48,6 @@ myConfig = def
     , focusedBorderColor = "#d4be98"
     , normalBorderColor = "#1e2122"
     , borderWidth = 3
-    , logHook = dynamicLogWithPP $  filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
     }`additionalKeysP` myKeymap
 
 myTerminal, myBrowser, myExplorer :: String
@@ -63,12 +55,9 @@ myTerminal = "alacritty" :: String
 myBrowser = "thorium-browser" :: String
 myExplorer = "pcmanfm" :: String
 
-myXmobarPP :: PP
-myXmobarPP = def
-
-myLayout = tiled ||| monocle ||| Full ||| fullsc
+myLayout = tiled ||| monocle ||| fullsc
   where
-	monocle  = spacingWithEdge 5 (Full)
+	monocle = spacingWithEdge 5 (Full)
 	tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
 	fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 
@@ -82,11 +71,13 @@ myManageHook = manageDocks <+> composeAll
     ]
 
 scratchpads :: [NamedScratchpad]
-scratchpads = [ NS "ncmpcpp" "st -n ncmpcpp -g 100x30 -e ncmpcpp" (title =? "ncmpcpp") centerFloating
-              , NS "pulsemixer" "st -n pulsemixer -g 100x30 -e pulsemixer" (title =? "pulsemixer") centerFloating
-              , NS "btop" "st -n btop -g 100x30 -e btop" (title =? "btop") centerFloating
+scratchpads = [ NS "ncmpcpp" "alacritty --class=ncmpcpp -t ncmpcpp -e ncmpcpp" (title =? "ncmpcpp") centerFloating
+              , NS "pulsemixer" "alacritty --class=pulsemixer -t pulsemixer -e pulsemixer" (title =? "pulsemixer") centerFloating
+              , NS "btop" "alacritty --class=btop -t btop -e btop" (title =? "btop") centerFloating
               ]where
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
+
+nonNSP = WSIs (return (\ws -> W.tag ws /= "NSP"))
 
 myKeymap =
     [("M-<Space>", spawn "dmenu_run -c -l 20"                 )
@@ -100,8 +91,8 @@ myKeymap =
     ,("M-w"  , kill			                                  ) -- Kills Window
     ,("M-h"  , sendMessage Shrink		                      ) -- Makes window smaller
     ,("M-l"  , sendMessage Expand		                      ) -- Makes it Bigger
-    ,("M-S-h"  , prevWS		                                  ) -- Move to previous workspace (ie from 2 to 1)
-    ,("M-S-l"  , nextWS		                                  ) -- Move to previous workspace (ie from 2 to 1)
+    ,("M-S-h"  , moveTo Prev nonNSP                           ) -- Move to previous workspace (ie from 2 to 1)
+    ,("M-S-l"  , moveTo Next nonNSP                           ) -- Move to previous workspace (ie from 2 to 1)
     ,("M-j"  , windows W.focusDown		                      ) -- change window focus
     ,("M-k"  , windows W.focusUp		                      ) -- same thing different direction
     ,("M-S-j"  , windows W.swapDown		                      ) -- move window in layout/stack
@@ -115,7 +106,7 @@ myKeymap =
     ,("<XF86AudioMute>",  spawn "pamixer -t && getvol"        ) -- toggle mute
     ,("<XF86AudioLowerVolume>", spawn "pamixer -d 5 && getvol") -- decrease volume by 5%
     ,("<XF86AudioRaiseVolume>", spawn "pamixer -i 5 && getvol") -- increase volume by 5%
-    ,("M-s",  spawn "scr select"                          ) --screenshot selection with scrot script
-    ,("M-S-s",  spawn "scr"                               ) --screenshot of whole screen with scrot script
-    ,("M-y"  , spawn "ywatch" ) -- Restart Xmonad
+    ,("M-s",  spawn "scr select"                              ) -- screenshot selection with scrot script
+    ,("M-S-s",  spawn "scr"                                   ) -- screenshot of whole screen with scrot script
+    ,("M-y"  , spawn "ywatch"                                 ) -- if my clipboard has a youtube link it is launched in mpv
     ]
