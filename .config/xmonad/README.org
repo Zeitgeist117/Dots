@@ -10,6 +10,8 @@
   - [[#scratchpads][Scratchpads]]
   - [[#keybindings][Keybindings]]
 
+*** Screenshots
+[[file:.img/1.png]]
 ** Imports
 Do i no what any of this does, yes i know that statusbar has PP and NamedScratchpad make me have scratchpad and name it jeff. no i don't i have no fucking idea what this shit is but it works.
 #+begin_src haskell

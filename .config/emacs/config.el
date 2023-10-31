@@ -260,11 +260,11 @@
 
 (set-face-attribute 'default nil
   :font "TerminessNerdFontMono"
-  :height 160
+  :height 170
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
   :font "TerminessNerdFontMono"
-  :height 160
+  :height 170
   :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
