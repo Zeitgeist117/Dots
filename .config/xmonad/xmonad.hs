@@ -32,14 +32,16 @@ myStartupHook = do
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
+    spawnOnce "eww --daemon && eww open bar"
     spawnOnce "xrdb .Xresources"
     spawnOnce "xset r rate 160 35"
     spawnOnce "syncthing &"
+    spawnOnce "mpDris2"
     spawnOnce "mpd"
     -- spawnOnce "easyeffects --gapplication-service"
 
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh =<< xmobar myConfig
+main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ myConfig
 myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
@@ -74,13 +76,15 @@ scratchpads :: [NamedScratchpad]
 scratchpads = [ NS "ncmpcpp" "alacritty --class=ncmpcpp -t ncmpcpp -e ncmpcpp" (title =? "ncmpcpp") centerFloating
               , NS "pulsemixer" "alacritty --class=pulsemixer -t pulsemixer -e pulsemixer" (title =? "pulsemixer") centerFloating
               , NS "btop" "alacritty --class=btop -t btop -e btop" (title =? "btop") centerFloating
+              , NS "scratch" "alacritty --class=scratch -t scratch" (title =? "scratch") centerFloating
               ]where
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
 
 nonNSP = WSIs (return (\ws -> W.tag ws /= "NSP"))
 
 myKeymap =
-    [("M-<Space>", spawn "dmenu_run -c -l 20"                 )
+    [("M-<Space>", spawn "dmenu_run -c -l 15"                 )
+    -- [("M-<Space>", spawn "rofi -show run"                     )
     ,("M-S-<Space>"  , sendMessage NextLayout                 )
     ,("M-S-p"  , spawn "passmenu -c -l 20 -p pass"	          ) -- Launches pass menu, a built in dmenu wrapper for the pass gpg password manager
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
@@ -100,6 +104,7 @@ myKeymap =
     ,("M-n"  , namedScratchpadAction scratchpads "ncmpcpp"    ) -- Launches a scratchpad of my favourite music player N Curses Music Player Client ++
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer" ) -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop"       ) -- Launches scratchpad of btop to quickly see whats happening and kill processess
+    ,("M-i"  , namedScratchpadAction scratchpads "scratch"    ) -- Launches scratchpad of an empty terminal to do quick stuff
     ,("<XF86AudioPlay>",  spawn "mpc toggle"                  ) -- toggle play/pause mpd
     ,("<XF86AudioPrev>",  spawn "mpc prev"                    ) -- skip to previous song mpd
     ,("<XF86AudioNext>",  spawn "mpc next"                    ) -- skip to next song mpd

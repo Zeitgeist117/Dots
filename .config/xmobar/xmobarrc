@@ -1,5 +1,5 @@
-Config { font = "xft:IBM Plex Mono:size=14:antialias=true"
-       , additionalFonts = [ "xft:FontAwesome:size=14" ]
+Config { font = "xft:TerminessNerdFontMono:size=16:antialias=true"
+       , additionalFonts = [ "xft:FontAwesome:size=16" ]
        , borderColor = "#1e2122"
        , border = NoBorder
        , bgColor = "#1e2122"

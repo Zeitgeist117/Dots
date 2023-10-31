@@ -20,7 +20,7 @@ state_line_color = black
 
 [playlist]
 playlist_display_mode = classic
-song_list_format = "{{%a - %t}|{%f}}{$R%l}"
+song_list_format = "{{%t}|{%f}}{$R%l}"
 now_playing_prefix = "$b$5"
 now_playing_suffix = "$/b$9"
 
@@ -30,10 +30,10 @@ progressbar_elapsed_color = red
 progressbar_color = black
 statusbar_visibility = no
 statusbar_color = default
-song_status_format = "{{%a{ - %t}}|{ - %f}{ - %b{ (%y)}}}"
+song_status_format = "{{%t}}|{ - %f}{ - %b{ (%y)}}}"
 
 [library]
-song_library_format = "{{%a - %t}|{%f}}{$R%l}"
+song_library_format = "{{%t}|{%f}}{$R%l}"
 empty_tag_color = black
 media_library_albums_split_by_date = no
 

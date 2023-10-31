@@ -73,5 +73,5 @@ case "$1" in
 	*) scrot "$output" || exit ;;
 esac
 
-libnotify "  Screenshot Taken "
+notify-send "  Screenshot Taken "
 #+end_src

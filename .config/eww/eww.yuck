@@ -1,4 +1,4 @@
-(defwindow example
+(defwindow bar 
            :monitor 0
            :geometry (geometry :x "0%"
                                :y "5px"
@@ -9,4 +9,15 @@
            :reserve (struts :distance "30px" :side "top")
            :windowtype "dock"
            :wm-ignore false
-  "place holder statusbar please ignore i know it is ugly i don't know how the fuck eww works yet i am retarded")
+(bar)) 
+
+(defwidget bar []
+  (box :orientation "h"
+      (datetime)))
+
+(defwidget datetime []
+		   (box :class "datetime" :orientation "h" :space-evenly false :halign "center"
+				time ))
+
+(defpoll time :interval "1s"
+  "date '+%a %b %d, %Y %T '")

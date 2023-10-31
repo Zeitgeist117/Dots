@@ -1,17 +1,20 @@
 window:
-  opacity: 0.9
+  padding:
+    x: 10
+    y: 10
   dynamic_padding: true
+  opacity: 0.9
 font:
   normal:
-    family: IBMPlexMono 
+    family: Terminess Nerd Font Mono 
     style: Medium
   bold:
-    family: IBMPlexMono 
+    family: Terminess Nerd Font Mono 
     style: Medium
   italic:
-    family: IBMPlexMono 
+    family: Terminess Nerd Font Mono 
     style: Light italic
-  size: 14
+  size: 16
 key_bindings:
   - {key: C, mods: Alt, action: Copy}
   - {key: V, mods: Alt, action: Paste}

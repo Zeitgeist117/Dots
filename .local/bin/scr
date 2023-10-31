@@ -7,4 +7,4 @@ case "$1" in
 	*) scrot "$output" || exit ;;
 esac
 
-notify-send "  Screenshot Taken "
+notify-send "  Screenshot Taken "
