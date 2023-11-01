@@ -16,8 +16,23 @@
       (datetime)))
 
 (defwidget datetime []
-		   (box :class "datetime" :orientation "h" :space-evenly false :halign "center"
+		   (box :class "time" 
+				:orientation "h" 
+				:space-evenly false 
+				:halign "center"
+				:windowtype "dock"
+				:tooltip date
 				time ))
+		   
+
+;; (defpoll time :interval "1s"
+;;   "date '+%a %b %d, %Y %T '")
 
 (defpoll time :interval "1s"
-  "date '+%a %b %d, %Y %T '")
+  "date '+%T '")
+
+;; (defpoll date :interval "100s"
+;;   "date '+%a %b %d, %Y'")
+
+(defpoll date :interval "100s"
+  "scripts/cale")
