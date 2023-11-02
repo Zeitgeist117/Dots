@@ -1,0 +1,8 @@
+#!/bin/sh
+usage="$(ps -eo pid,pcpu,comm | awk '{if ($2 > 2) print }')"  
+temp="$(sensors | awk '/Core 0/ {print "🌡" $3}')"
+
+echo "TEMP: $temp"
+echo "             "
+echo "USAGE:"
+echo "$usage"

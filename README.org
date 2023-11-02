@@ -1,6 +1,6 @@
 * Dotfiles
 
-** XMonad
+** [[file:.config/xmonad/README.org]]
 
 [[file:.img/x1.png]]
 [[file:.img/x2.png]]

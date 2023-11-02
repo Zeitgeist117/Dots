@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Set the number of iterations and delay between updates
+# Loop to monitor CPU usage and calculate the total percentage
+cpu=$(mpstat 1 1 | awk '$3 == "all" {print 100 - $NF}')
+echo -n "[󰻠 $cpu%] "

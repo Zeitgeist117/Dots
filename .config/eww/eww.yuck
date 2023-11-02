@@ -13,26 +13,59 @@
 
 (defwidget bar []
   (box :orientation "h"
-      (datetime)))
+	  (workspaces)
+      (datetime)
+	  (systop)
+)) 
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly true
+       :halign "start"
+       :spacing 1
+    (button :onclick "wmctrl -s 0" 1)
+    (button :onclick "wmctrl -s 1" 2)
+    (button :onclick "wmctrl -s 2" 3)
+    (button :onclick "wmctrl -s 3" 4)
+    (button :onclick "wmctrl -s 4" 5)
+    (button :onclick "wmctrl -s 5" 6)
+    (button :onclick "wmctrl -s 6" 7)
+    (button :onclick "wmctrl -s 7" 8)
+    (button :onclick "wmctrl -s 8" 9)))
 
 (defwidget datetime []
-		   (box :class "time" 
-				:orientation "h" 
-				:space-evenly false 
-				:halign "center"
-				:windowtype "dock"
-				:tooltip date
-				time ))
-		   
+   (box :class "time" 
+		:orientation "h" 
+		:space-evenly false 
+		:halign "center"
+		:tooltip date
+		time ))
 
-;; (defpoll time :interval "1s"
-;;   "date '+%a %b %d, %Y %T '")
+(defwidget systop []
+	(box :orientation "h"
+		 :space-evenly true
+		 :spacing 1
+		 :halign "end"
+		 (label :text proc :tooltip cput)	
+		 (label :text memp :tooltip mem)	
+))
+	
 
 (defpoll time :interval "1s"
-  "date '+%T '")
+	"date '+%T '")
 
-;; (defpoll date :interval "100s"
-;;   "date '+%a %b %d, %Y'")
+(defpoll date :interval "600s"
+	"scripts/cale")
 
-(defpoll date :interval "100s"
-  "scripts/cale")
+(defpoll proc :interval "1s"
+    "scripts/cpu")
+
+(defpoll cput :interval "10s"
+    "scripts/cput")
+
+(defpoll mem :interval "1s"
+	"scripts/mem")
+
+(defpoll memp :interval "1s"
+	"scripts/memp")
