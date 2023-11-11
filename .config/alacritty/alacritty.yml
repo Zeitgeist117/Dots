@@ -6,13 +6,13 @@ window:
   opacity: 0.9
 font:
   normal:
-    family: Terminess Nerd Font Mono 
+    family: Monaspace Krypton Var
     style: Medium
   bold:
-    family: Terminess Nerd Font Mono 
+    family: Monaspace Krypton Var
     style: Medium
   italic:
-    family: Terminess Nerd Font Mono 
+    family: Monaspace Krypton Var
     style: Light italic
   size: 16
 key_bindings:
@@ -21,4 +21,4 @@ key_bindings:
 # env:
 #   TERM: alacritty-direct
 import:
-  - /home/nightwing/.config/alacritty/gruvbox_dark.yaml
+ - /home/nightwing/.config/alacritty/gruvbox_dark.yml

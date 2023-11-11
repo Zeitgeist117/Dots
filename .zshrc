@@ -33,7 +33,7 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -v '^?' backward-delete-char
+
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
@@ -71,3 +71,12 @@ export EXPLORER="pcmanfm"
 export BROWSER="thorium-browser"
 export MANPAGER="nvim +Man!"
 export LC_ALL=en_US.UTF-8
+
+
+
+function reload_gtk_theme() {
+  theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
+  gsettings set org.gnome.desktop.interface gtk-theme ''
+  sleep 1
+  gsettings set org.gnome.desktop.interface gtk-theme $theme
+}

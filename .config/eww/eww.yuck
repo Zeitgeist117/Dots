@@ -6,7 +6,7 @@
                                :height "30px"
                                :anchor "top center")
            :stacking "fg"
-           :reserve (struts :distance "30px" :side "top")
+           :reserve (struts :distance "35px" :side "top")
            :windowtype "dock"
            :wm-ignore false
 (bar)) 
@@ -23,7 +23,7 @@
        :orientation "h"
        :space-evenly true
        :halign "start"
-       :spacing 1
+       :spacing 2
     (button :onclick "wmctrl -s 0" 1)
     (button :onclick "wmctrl -s 1" 2)
     (button :onclick "wmctrl -s 2" 3)

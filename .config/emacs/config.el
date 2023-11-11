@@ -259,11 +259,11 @@
 (use-package magit)
 
 (set-face-attribute 'default nil
-  :font "TerminessNerdFontMono"
+  :font "MonaspaceKrypton"
   :height 170
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "TerminessNerdFontMono"
+  :font "MonaspaceKrypton"
   :height 170
   :weight 'medium)
 ;; Makes commented text and keywords italics.
@@ -275,6 +275,32 @@
   :slant 'italic)
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
+
+(use-package ligature
+  :load-path "path-to-ligature-repo"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -352,6 +378,8 @@
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
 
+(use-package drag-stuff)
+
 (use-package darkroom)
 
 (use-package toc-org
@@ -359,9 +387,9 @@
     :init (add-hook 'org-mode-hook 'toc-org-enable))
 
 (use-package org-superstar)
-;; (setq
-;;     org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
-;; )
+(setq
+    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
 (require 'org-tempo)

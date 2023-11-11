@@ -1,4 +1,4 @@
-*.font: Terminess Nerd Font Mono-16
+*.font: Monaspace Krypton-14
 !!*.font:TerminessTTF Nerd Font Mono-16
 
 !!*.alpha: 0.9
@@ -63,25 +63,45 @@
 ! *.color15:      #f2f0ec
 
 
+! Gruvbox !
+*background: #282828
+*foreground: #ebdbb2
+*color0:  #282828
+*color8:  #928374
+*color1:  #cc241d
+*color9:  #fb4934
+*color2:  #98971a
+*color10: #b8bb26
+*color3:  #d79921
+*color11: #fabd2f
+*color4:  #458588
+*color12: #83a598
+*color5:  #b16286
+*color13: #d3869b
+*color6:  #689d6a
+*color14: #8ec07c
+*color7:  #a89984
+*color15: #ebdbb2
+
 ! Gruvbox Material !
-*background: #1e2122
-*foreground: #d4be98
-   *color0:  #282b2c
-   *color8:  #32302f
-   *color1:  #df736d
-   *color9:  #d1807b
-   *color2:  #a8b467
-   *color10: #a5b06b
-   *color3:  #d28e63
-   *color11: #ccb380
-   *color4:  #6d8dad
-   *color12: #748faa
-   *color5:  #d0899d
-   *color13: #cb8e9e
-   *color6:  #8dae88
-   *color14: #89b482
-   *color7:  #c0b6a4
-   *color15: #c5b89f
+! *background: #1e2122
+! *foreground: #d4be98
+! *color0:  #282b2c
+! *color8:  #32302f
+! *color1:  #df736d
+! *color9:  #d1807b
+! *color2:  #a8b467
+! *color10: #a5b06b
+! *color3:  #d28e63
+! *color11: #ccb380
+! *color4:  #6d8dad
+! *color12: #748faa
+! *color5:  #d0899d
+! *color13: #cb8e9e
+! *color6:  #8dae88
+! *color14: #89b482
+! *color7:  #c0b6a4
+! *color15: #c5b89f
 
 ! Dracula Xresources palette
 ! *.foreground:  #f8f8f2
@@ -122,6 +142,34 @@
 !*.color13: #ada0d3
 !*.color14: #95c4ce
 !*.color15: #d2d4d
+
+!Swamp!
+! *background: #242015
+! *foreground: #ebe0bb
+!
+! *color0:  #242015
+! *color8:  #856A5D
+!
+! *color1:  #96294d
+! *color9:  #a82d56
+!
+! *color2:  #7a7653
+! *color10: #736f4e
+!
+! *color3:  #db930d
+! *color11: #e69a0e
+!
+! *color4:  #91506c
+! *color12: #80465f
+!
+! *color5:  #C1666B
+! *color13: #b05d61
+!
+! *color6:  #508991
+! *color14: #61A0A8
+!
+! *color7:  #9F8875
+! *color15: #ebe0bb
 
 ! Gotham !
 /* *.foreground:   #98d1ce */

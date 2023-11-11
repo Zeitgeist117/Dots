@@ -6,6 +6,7 @@ return {
 	},
 	"morhetz/gruvbox",
 
+	"masroof-maindak/swamp.nvim",
 
 	{"numToStr/Comment.nvim",
 	config = function()

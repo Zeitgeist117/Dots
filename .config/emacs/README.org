@@ -14,6 +14,7 @@
   - [[#general-keybindings][General keybindings]]
 - [[#git][Git]]
 - [[#fonts][Fonts]]
+  - [[#ligatures][Ligatures]]
   - [[#zooming-in-and-out][Zooming in and out]]
   - [[#all-the-icons][ALL THE ICONS]]
   - [[#rainbow-mode][Rainbow mode]]
@@ -22,6 +23,7 @@
   - [[#line-numbers-and-truncated-lines][Line numbers and truncated lines]]
 - [[#which-key][Which Key]]
 - [[#ivy-counsel][IVY (counsel)]]
+- [[#text-stuff][Text Stuff]]
 - [[#org-mode][Org Mode]]
   - [[#misc-packages][Misc Packages]]
   - [[#enabling-table-of-contents][Enabling table of contents]]
@@ -337,11 +339,11 @@ Defining all the fonts so it looks kool an so i kan reed
 
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
-  :font "TerminessNerdFontMono"
+  :font "MonaspaceKrypton"
   :height 170
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "TerminessNerdFontMono"
+  :font "MonaspaceKrypton"
   :height 170
   :weight 'medium)
 ;; Makes commented text and keywords italics.
@@ -354,6 +356,36 @@ Defining all the fonts so it looks kool an so i kan reed
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
 #+end_src
+
+** Ligatures
+#+begin_src emacs-lisp
+(use-package ligature
+  :load-path "path-to-ligature-repo"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+#+end_src
+
 ** Zooming in and out
 
 #+begin_src emacs-lisp
@@ -461,6 +493,15 @@ which fucking keys do i use, is this moonlight sonata?
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
 #+end_src
+
+
+* Text Stuff
+
+#+begin_src emacs-lisp
+(use-package drag-stuff)
+#+end_src
+
+
 * Org Mode
 ** Misc Packages
 #+begin_src emacs-lisp
@@ -477,9 +518,9 @@ which fucking keys do i use, is this moonlight sonata?
 ** Org bullets
 #+begin_src emacs-lisp
 (use-package org-superstar)
-;; (setq
-;;     org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
-;; )
+(setq
+    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 #+end_src
 

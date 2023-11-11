@@ -1,0 +1,41 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+}
+
+
+.bar {
+	padding: 5px;
+	min-height: 10px;
+	border: 2px solid #ebdbb2;
+	background: #282828;
+	color: #ebdbb2;
+}
+
+.systop {
+	padding: 5px;
+	color: #ebdbb2;
+}
+
+.workspaces button:hover {
+	border-radius: 0px;
+	padding: 3px;
+	background-color: #928374;
+	color: #ebdbb2;
+
+}
+.workspaces button {
+	border-radius: 0px;
+	padding: 4px;
+	color: #ebdbb2;
+	// border: 1px solid #ebdbb2;
+	margin: 4px;
+}
+
+tooltip {
+	padding: 5px;
+	border-radius: 0px;
+	color: #ebdbb2;
+	border: 1px solid #ebdbb2;
+	background-color: #282828;
+}
+

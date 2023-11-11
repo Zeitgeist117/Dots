@@ -3,40 +3,9 @@ mpd_host = localhost
 mpd_port = 6600
 mpd_crossfade_time = 2
 
+now_playing_prefix = "> "
+progressbar_look = "─╼ "
 visualizer_fifo_path = /tmp/mpd.fifo
 visualizer_in_stereo = no
 visualizer_type = spectrum
-visualizer_look = ●┃
-visualizer_color = cyan, green, yellow, magenta, red
-
-header_visibility = no
-header_window_color = default
-playlist_shorten_total_times = yes
-volume_color = default
-state_line_color = black
-
-playlist_display_mode = classic
-song_list_format = "{{%t}|{%f}}{$R%l}"
-now_playing_prefix = "> $b$5"
-now_playing_suffix = "$/b$9"
-
-progressbar_look = "─╼ "
-progressbar_elapsed_color = red
-progressbar_color = black
-statusbar_visibility = no
-statusbar_color = default
-song_status_format = "{{%t}}|{ - %f}{ - %b{ (%y)}}}"
-
-song_library_format = "{{%t}|{%f}}{$R%l}"
-empty_tag_color = black
 media_library_albums_split_by_date = no
-
-user_interface = alternative
-colors_enabled = yes
-main_window_color = default
-centered_cursor = yes
-enable_window_title = yes
-external_editor = vim
-startup_screen = "media_library"
-titles_visibility = yes
-autocenter_mode = yes

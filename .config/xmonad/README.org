@@ -50,12 +50,13 @@ myStartupHook :: X ()
 myStartupHook = do 
     spawnOnce "xrandr --output 'eDP-1' --off"
     spawnOnce "picom &"
+    spawnOnce "xset r rate 160 35"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
-    spawnOnce "eww --daemon && eww open bar"
     spawnOnce "xrdb .Xresources"
-    spawnOnce "xset r rate 160 35"
+    spawnOnce "eww --daemon"
+    spawnOnce "eww open bar"
     spawnOnce "syncthing &"
     spawnOnce "mpDris2"
     spawnOnce "mpd"
@@ -65,7 +66,7 @@ myStartupHook = do
 ** Main Config
 #+begin_src haskell
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ myConfig
+main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ myConfig 
 myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
@@ -73,14 +74,14 @@ myConfig = def
     , manageHook = myManageHook  -- Match on certain windows
     , focusedBorderColor = "#d4be98"
     , normalBorderColor = "#1e2122"
-    , borderWidth = 3
+    , borderWidth = 2 
     }`additionalKeysP` myKeymap
 #+end_src
 
 ** Common Variables
 #+begin_src haskell
 myTerminal, myBrowser, myExplorer :: String
-myTerminal = "alacritty" :: String
+myTerminal = "st" :: String
 myBrowser = "thorium-browser" :: String
 myExplorer = "pcmanfm" :: String
 #+end_src
@@ -113,10 +114,10 @@ myManageHook = manageDocks <+> composeAll
 These are a fucking godsend and more people should use and implement them
 #+begin_src haskell
 scratchpads :: [NamedScratchpad]
-scratchpads = [ NS "ncmpcpp" "alacritty --class=ncmpcpp -t ncmpcpp -e ncmpcpp" (title =? "ncmpcpp") centerFloating
-              , NS "pulsemixer" "alacritty --class=pulsemixer -t pulsemixer -e pulsemixer" (title =? "pulsemixer") centerFloating
-              , NS "btop" "alacritty --class=btop -t btop -e btop" (title =? "btop") centerFloating
-              , NS "scratch" "alacritty --class=scratch -t scratch" (title =? "scratch") centerFloating
+scratchpads = [ NS "ncmpcpp" "st -c ncmpcpp -T 'ncmpcpp' -e ncmpcpp" (className =? "ncmpcpp") centerFloating
+              , NS "pulsemixer" "st -c pulsemixer -T pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating
+              , NS "btop" "st -c btop -T btop -e btop" (className =? "btop") centerFloating
+              , NS "scratch" "st -c scratch -T scratch" (className =? "scratch") centerFloating
               ]where
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
 #+end_src
@@ -132,9 +133,10 @@ nonNSP = WSIs (return (\ws -> W.tag ws /= "NSP"))
 haxxer mvn
 #+begin_src haskell
 myKeymap =
-    [("M-<Space>", spawn "dmenu_run -c -l 15"                 )
-    -- [("M-<Space>", spawn "rofi -show run"                     )
-    ,("M-S-<Space>"  , sendMessage NextLayout                 )
+    [("M-<Space>", spawn "dmenu_run -c -l 15"                 ) --Launches DMenu a suckless application launcher
+    -- [("M-<Space>", spawn "rofi -show run"                     ) -- Launches Rofi application launcher
+    ,("M-S-<Space>"  , sendMessage NextLayout                 ) -- Cycles through layouts
+    ,("M-S-<Backspace>"  , spawn "slock"                      ) -- Launches slock the suckless lock screen
     ,("M-S-p"  , spawn "passmenu -c -l 20 -p pass"	          ) -- Launches pass menu, a built in dmenu wrapper for the pass gpg password manager
     ,("M-q"  , spawn "xmonad --recompile && xmonad --restart" ) -- Restart Xmonad
     ,("M-v"  , spawn myBrowser                                ) -- Launches Web Browser
@@ -145,7 +147,7 @@ myKeymap =
     ,("M-h"  , sendMessage Shrink		                      ) -- Makes window smaller
     ,("M-l"  , sendMessage Expand		                      ) -- Makes it Bigger
     ,("M-S-h"  , moveTo Prev nonNSP                           ) -- Move to previous workspace (ie from 2 to 1)
-    ,("M-S-l"  , moveTo Next nonNSP                           ) -- Move to previous workspace (ie from 2 to 1)
+    ,("M-S-l"  , moveTo Next nonNSP                           ) -- Move to next workspace (ie from 1 to 2)
     ,("M-j"  , windows W.focusDown		                      ) -- change window focus
     ,("M-k"  , windows W.focusUp		                      ) -- same thing different direction
     ,("M-S-j"  , windows W.swapDown		                      ) -- move window in layout/stack

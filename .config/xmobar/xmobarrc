@@ -1,15 +1,21 @@
-Config { font = "xft:TerminessNerdFontMono:size=16:antialias=true"
-       , additionalFonts = [ "xft:FontAwesome:size=16" ]
-       , borderColor = "#1e2122"
-       , border = NoBorder
-       , bgColor = "#1e2122"
-       , fgColor = "#d4be98"
-       , position = Top
-       , lowerOnStart = True
-       , commands = [ Run Date " [%H:%M] [%a %b %_d]" "date" 10
-                    , Run StdinReader
-                    ]
-       , sepChar = "%"
-       , alignSep = "}{"
-       , template = "%StdinReader% }{ %date%"
-       }
+Config { font = "Monaspace Krypton Bold 14"
+        , borderColor = "#edb"
+        , border = FullB
+		, borderWidth = 2
+        , bgColor = "#282828"
+        , fgColor = "#ebdbb2"
+        , position = TopHM 30 5 5 5 0
+        , commands = [ Run Cpu ["-t","<total>%"] 10
+                     , Run Memory ["-t","<usedratio>%"] 10
+                     , Run DiskU [("/","<used>/<size>")] [] 10
+                     , Run Com "uname" ["-r"] "" 36000
+                     , Run CommandReader "/usr/local/bin/subs.sh" "subs"
+                     , Run CommandReader "rofi -show drun" "menu"
+                     , Run Date "%b %_d - %I:%M" "date" 10
+                     , Run UnsafeStdinReader
+                     ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = " <action=`dmenu_run -c -l 15` button=1> <fc=#9ECE6A,#282828></fc></action>  | %UnsafeStdinReader%  }{ <fc=#d79921>󰻠</fc> %cpu%  <fc=#b16286>󰍛</fc>  %memory%   <fc=#b8bb26>󰥔 </fc> %date%  "
+        }
+

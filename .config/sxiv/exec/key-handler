@@ -3,7 +3,7 @@ while read file
 do
         case "$1" in
         "D")
-                mv "$file" ~/.trash ;;
+                trash-put "$file";;
         "w")
 			feh --bg-fill $file
 
