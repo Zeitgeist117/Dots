@@ -535,6 +535,7 @@
   (setq elfeed-search-feed-face ":foreground #ffffff :weight bold"
         elfeed-feeds (quote
                        (("https://export.arxiv.org/api/query?search_query=extra+terrestrials+cat:astro-ph.CV" ET)
+						("https://kbd.news/rss2.php" KBD News)
                         ("https://odysee.com/$/rss/@AlphaNerd:8" Mental Outlaw)))))
  
 

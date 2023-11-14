@@ -1,6 +1,6 @@
 alias startx='startx ~/.xinitrc'
 alias ls='eza --icons'
-alias lls='ls -l'
+alias ll='ls -l'
 alias la='ls -A'
 alias lla='ls -lA'
 alias steam-b='steam -gamepadui'
