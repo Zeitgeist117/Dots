@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Monaspace Krypton :pixelsize=15:antialias=true:autohint=true";
-static char *font2[] = { "JetBrainsNerdFont Mono :pixelsize=15:antialias=true:autohint=true" };
+static char *font = "CozettVectoreNerdFont :pixelsize=15:antialias=true:autohint=true";
+static char *font2[] = { "CozettVectoreNerdFont :pixelsize=15:antialias=true:autohint=true" };
 static int borderpx = 20;
 
 /*

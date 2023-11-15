@@ -13,7 +13,7 @@
 
 (defwidget bar []
   (box :orientation "h"
-	  (workspaces)
+	  (ws)
       (datetime)
 	  (systop)
 )) 
@@ -33,6 +33,17 @@
     (button :onclick "wmctrl -s 6" 7)
     (button :onclick "wmctrl -s 7" 8)
     (button :onclick "wmctrl -s 8" 9)))
+
+(defwidget ws []
+      (box
+        :halign "start"
+        :valign "center"
+        (literal :content WS))
+      ) 
+   
+
+(deflisten WS :initial "(box (label :text 'init'))"
+  `scripts/ws`)
 
 (defwidget datetime []
    (box :class "time" 

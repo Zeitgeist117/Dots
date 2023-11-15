@@ -1,4 +1,4 @@
-*.font: Monaspace Krypton-14
+*.font: CozetteVector Nerd Font-14
 !!*.font:TerminessTTF Nerd Font Mono-16
 
 !!*.alpha: 0.9
@@ -191,3 +191,32 @@
 /* *.color13:      #888ba5 */
 /* *.color14:      #599caa */
 /* *.color15:      #d3ebe9 */
+
+	
+!! Quantatative !!
+! *.foreground:   #C0C0C0
+! *.background:   #101010
+! ! black/dark-gray
+! *.color0:       #101010
+! *.color8:       #454545
+! ! red/orange
+! *.color1:       #EFA6A2
+! *.color9:       #E0AF85
+! ! green/aquamarine
+! *.color2:       #80C990
+! *.color10:      #5ACCAF
+! ! amber/yellow
+! *.color3:       #A69460
+! *.color11:      #C8C874
+! ! blue/violet
+! *.color4:       #A3B8EF
+! *.color12:      #CCACED
+! ! magenta/rose
+! *.color5:       #E6A3DC
+! *.color13:      #F2A1C2
+! ! cyan/azure
+! *.color6:       #50CACD
+! *.color14:      #74C3E4
+! ! gray/white
+! *.color7:       #808080
+! *.color15:      #C0C0C0
