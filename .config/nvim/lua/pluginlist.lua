@@ -6,8 +6,6 @@ return {
 	},
 	"morhetz/gruvbox",
 
-	"masroof-maindak/swamp.nvim",
-
 	{"numToStr/Comment.nvim",
 	config = function()
 		require("Comment").setup()
@@ -20,10 +18,29 @@ return {
 	"folke/which-key.nvim",
 	{'nvim-telescope/telescope.nvim', tag = '0.1.4',
 	dependencies = { 'nvim-lua/plenary.nvim' }},
-
+	{
+		"folke/zen-mode.nvim",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		}
+	},
 
 	{"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate"},
+
+
+	{"vimwiki/vimwiki",
+	init = function()
+		vim.g.vimwiki_list = {{
+			path = '~/Notes/wiki/',
+			syntax = 'markdown',
+			ext = '.md',
+		}}
+	end},
+	"preservim/vim-pencil",
+
 
 	"nvim-treesitter/playground",
 	"theprimeagen/harpoon",

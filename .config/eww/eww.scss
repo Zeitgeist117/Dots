@@ -6,23 +6,17 @@
 .bar {
 	padding: 5px;
 	min-height: 10px;
-	border: 2px solid #ebdbb2;
+	// border: 2px solid #ebdbb2;
 	background: #282828;
 	color: #ebdbb2;
 }
 .ws_active {
-    font-size: 1.2rem;
-    font-weight: bold;
 }
 
 .ws_inactive {
-    font-size: 1.2rem;
-    font-weight: bold;
 }
 
 .ws_occupied {
-    font-size: 1.2rem;
-    font-weight: bold;
 }
 
 .systop {
@@ -52,4 +46,3 @@ tooltip {
 	border: 1px solid #ebdbb2;
 	background-color: #282828;
 }
-

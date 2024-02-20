@@ -1,7 +1,7 @@
 #!/bin/bash
 
 check_occupied() {
-    wmctrl -l | awk '{print $2}' | uniq | while read -r op; do
+    wmctrl -l | awk '{print $2}' | grep -v '9' | uniq | while read -r op; do
         if [ "$op" == "$1" ]; then
             echo "true"
             return
@@ -15,12 +15,12 @@ xprop -spy -root _NET_CURRENT_DESKTOP | while read -r; do
 
     wmctrl -d | awk '{print $1 " " $2 " " $9}' | while read -r number status name; do
         statusClass="ws_inactive"
-        icon="󰧞"
+        icon="[]"
         # icon="󰣏"
 
         if [ "$(check_occupied $number)" == "true" ]; then
             statusClass="ws_occupied"
-            icon="[]"
+            icon=""
             # icon=""
             # icon="󰮿"
         fi
@@ -36,7 +36,7 @@ xprop -spy -root _NET_CURRENT_DESKTOP | while read -r; do
         buffered+="(label :class '$statusClass' :text '$icon')"
 
         if [ "$number" == "$wsNumber" ]; then
-            echo "(box :space-evenly true :spacing 10 $buffered)"
+            echo "(box :space-evenly true :spacing 5 $buffered)"
         fi
     done
 done

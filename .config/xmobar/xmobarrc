@@ -1,10 +1,10 @@
-Config { font = "Monaspace Krypton Bold 14"
-        , borderColor = "#edb"
+Config { font = "Iosevka Nerd Font Mono Regular 14"
+        , borderColor = "#ebdbb2"
         , border = FullB
 		, borderWidth = 2
         , bgColor = "#282828"
         , fgColor = "#ebdbb2"
-        , position = TopHM 30 5 5 5 0
+        , position = TopHM 30 10 10 5 -5 
         , commands = [ Run Cpu ["-t","<total>%"] 10
                      , Run Memory ["-t","<usedratio>%"] 10
                      , Run DiskU [("/","<used>/<size>")] [] 10
@@ -16,6 +16,6 @@ Config { font = "Monaspace Krypton Bold 14"
                      ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = " <action=`dmenu_run -c -l 15` button=1> <fc=#9ECE6A,#282828></fc></action>  | %UnsafeStdinReader%  }{ <fc=#d79921>󰻠</fc> %cpu%  <fc=#b16286>󰍛</fc>  %memory%   <fc=#b8bb26>󰥔 </fc> %date%  "
+        , template = " <action=`dmenu_run -c -l 15` button=1> <fc=#ebdbb2,#282828></fc></action>  | %UnsafeStdinReader%  }{ [<fc=#d79921>󰻠</fc> %cpu%]  [<fc=#b16286>󰍛</fc>  %memory%]  [<fc=#b8bb26>󰥔 </fc> %date%] "
         }
 

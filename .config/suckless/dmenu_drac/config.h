@@ -7,8 +7,7 @@ static int colorprompt = 0;                /* -p  option; if 1, prompt uses Sche
 static int min_width = 500;
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"Cascadia Code:size=15",
-	"FiraCode Nerd Font:size=15",
+	"CozetteVector Nerd Font:size=15",
 	"JoyPixels:pixelsize=15",
 };
 static const char *prompt      = "󰘧";      /* -p  option; prompt to the left of input field */

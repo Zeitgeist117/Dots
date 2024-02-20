@@ -1,4 +1,4 @@
-#+PROPERTY: header-args :tangle xmonad.hs
+#+PROPERTY: header-args 
 * Xmonad Config :toc:
   - [[#imports][Imports]]
   - [[#autostart][Autostart]]
@@ -48,10 +48,11 @@ Idk, what the fuck do i say, its pretty self explanatory
 #+begin_src haskell 
 myStartupHook :: X ()
 myStartupHook = do 
-    spawnOnce "xrandr --output 'eDP-1' --off"
-    spawnOnce "picom &"
+    -- spawnOnce "xrandr --output 'eDP-1' --off"
+    spawnOnce "compfy &"
     spawnOnce "xset r rate 160 35"
     spawnOnce "/usr/bin/emacs --daemon &"
+    spawnOnce "dunst"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
     spawnOnce "xrdb .Xresources"
@@ -72,8 +73,8 @@ myConfig = def
     , layoutHook = myLayout      -- Use custom layouts
     , startupHook = myStartupHook
     , manageHook = myManageHook  -- Match on certain windows
-    , focusedBorderColor = "#d4be98"
-    , normalBorderColor = "#1e2122"
+    , focusedBorderColor = "#ebdbb2"
+    , normalBorderColor = "#282828"
     , borderWidth = 2 
     }`additionalKeysP` myKeymap
 #+end_src
@@ -82,8 +83,8 @@ myConfig = def
 #+begin_src haskell
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "st" :: String
-myBrowser = "thorium-browser" :: String
-myExplorer = "pcmanfm" :: String
+myBrowser = "firefox" :: String
+myExplorer = "thunar" :: String
 #+end_src
 
 ** Layouts
@@ -97,7 +98,8 @@ myLayout = tiled ||| monocle ||| fullsc
 
 ** Workspaces
 #+begin_src haskell
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+-- myWorkspaces = ["dev","term","www","gam","cht","6","7","8","9"]
+myWorkspaces = [" dev ", " code ", " www ", " game ", " chat ", " vid ", " wrk "]
 #+end_src
 
 ** Window Rules
@@ -167,4 +169,3 @@ myKeymap =
     ,("M-y"  , spawn "ywatch"                                 ) -- if my clipboard has a youtube link it is launched in mpv
     ]
 #+end_src
-

@@ -27,8 +27,8 @@ import XMonad.StackSet as W
 
 myStartupHook :: X ()
 myStartupHook = do 
-    spawnOnce "xrandr --output 'eDP-1' --off"
-    spawnOnce "picom &"
+    -- spawnOnce "xrandr --output 'eDP-1' --off"
+    spawnOnce "compfy &"
     spawnOnce "xset r rate 160 35"
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "xclip &"
@@ -48,15 +48,15 @@ myConfig = def
     , layoutHook = myLayout      -- Use custom layouts
     , startupHook = myStartupHook
     , manageHook = myManageHook  -- Match on certain windows
-    , focusedBorderColor = "#d4be98"
-    , normalBorderColor = "#1e2122"
+    , focusedBorderColor = "#ebdbb2"
+    , normalBorderColor = "#282828"
     , borderWidth = 2 
     }`additionalKeysP` myKeymap
 
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "st" :: String
-myBrowser = "thorium-browser" :: String
-myExplorer = "pcmanfm" :: String
+myBrowser = "firefox" :: String
+myExplorer = "thunar" :: String
 
 myLayout = tiled ||| monocle ||| fullsc
   where
@@ -64,7 +64,8 @@ myLayout = tiled ||| monocle ||| fullsc
 	tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
 	fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+-- myWorkspaces = ["dev","term","www","gam","cht","6","7","8","9"]
+myWorkspaces = [" dev ", " code ", " www ", " game ", " chat ", " vid ", " wrk "]
 
 myManageHook = manageDocks <+> composeAll
     [ isFullscreen --> doFullFloat
@@ -78,6 +79,7 @@ scratchpads = [ NS "ncmpcpp" "st -c ncmpcpp -T 'ncmpcpp' -e ncmpcpp" (className 
               , NS "pulsemixer" "st -c pulsemixer -T pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating
               , NS "btop" "st -c btop -T btop -e btop" (className =? "btop") centerFloating
               , NS "scratch" "st -c scratch -T scratch" (className =? "scratch") centerFloating
+              , NS "term" "st -c term -T term" (className =? "term") centerFloating
               ]where
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
 
@@ -107,6 +109,7 @@ myKeymap =
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer" ) -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop"       ) -- Launches scratchpad of btop to quickly see whats happening and kill processess
     ,("M-i"  , namedScratchpadAction scratchpads "scratch"    ) -- Launches scratchpad of an empty terminal to do quick stuff
+    ,("M-o"  , namedScratchpadAction scratchpads "term"    ) -- Launches scratchpad of an empty terminal to do quick stuff
     ,("<XF86AudioPlay>",  spawn "mpc toggle"                  ) -- toggle play/pause mpd
     ,("<XF86AudioPrev>",  spawn "mpc prev"                    ) -- skip to previous song mpd
     ,("<XF86AudioNext>",  spawn "mpc next"                    ) -- skip to next song mpd

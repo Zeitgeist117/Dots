@@ -1,46 +1,47 @@
-*.font: CozetteVector Nerd Font-14
+! *.font: CozetteVector Nerd Font-14
+*.font: Iosevka Nerd Font Mono-14
 !!*.font:TerminessTTF Nerd Font Mono-16
 
 !!*.alpha: 0.9
 !! moonify theme
-/* *.color0: #323437 */
-/* *.color1: #ff5454 */
-/* *.color2: #8cc85f */
-/* *.color3: #e3c78a */
-/* *.color4: #80a0ff */
-/* *.color5: #d183e8 */
-/* *.color6: #79dac8 */
-/* *.color7: #a1aab8 */
-/* *.color8: #7c8f8f */
-/* *.color9: #ff5189 */
-/* *.color10: #36c692 */
-/* *.color11: #bfbf97 */
-/* *.color12: #74b2ff */
-/* *.color13: #ae81ff */
-/* *.color14: #79dac8 */
-/* *.color15: #e2637f */
-/* *.foreground: #eeeeee */
-/* *.background: #282c34 */ 
+! *.color0: #323437 
+! *.color1: #ff5454
+! *.color2: #8cc85f
+! *.color3: #e3c78a
+! *.color4: #80a0ff
+! *.color5: #d183e8
+! *.color6: #79dac8
+! *.color7: #a1aab8
+! *.color8: #7c8f8f
+! *.color9: #ff5189
+! *.color10: #36c692
+! *.color11: #bfbf97
+! *.color12: #74b2ff
+! *.color13: #ae81ff
+! *.color14: #79dac8
+! *.color15: #e2637f
+! *.foreground: #eeeeee
+! *.background: #282c34
 
 !! Catppuccin theme
-/* *.color0: #6E6C7E */
-/* *.color1: #F28FAD */
-/* *.color2: #ABE9B3 */
-/* *.color3: #FAE3B0 */
-/* *.color4: #96CDFB */
-/* *.color5: #F5C2E7 */
-/* *.color6: #89DCEB */
-/* *.color7: #D9E0EE */
-/* *.color8: #988BA2 */
-/* *.color9: #F28FAD */
-/* *.color10: #ABE9B3 */
-/* *.color11: #FAE3B0 */
-/* *.color12: #96CDFB */
-/* *.color13: #F5C2E7 */
-/* *.color14: #89DCEB */
-/* *.color15: #D9E0EE */
-/* *.background: #1E1E2E */
-/* *.foreground: #D9E0EE */
+! *.color0: #6E6C7E
+! *.color1: #F28FAD
+! *.color2: #ABE9B3
+! *.color3: #FAE3B0
+! *.color4: #96CDFB
+! *.color5: #F5C2E7
+! *.color6: #89DCEB
+! *.color7: #D9E0EE
+! *.color8: #988BA2
+! *.color9: #F28FAD
+! *.color10: #ABE9B3
+! *.color11: #FAE3B0
+! *.color12: #96CDFB
+! *.color13: #F5C2E7
+! *.color14: #89DCEB
+! *.color15: #D9E0EE
+! *.background: #1E1E2E
+! *.foreground: #D9E0EE
 
 ! Eighties Dark !
 !*.background:   #2d2d2d
@@ -172,51 +173,43 @@
 ! *color15: #ebe0bb
 
 ! Gotham !
-/* *.foreground:   #98d1ce */
-/* *.background:   #0a0f14 */
-/* *.cursorColor:  #98d1ce */
-/* *.color0:       #0a0f14 */
-/* *.color1:       #c33027 */
-/* *.color2:       #26a98b */
-/* *.color3:       #edb54b */
-/* *.color4:       #195465 */
-/* *.color5:       #4e5165 */
-/* *.color6:       #33859d */
-/* *.color7:       #98d1ce */
-/* *.color8:       #10151b */
-/* *.color9:       #d26939 */
-/* *.color10:      #081f2d */
-/* *.color11:      #245361 */
-/* *.color12:      #093748 */
-/* *.color13:      #888ba5 */
-/* *.color14:      #599caa */
-/* *.color15:      #d3ebe9 */
+! *.foreground:   #98d1ce
+! *.background:   #0a0f14
+! *.cursorColor:  #98d1ce
+! *.color0:       #0a0f14
+! *.color1:       #c33027
+! *.color2:       #26a98b
+! *.color3:       #edb54b
+! *.color4:       #195465
+! *.color5:       #4e5165
+! *.color6:       #33859d
+! *.color7:       #98d1ce
+! *.color8:       #10151b
+! *.color9:       #d26939
+! *.color10:      #081f2d
+! *.color11:      #245361
+! *.color12:      #093748
+! *.color13:      #888ba5
+! *.color14:      #599caa
+! *.color15:      #d3ebe9
 
 	
 !! Quantatative !!
 ! *.foreground:   #C0C0C0
 ! *.background:   #101010
-! ! black/dark-gray
 ! *.color0:       #101010
 ! *.color8:       #454545
-! ! red/orange
 ! *.color1:       #EFA6A2
 ! *.color9:       #E0AF85
-! ! green/aquamarine
 ! *.color2:       #80C990
 ! *.color10:      #5ACCAF
-! ! amber/yellow
 ! *.color3:       #A69460
 ! *.color11:      #C8C874
-! ! blue/violet
 ! *.color4:       #A3B8EF
 ! *.color12:      #CCACED
-! ! magenta/rose
 ! *.color5:       #E6A3DC
 ! *.color13:      #F2A1C2
-! ! cyan/azure
 ! *.color6:       #50CACD
 ! *.color14:      #74C3E4
-! ! gray/white
 ! *.color7:       #808080
 ! *.color15:      #C0C0C0
