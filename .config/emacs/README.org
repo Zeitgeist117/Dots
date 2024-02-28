@@ -667,6 +667,7 @@ an org mode package that is installed with emacs but not enabled by default that
 ** Biblio 
 #+begin_src emacs-lisp
   (use-package biblio)
+  (use-package org-ref)
   (setq biblio-download-directory "~/Downloads/")
 #+end_src
 

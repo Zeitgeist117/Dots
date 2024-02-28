@@ -511,6 +511,7 @@
 (require 'org-tempo)
 
 (use-package biblio)
+(use-package org-ref)
 (setq biblio-download-directory "~/Downloads/")
 
 (use-package org-roam)
