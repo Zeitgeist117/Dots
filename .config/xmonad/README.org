@@ -1,4 +1,4 @@
-#+PROPERTY: header-args 
+#+PROPERTY: header-args tangle:xmonad.hs
 * Xmonad Config :toc:
   - [[#imports][Imports]]
   - [[#autostart][Autostart]]
@@ -89,10 +89,11 @@ myExplorer = "thunar" :: String
 
 ** Layouts
 #+begin_src haskell
-myLayout = tiled ||| monocle ||| fullsc
+myLayout = tiled ||| ngtiled ||| monocle ||| fullsc
   where
 	monocle = spacingWithEdge 5 (Full)
 	tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
+	ngtiled = spacingWithEdge 0 (avoidStruts(smartBorders(Tall 1 (3/100) (1/2))))
 	fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 #+end_src
 
@@ -120,6 +121,7 @@ scratchpads = [ NS "ncmpcpp" "st -c ncmpcpp -T 'ncmpcpp' -e ncmpcpp" (className 
               , NS "pulsemixer" "st -c pulsemixer -T pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating
               , NS "btop" "st -c btop -T btop -e btop" (className =? "btop") centerFloating
               , NS "scratch" "st -c scratch -T scratch" (className =? "scratch") centerFloating
+              , NS "term" "st -c term -T term" (className =? "term") centerFloating
               ]where
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
 #+end_src
@@ -158,6 +160,7 @@ myKeymap =
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer" ) -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop"       ) -- Launches scratchpad of btop to quickly see whats happening and kill processess
     ,("M-i"  , namedScratchpadAction scratchpads "scratch"    ) -- Launches scratchpad of an empty terminal to do quick stuff
+    ,("M-o"  , namedScratchpadAction scratchpads "term"    ) -- Launches scratchpad of an empty terminal to do quick stuff
     ,("<XF86AudioPlay>",  spawn "mpc toggle"                  ) -- toggle play/pause mpd
     ,("<XF86AudioPrev>",  spawn "mpc prev"                    ) -- skip to previous song mpd
     ,("<XF86AudioNext>",  spawn "mpc next"                    ) -- skip to next song mpd

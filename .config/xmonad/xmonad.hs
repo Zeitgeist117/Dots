@@ -58,10 +58,11 @@ myTerminal = "st" :: String
 myBrowser = "firefox" :: String
 myExplorer = "thunar" :: String
 
-myLayout = tiled ||| monocle ||| fullsc
+myLayout = tiled ||| ngtiled ||| monocle ||| fullsc
   where
 	monocle = spacingWithEdge 5 (Full)
 	tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
+	ngtiled = spacingWithEdge 0 (smartBorders(Tall 1 (3/100) (1/2)))
 	fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 
 -- myWorkspaces = ["dev","term","www","gam","cht","6","7","8","9"]
