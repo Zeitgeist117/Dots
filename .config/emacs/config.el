@@ -359,44 +359,34 @@
 
 (use-package org-superstar)
 (setq
-;;    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
 )
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-(setq org-ellipsis " ≫");; 
-(add-hook 'org-mode-hook #'prettify-symbols-mode)
+(setq org-ellipsis " ≫");;
 
 (use-package org-modern
   :hook
   (org-mode . global-org-modern-mode)
   :custom ;; disable a bunch of shit i find useless
-  (org-modern-todo nil)
-  (org-modern-todo-faces nil)
-  (org-modern-date nil)
-  (org-modern-date-active nil)
-  (org-modern-date-inactive nil)
-  (org-modern-done nil)
-  (org-modern-label nil)
-  (org-modern-agenda nil)
-  (org-modern-timestamp nil)
-  (org-modern-progress nil)
-  (org-modern-progress-faces nil)
-  (org-modern-priority nil)
-  (org-modern-priority-faces nil)
-  (org-modern-symbol nil)
-  (org-modern-statistics nil)
-  (org-modern-tags nil)
-  (org-modern-faces nil)
-  (org-modern-star nil)
-  (org-modern-footnote nil)
+; (org-modern-todo nil)
+; (org-modern-todo-faces nil)
+; (org-modern-date nil)
+; (org-modern-date-active nil)
+; (org-modern-date-inactive nil)
+; (org-modern-done nil)
+; (org-modern-label nil)
+; (org-modern-agenda nil)
+; (org-modern-timestamp nil)
+; (org-modern-progress nil)
+; (org-modern-progress-faces nil)
+; (org-modern-priority nil)
+; (org-modern-priority-faces nil)
+; (org-modern-symbol nil)
+; (org-modern-statistics nil)
+; (org-modern-tags nil)
+; (org-modern-faces nil)
   (org-modern-label-border nil)
 )
-
-(require 'svg-setup)
-(add-hook 'dashboard-mode-hook #'eli-org-agenda-show-svg)
-(add-hook 'prog-mode-hook 'svg-tag-mode)
-(add-hook 'org-mode-hook 'svg-tag-mode)
-(add-hook 'dashboard-mode-hook 'svg-tag-mode)
-;(global-svg-tag-mode 1)
 
 (require 'org-tempo)
 
