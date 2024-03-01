@@ -1,7 +1,11 @@
+
+(add-to-list 'load-path "~/.config/emacs/scripts/")
+(require 'straight-setup)
 (org-babel-load-file
  (expand-file-name
   "config.el"
   user-emacs-directory))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -20,7 +24,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(elfeed-feeds '("https://kbd.news/rss2.php"))
  '(flycheck-checker-error-threshold nil)
  '(org-agenda-files '("/home/nightwing/Notes/Tasks.org"))
  '(org-babel-load-languages

@@ -1,4 +1,3 @@
-#+begin_src emacs-lisp
 (use-package svg-tag-mode)
 (setq svg-tag-tags
       '(
@@ -157,10 +156,7 @@
   (add-hook 'org-agenda-finalize-hook #'org-agenda-show-svg)
 
 (provide 'svg-setup)
-#+end_src
 
-#+begin_src emacs-lisp
 (add-hook 'prog-mode-hook 'svg-tag-mode)
 (add-hook 'org-mode-hook 'svg-tag-mode)
 (add-hook 'dashboard-mode-hook 'svg-tag-mode)
-#+end_src

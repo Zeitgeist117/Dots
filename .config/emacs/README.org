@@ -1,5 +1,5 @@
-#+TITLE: Emacs Config
 #+AUTHOR: Zeitgeist117
+#+TITLE: Emacs Config
 #+DESCRIPTION: Zeitgeist's personal Emacs config
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
@@ -8,8 +8,8 @@
 * TOC :toc:
 - [[#important-startup-programs][Important Startup Programs]]
   - [[#add-scripts-to-directory-path][Add scripts to directory path]]
-  - [[#sourcing-scripts][Sourcing Scripts]]
   - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
+  - [[#sourcing-scripts][Sourcing Scripts]]
   - [[#sane-defaults][Sane Defaults]]
   - [[#general-keybindings][General keybindings]]
 - [[#git][Git]]
@@ -62,13 +62,14 @@
 
 ** Sourcing Scripts
 #+begin_src emacs-lisp
-  (require 'elpaca-setup)
-  ;;(require 'straight-setup)
+  ;;(require 'elpaca-setup)
   (require 'buffer-move)
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives
-		'("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+
+'("melpa-stable" . "https://stable.melpa.org/packages/") t)
 #+end_src
 
 ** Load Evil Mode (for my sanity)
@@ -475,15 +476,15 @@ which fucking keys do i use, is this moonlight sonata?
 #+begin_src emacs-lisp
 (use-package darkroom)
 #+end_src
+
 ** Enabling table of contents
 #+begin_src emacs-lisp
-  (use-package toc-org
-	  :commands toc-org-enable
-	  :init (add-hook 'org-mode-hook 'toc-org-enable))
+(use-package toc-org
+	:commands toc-org-enable
+	:init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 ** Org styling
-style with kyle
 #+begin_src emacs-lisp
 (use-package org-superstar)
 (setq
@@ -499,25 +500,30 @@ style with kyle
   :hook
   (org-mode . global-org-modern-mode)
   :custom ;; disable a bunch of shit i find useless
-; (org-modern-todo nil)
-; (org-modern-todo-faces nil)
-; (org-modern-date nil)
-; (org-modern-date-active nil)
-; (org-modern-date-inactive nil)
-; (org-modern-done nil)
-; (org-modern-label nil)
-; (org-modern-agenda nil)
-; (org-modern-timestamp nil)
-; (org-modern-progress nil)
-; (org-modern-progress-faces nil)
-; (org-modern-priority nil)
-; (org-modern-priority-faces nil)
-; (org-modern-symbol nil)
-; (org-modern-statistics nil)
-; (org-modern-tags nil)
-; (org-modern-faces nil)
-  (org-modern-label-border nil)
+ (org-modern-todo nil)
+ (org-modern-todo-faces nil)
+ (org-modern-date nil)
+ (org-modern-date-active nil)
+ (org-modern-date-inactive nil)
+ (org-modern-done nil)
+ (org-modern-label nil)
+ (org-modern-agenda nil)
+ (org-modern-timestamp nil)
+ (org-modern-progress nil)
+ (org-modern-progress-faces nil)
+ (org-modern-priority nil)
+ (org-modern-priority-faces nil)
+ (org-modern-symbol nil)
+ (org-modern-statistics nil)
+ (org-modern-tags nil)
+ (org-modern-faces nil)
+ (org-modern-label-border nil)
 )
+#+end_src
+
+*** Org SVG
+#+begin_src emacs-lisp
+(require 'svg-setup)
 #+end_src
 
 ** Org Tempo 
