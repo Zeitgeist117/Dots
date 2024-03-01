@@ -352,9 +352,6 @@
 
 (use-package drag-stuff)
 
-(use-package olivetti
-  :ensure t)
-
 (use-package toc-org
 	:commands toc-org-enable
 	:init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -364,8 +361,19 @@
     org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
 )
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-(setq org-ellipsis " ≫");; 
+(setq org-ellipsis " ≫");;
+
+(use-package olivetti
+  :ensure t
+  :config
+  (message "Olivetti configuration loaded")
+  (setq olivetti-body-width 110))
+
+(add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
+(defun org-agenda-open-hook ()
+  "Hook to be run when org-agenda is opened"
+  (olivetti-mode))
 
 (use-package org-modern
   :hook

@@ -24,7 +24,6 @@
 - [[#ivy-counsel][IVY (counsel)]]
 - [[#text-stuff][Text Stuff]]
 - [[#org-mode][Org Mode]]
-  - [[#misc-packages][Misc Packages]]
   - [[#enabling-table-of-contents][Enabling table of contents]]
   - [[#org-styling][Org styling]]
   - [[#org-tempo][Org Tempo]]
@@ -472,13 +471,6 @@ which fucking keys do i use, is this moonlight sonata?
 #+end_src
 
 * Org Mode
-** Misc Packages
-#+begin_src emacs-lisp
-(use-package olivetti
-  :ensure t)
-
-#+end_src
-
 ** Enabling table of contents
 #+begin_src emacs-lisp
 (use-package toc-org
@@ -487,6 +479,7 @@ which fucking keys do i use, is this moonlight sonata?
 #+end_src
 
 ** Org styling
+*** Superstar
 #+begin_src emacs-lisp
 (use-package org-superstar)
 (setq
@@ -494,7 +487,22 @@ which fucking keys do i use, is this moonlight sonata?
 )
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 (setq org-ellipsis " ≫");; 
+#+end_src
+
+*** Olivetti
+#+begin_src emacs-lisp
+(use-package olivetti
+  :ensure t
+  :config
+  (message "Olivetti configuration loaded")
+  (setq olivetti-body-width 110))
+
+(add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
+(defun org-agenda-open-hook ()
+  "Hook to be run when org-agenda is opened"
+  (olivetti-mode))
+
 #+end_src
 
 *** Org Modern
