@@ -5,54 +5,6 @@
 #+OPTIONS: toc:2
 #+PROPERTY: header-args :tangle config.el
 
-* TOC :toc:
-- [[#important-startup-programs][Important Startup Programs]]
-  - [[#add-scripts-to-directory-path][Add scripts to directory path]]
-  - [[#sourcing-scripts][Sourcing Scripts]]
-  - [[#load-evil-mode-for-my-sanity][Load Evil Mode (for my sanity)]]
-  - [[#sane-defaults][Sane Defaults]]
-  - [[#general-keybindings][General keybindings]]
-- [[#git][Git]]
-- [[#fonts][Fonts]]
-  - [[#zooming-in-and-out][Zooming in and out]]
-  - [[#all-the-icons][ALL THE ICONS]]
-  - [[#rainbow-mode][Rainbow mode]]
-- [[#gui-shit][GUI shit]]
-  - [[#turning-off-toolbars-and-scrollbars][turning off toolbars and scrollbars]]
-  - [[#line-numbers-and-truncated-lines][Line numbers and truncated lines]]
-- [[#which-key][Which Key]]
-- [[#ivy-counsel][IVY (counsel)]]
-- [[#text-stuff][Text Stuff]]
-- [[#org-mode][Org Mode]]
-  - [[#enabling-table-of-contents][Enabling table of contents]]
-  - [[#org-styling][Org styling]]
-  - [[#org-tempo][Org Tempo]]
-  - [[#biblio][Biblio]]
-  - [[#org-roam][Org Roam]]
-  - [[#org-present][Org Present]]
-  - [[#org-agenda][Org Agenda]]
-  - [[#org-babel-settings][Org Babel Settings]]
-- [[#projectile][Projectile]]
-- [[#language-support][LANGUAGE SUPPORT]]
-  - [[#diminish][Diminish]]
-  - [[#flycheck][Flycheck]]
-  - [[#company][Company]]
-  - [[#lsp][LSP]]
-- [[#vterm][Vterm]]
-  - [[#vterm-toggle][Vterm-Toggle]]
-- [[#sudo-edit][Sudo Edit]]
-- [[#file-mangagment][File Mangagment]]
-  - [[#dired][Dired]]
-  - [[#neotree][Neotree]]
-  - [[#tabs][Tabs]]
-- [[#other-applications][Other applications]]
-  - [[#elfeed-rss-reader][Elfeed (rss reader)]]
-- [[#theming][Theming]]
-  - [[#color-scheme][color scheme]]
-  - [[#transparency][Transparency]]
-  - [[#modeline][Modeline]]
-  - [[#dashboard][Dashboard]]
-
 * Important Startup Programs
 ** Add scripts to directory path
 #+begin_src emacs-lisp
@@ -98,35 +50,36 @@
 
 ** Sane Defaults
 #+begin_src emacs-lisp
-  (delete-selection-mode 1)    ;; You can select text and delete it by typing.
-  (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
-  (electric-pair-mode 1)       ;; Turns on automatic parens pairing
-  ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
-  ;; Otherwise, org-tempo is broken when you try to <s TAB...
-  (add-hook 'org-mode-hook (lambda ()
+(delete-selection-mode 1)    ;; You can select text and delete it by typing.
+(electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
+(electric-pair-mode 1)       ;; Turns on automatic parens pairing
+;; The following prevents <> from auto-pairing when electric-pair-mode is on.
+;; Otherwise, org-tempo is broken when you try to <s TAB...
+(add-hook 'org-mode-hook (lambda ()
 			 (setq-local electric-pair-inhibit-predicate
 					 `(lambda (c)
 					(if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-  (global-auto-revert-mode t)  ;; Automatically show changes if the file has changed
-  (global-display-line-numbers-mode 1) ;; Display line numbers
-  (global-visual-line-mode t)  ;; Enable truncated lines
-  (menu-bar-mode -1)           ;; Disable the menu bar 
-  (scroll-bar-mode -1)         ;; Disable the scroll bar
-  (tool-bar-mode -1)           ;; Disable the tool bar
-  (setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
-  (setq ring-bell-function 'ignore)
-  (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files"))) ;; change backup saves location to trash folder
-  (setq split-width-threshold nil)
-  ;; Remove messages from the *Messages* buffer.
-  (setq-default message-log-max nil)
-  ;; Kill both buffers on startup.
-  (kill-buffer "*Messages*")
-  ;; Empty the *scratch* buffer.
-  (setq initial-scratch-message "")
-  (kill-buffer "*scratch*")
-  ;; (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 4)
-  (setq indent-line-function 'insert-tab)
+(global-auto-revert-mode t)  ;; Automatically show changes if the file has changed
+(global-display-line-numbers-mode 1) ;; Display line numbers
+(global-visual-line-mode t)  ;; Enable truncated lines
+(menu-bar-mode -1)           ;; Disable the menu bar 
+(scroll-bar-mode -1)         ;; Disable the scroll bar
+(tool-bar-mode -1)           ;; Disable the tool bar
+(setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
+(setq ring-bell-function 'ignore)
+(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files"))) ;; change backup saves location to trash folder
+(setq split-width-threshold nil)
+;; Remove messages from the *Messages* buffer.
+(setq-default message-log-max nil)
+;; Kill both buffers on startup.
+(kill-buffer "*Messages*")
+;; Empty the *scratch* buffer.
+(setq initial-scratch-message "")
+(kill-buffer "*scratch*")
+;; (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
+(setq bookmark-save-flag 1) ; save bookmarks automatically
 #+end_src
 
 ** General keybindings
@@ -335,7 +288,8 @@
 * Fonts
 Defining all the fonts so it looks kool an so i kan reed
 
-#+begin_src emacs-lisp
+
+#+begin_src emacs-lisp :tangle no
   (set-face-attribute 'default nil
 	:font "IosevkaNerdFontMono"
 	:height 160
@@ -495,7 +449,7 @@ which fucking keys do i use, is this moonlight sonata?
   :ensure t
   :config
   (message "Olivetti configuration loaded")
-  (setq olivetti-body-width 110))
+  (setq-default olivetti-body-width 110))
 
 (add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
@@ -536,6 +490,7 @@ which fucking keys do i use, is this moonlight sonata?
 #+begin_src emacs-lisp
 (require 'svg-setup)
 #+end_src
+
 
 ** Org Tempo 
 an org mode package that is installed with emacs but not enabled by default that lets you do cool shit faster like all the source code blocks in this config for example:
@@ -747,7 +702,13 @@ file tree on the side
 #+end_src
 
 ** Tabs
+
 #+begin_src emacs-lisp
+(global-set-key (kbd "M-k") 'next-buffer)
+(global-set-key (kbd "M-j") 'previous-buffer)
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
   (use-package centaur-tabs
 	:demand
 	:config
@@ -782,14 +743,29 @@ file tree on the side
 
 #+end_src
 
+* Completions
+
+#+begin_src emacs-lisp :tangle no
+(use-package vertico)
+#+end_src
+
 * Theming
 r/unixporn
 
-** color scheme
+** Themes
 the building blocks of rice
+
+#+begin_src emacs-lisp 
+(use-package dracula-theme)
+(use-package gruvbox-theme)
+(use-package darktooth-theme)
+(use-package modus-themes)
+(use-package ef-themes)
+(use-package poet-theme)
+#+end_src
+
+*** Doom themes
 #+begin_src emacs-lisp
-  (use-package dracula-theme)
-  (use-package gruvbox-theme)
   (use-package doom-themes
 	:config
 	(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -820,6 +796,32 @@ the building blocks of rice
 		  doom-modeline-enable-word-count t)) ;; adds folder icon next to persp name
 #+end_src
 
+*** Spacious Padding
+
+#+begin_src emacs-lisp
+(use-package spacious-padding)
+(require 'spacious-padding)
+
+;; These is the default value, but I keep it here for visiibility.
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :scroll-bar-width 8
+         :fringe-width 8))
+
+;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+;; is very flexible and provides several examples.
+(setq spacious-padding-subtle-mode-line
+      `( :mode-line-active 'default
+         :mode-line-inactive vertical-border))
+
+;; Set a key binding if you need to toggle spacious padding.
+(define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+#+end_src
+
 ** Dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -839,4 +841,11 @@ the building blocks of rice
 									  (bookmarks . "book")))
 	:config
 	(dashboard-setup-startup-hook))
+#+end_src
+
+
+** new stuff for now
+
+#+begin_src emacs-lisp
+(use-package perspective)
 #+end_src

@@ -29,8 +29,6 @@ import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
 import XMonad.Util.Loggers
-import XMonad.Util.Ungrab
-import XMonad.Util.Scratchpad
 import XMonad.Util.NamedScratchpad
 
 import XMonad.Layout.Spacing
@@ -91,10 +89,10 @@ myExplorer = "thunar" :: String
 #+begin_src haskell
 myLayout = tiled ||| ngtiled ||| monocle ||| fullsc
   where
-	monocle = spacingWithEdge 5 (Full)
-	tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
-	ngtiled = spacingWithEdge 0 (avoidStruts(smartBorders(Tall 1 (3/100) (1/2))))
-	fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
+    monocle = spacingWithEdge 5 (Full)
+    tiled = spacingWithEdge 5 (Tall 1 (3/100) (1/2))
+    ngtiled = spacingWithEdge 0 (avoidStruts(smartBorders(Tall 1 (3/100) (1/2))))
+    fullsc = spacingWithEdge 0 (avoidStruts(smartBorders(Full)))
 #+end_src
 
 ** Workspaces

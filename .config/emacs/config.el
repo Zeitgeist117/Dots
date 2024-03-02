@@ -36,9 +36,9 @@
 ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
 ;; Otherwise, org-tempo is broken when you try to <s TAB...
 (add-hook 'org-mode-hook (lambda ()
-		       (setq-local electric-pair-inhibit-predicate
-				       `(lambda (c)
-				      (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+			 (setq-local electric-pair-inhibit-predicate
+					 `(lambda (c)
+					(if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 (global-auto-revert-mode t)  ;; Automatically show changes if the file has changed
 (global-display-line-numbers-mode 1) ;; Display line numbers
 (global-visual-line-mode t)  ;; Enable truncated lines
@@ -59,6 +59,7 @@
 ;; (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
+(setq bookmark-save-flag 1) ; save bookmarks automatically
 
 (use-package general
       :config
@@ -256,24 +257,6 @@
 )
 (use-package magit)
 
-(set-face-attribute 'default nil
-      :font "IosevkaNerdFontMono"
-      :height 160
-      :weight 'medium)
-(set-face-attribute 'fixed-pitch nil
-      :font "IosevkaNerdFontMono"
-      :height 160
-      :weight 'medium)
-;; Makes commented text and keywords italics.
-;; This is working in emacsclient but not emacs.
-;; Your font must have an italic face available.
-(set-face-attribute 'font-lock-comment-face nil
-      :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-      :slant 'italic)
-;; Uncomment the following line if line spacing needs adjusting.
-(setq-default line-spacing 0.12)
-
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
@@ -367,7 +350,7 @@
   :ensure t
   :config
   (message "Olivetti configuration loaded")
-  (setq olivetti-body-width 110))
+  (setq-default olivetti-body-width 110))
 
 (add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
@@ -528,18 +511,8 @@
 				 (setq auto-hscroll-mode nil)))))
 ;; show hidden files
 
-(use-package centaur-tabs
-      :demand
-      :config
- (centaur-tabs-mode t)
- (setq centaur-tabs-group-buffer-group -1)
- :bind
-      (:map evil-normal-state-map
-		("M-k" . centaur-tabs-forward)
-		("M-j" . centaur-tabs-backward))
-      )
-(setq centaur-tabs-set-icons t)
-(setopt centaur-tabs-buffer-groups-function (lambda () '("All")))
+(global-set-key (kbd "M-k") 'next-buffer)
+(global-set-key (kbd "M-j") 'previous-buffer)
 
 (use-package elfeed
       :config
@@ -558,6 +531,11 @@
 
 (use-package dracula-theme)
 (use-package gruvbox-theme)
+(use-package darktooth-theme)
+(use-package modus-themes)
+(use-package ef-themes)
+(use-package poet-theme)
+
 (use-package doom-themes
       :config
       (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -581,6 +559,28 @@
 		doom-modeline-persp-icon t
 		doom-modeline-enable-word-count t)) ;; adds folder icon next to persp name
 
+(use-package spacious-padding)
+(require 'spacious-padding)
+
+;; These is the default value, but I keep it here for visiibility.
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :scroll-bar-width 8
+         :fringe-width 8))
+
+;; Read the doc string of `spacious-padding-subtle-mode-line' as it
+;; is very flexible and provides several examples.
+(setq spacious-padding-subtle-mode-line
+      `( :mode-line-active 'default
+         :mode-line-inactive vertical-border))
+
+;; Set a key binding if you need to toggle spacious padding.
+(define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+
 (use-package dashboard
       :ensure t 
       :init
@@ -598,3 +598,5 @@
 									(bookmarks . "book")))
       :config
       (dashboard-setup-startup-hook))
+
+(use-package perspective)
