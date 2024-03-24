@@ -10,25 +10,25 @@
 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (use-package evil
-      :init
-      (setq evil-want-integration t)
-      (setq evil-want-keybinding nil)
-      (setq evil-vsplit-window-right t)
-      (evil-mode))  
+	:init
+	(setq evil-want-integration t)
+	(setq evil-want-keybinding nil)
+	(setq evil-vsplit-window-right t)
+	(evil-mode))  
 (use-package evil-collection
-      :after evil
-      :config
-      (setq evil-collection-mode-list '(dashboard dired ibuffer))
-      (evil-collection-init))
+	:after evil
+	:config
+	(setq evil-collection-mode-list '(dashboard dired ibuffer pdf))
+	(evil-collection-init))
 (use-package evil-tutor)
 ;; Using RETURN to follow links in Org/Evil 
 ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
 (with-eval-after-load 'evil-maps
-      (define-key evil-motion-state-map (kbd "SPC") nil)
-      (define-key evil-motion-state-map (kbd "RET") nil)
-      (define-key evil-motion-state-map (kbd "TAB") nil))
+	(define-key evil-motion-state-map (kbd "SPC") nil)
+	(define-key evil-motion-state-map (kbd "RET") nil)
+	(define-key evil-motion-state-map (kbd "TAB") nil))
 ;; Setting RETURN key in org-mode to follow links
-      (setq org-return-follows-link  t)
+	(setq org-return-follows-link  t)
 
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
@@ -169,7 +169,8 @@
 	   "m B" '(org-babel-tangle :wk "Org babel tangle")
 	   "m T" '(org-todo-list :wk "Org todo list")
 	   "m x" '(org-toggle-checkbox :wk "Org toggle checkbox")
-	   "m m" '(org-roam-node-find :wk "Org Roam find node")
+	   "m l" '(org-roam-buffer-toggle :wk "Org Roam find node")
+	   "m f" '(org-roam-node-find :wk "Org Roam find node")
 	   "m I" '(org-roam-node-insert :wk "Org Roam insert node"))
 
 	 (zg/leader-keys
@@ -352,6 +353,7 @@
   :config (add-to-list 'revert-without-query ".pdf")
 )
 (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
+(evil-set-initial-state 'pdf-view-mode 'normal)
 
 (use-package toc-org
 	:commands toc-org-enable
@@ -402,14 +404,21 @@
 
 (require 'svg-setup)
 
+(use-package org-noter)
+
 (require 'org-tempo)
 
 (use-package biblio)
 (use-package org-ref)
 (setq biblio-download-directory "~/Downloads/")
 
-(use-package org-roam)
-(setq org-roam-directory (file-truename "~/Notes/roam"))
+(use-package org-roam
+	:ensure t
+	:custom
+	(org-roam-directory "~/Notes/roam")
+	:config
+	(org-roam-setup)
+)
 (setq org-roam-db-autosync-mode t)
 
 (use-package org-present)
@@ -490,23 +499,24 @@
 	      "f u" '(sudo-edit-find-file :wk "Sudo find file")
 	      "f U" '(sudo-edit :wk "Sudo edit file")))
 
+(use-package discover)
 (use-package dired-open
-      :config
-      (setq dired-open-extensions '(("gif" . "sxiv")
-								("jpg" . "sxiv")
-								("png" . "sxiv")
-								("pdf" . "zathura")
-								("mkv" . "mpv")
-								("mp4" . "mpv"))))
+	:config
+	(setq dired-open-extensions '(;;("gif" . "sxiv")
+								  ;;("jpg" . "sxiv")
+								  ;;("png" . "sxiv")
+								  ;;("pdf" . "zathura")
+								  ("mkv" . "mpv")
+								  ("mp4" . "mpv"))))
 
 (use-package peep-dired
-      :after dired
-      :hook (evil-normalize-keymaps . peep-dired-hook)
-      :config
-	(evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-	(evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
-	(evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
-	(evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+	:after dired
+	:hook (evil-normalize-keymaps . peep-dired-hook)
+	:config
+	  (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+	  (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+	  (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+	  (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
 )
 
 ;; (add-hook 'peep-dired-hook 'evil-normalize-keymaps)
@@ -531,6 +541,19 @@
 
 (global-set-key (kbd "M-k") 'next-buffer)
 (global-set-key (kbd "M-j") 'previous-buffer)
+
+(use-package centaur-tabs
+	:demand
+	:config
+   (centaur-tabs-mode t)
+   (setq centaur-tabs-group-buffer-group -1)
+;;  :bind
+;;(:map evil-normal-state-map
+;;  ("M-k" . centaur-tabs-forward)
+;;  ("M-j" . centaur-tabs-backward))
+)
+  (setq centaur-tabs-set-icons t)
+  (setopt centaur-tabs-buffer-groups-function (lambda () '("All")))
 
 (use-package elfeed
       :config
@@ -575,6 +598,8 @@
 		  doom-modeline-persp-icon t
 		  doom-modeline-enable-word-count t)) ;; adds folder icon next to persp name
 
+(add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+
 (use-package spacious-padding)
 (require 'spacious-padding)
 
@@ -601,29 +626,14 @@
 	:ensure t 
 	:init
 	(setq initial-buffer-choice 'dashboard-open)
-	(setq dashboard-set-heading-icons t)
 	(setq dashboard-set-file-icons t)
-	;;(setq dashboard-startup-banner "/home/nightwing/.dots/.config/emacs/images/emacs-dash.txt")  ;; use custom image as banner
-	(setq dashboard-startup-banner 'logo)
+	(setq dashboard-startup-banner "/home/nightwing/.dots/.config/emacs/images/emacs-dash.txt")  ;; use custom image as banner
+	;; (setq dashboard-startup-banner 'text)
 	(setq dashboard-center-content t) ;; set to 't' for centered content
 	(setq dashboard-items '((recents . 5)
 							(agenda . 3)
-							(bookmarks . 3)
 							(projects . 3)))
-	:custom
-	(dashboard-modify-heading-icons '((recents . "file-text")
-									  (bookmarks . "book")))
 	:config
 	(dashboard-setup-startup-hook))
 
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "/home/nightwing/.config/emacs/images/emacs-dash.txt")
-(setq inhibit-startup-screen t)
-)
-
 (use-package perspective)
-
-(add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth

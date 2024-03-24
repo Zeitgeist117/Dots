@@ -62,8 +62,8 @@ bindkey -M visual '^[[P' vi-delete
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 # default apps
-# export EDITOR="emacsclient -c"    
-# export VISUAL="emacsclient -c"    
+# export EDITOR="emacsclient -c -a emacs" 
+# export VISUAL="emacsclient -c -a emacs" 
 export EDITOR="nvim"    
 export VISUAL="nvim"    
 export TERMINAL="alacritty"

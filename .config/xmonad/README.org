@@ -82,7 +82,7 @@ myConfig = def
 myTerminal, myBrowser, myExplorer :: String
 myTerminal = "st" :: String
 myBrowser = "firefox" :: String
-myExplorer = "thunar" :: String
+myExplorer = "pcmanfm" :: String
 #+end_src
 
 ** Layouts
