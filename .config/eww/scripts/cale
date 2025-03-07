@@ -2,5 +2,5 @@
 year="$(date '+%Y')"
 date="$(date '+%a %b %d, %Y')"
 
-echo "  $date"
+echo " $date"
 cal | grep -vE "$year"

@@ -16,19 +16,19 @@ for battery in /sys/class/power_supply/BAT?*; do
     capacity="$(cat "$battery/capacity" 2>&1)"
     if [ "$capacity" -gt 90 ]; then
         status=" "
-	color="50fa7b"
+	color="b8bb26"
     elif [ "$capacity" -gt 60 ]; then
         status=" "
-	color="50fa7b"
+	color="b8bb26"
     elif [ "$capacity" -gt 40 ]; then
         status=" "
-	color="50fa7b"
+	color="b8bb26"
     elif [ "$capacity" -gt 10 ]; then
         status=" "
-	color="50fa7b"
+	color="b8bb26"
     else
         status=" "
-	color="50fa7b"
+	color="b8bb26"
     fi
 
     # Sets up the status and capacity
@@ -47,5 +47,5 @@ for battery in /sys/class/power_supply/BAT?*; do
 
     # Prints the info
     # echo "$status$capacity%"
-    echo "^b#282A36^ ^b#44475a^^c#f8f8f2^ $status^b#$color^^c#282A36^ $capacity% ^b#282A36^" 
+    echo "^b#282828^ ^b#504945^^c#ebdbb2^ $status^b#$color^^c#282828^ $capacity% ^b#282828^" 
 done && echo

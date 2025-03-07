@@ -1,0 +1,4 @@
+#!/bin/sh
+date="$(date '+%a %b %d')"
+	
+echo [ $date]

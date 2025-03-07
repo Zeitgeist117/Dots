@@ -1,0 +1,22 @@
+Config { font = "Iosevka Nerd Font Mono 15"
+    -- , borderColor = "#ebdbb2"
+    -- , border = FullB
+	-- , borderWidth = 2
+        , bgColor = "#282828"
+        , fgColor = "#ebdbb2"
+        , position = TopHM 29 0 0 0 0
+        , commands = [ Run Cpu ["-t","<total>%"] 10
+                     , Run Memory ["-t","<usedratio>%"] 10
+                     , Run DiskU [("/","<used>/<size>")] [] 10
+                     , Run Com "uname" ["-r"] "" 36000
+                     , Run CommandReader "/usr/local/bin/subs.sh" "subs"
+                     , Run CommandReader "rofi -show drun" "menu"
+                     , Run Date "%a %b %d" "date" 10
+                     , Run Date "%I:%M" "time" 10
+					 , Run Battery ["BAT1"] 600
+                     , Run UnsafeStdinReader
+                     ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = " <action=`dmenu_run -c -l 15` button=1> <fc=#ebdbb2,#282828>󰘧</fc></action> | %UnsafeStdinReader%  }{ [ <fc=#d79921>󰻠 </fc> %cpu% ]  [ <fc=#b16286></fc>  %memory% ]  [ <fc=#b8bb26> </fc> %date% ] [ <fc=#b8bb26>󱑁 </fc>%time% ] [ %battery% ]"
+        }

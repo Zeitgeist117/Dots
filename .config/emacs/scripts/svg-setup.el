@@ -159,4 +159,4 @@
 
 (add-hook 'prog-mode-hook 'svg-tag-mode)
 (add-hook 'org-mode-hook 'svg-tag-mode)
-(add-hook 'dashboard-mode-hook 'svg-tag-mode)
+;; (add-hook 'dashboard-mode-hook 'svg-tag-mode)

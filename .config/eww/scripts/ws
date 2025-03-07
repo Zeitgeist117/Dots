@@ -15,19 +15,19 @@ xprop -spy -root _NET_CURRENT_DESKTOP | while read -r; do
 
     wmctrl -d | awk '{print $1 " " $2 " " $9}' | while read -r number status name; do
         statusClass="ws_inactive"
-        icon="[]"
+        icon="  "
         # icon="󰣏"
 
         if [ "$(check_occupied $number)" == "true" ]; then
             statusClass="ws_occupied"
-            icon=""
+            icon="  "
             # icon=""
             # icon="󰮿"
         fi
 
         if [ "$status" == "*" ]; then # "*" mean active
             statusClass="ws_active"
-            icon="[]"
+            icon="  "
             # icon=""
             # icon=""
         fi

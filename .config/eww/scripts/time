@@ -1,0 +1,4 @@
+#!/bin/sh
+time="$(date '+%T')"
+
+echo [󰥔 $time]

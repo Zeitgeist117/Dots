@@ -1,0 +1,38 @@
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Alt"
+
+[general]
+import = ["/home/nightwing/.config/alacritty/gruvbox_dark.toml"]
+
+[font]
+size = 16
+
+[font.bold]
+family = "Monaspace Krypton Var"
+style = "Medium"
+
+[font.italic]
+family = "Monaspace Krypton Var"
+style = "Light italic"
+
+[font.normal]
+family = "Monaspace Krypton Var"
+style = "Medium"
+
+[window]
+dynamic_padding = true
+opacity = 0.8
+
+[window.padding]
+x = 10
+y = 10
+
+[keyboard]

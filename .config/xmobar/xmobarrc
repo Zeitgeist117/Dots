@@ -1,21 +1,22 @@
-Config { font = "Iosevka Nerd Font Mono Regular 14"
+Config { font = "Monaspace Krypton 15"
         , borderColor = "#ebdbb2"
-        , border = FullB
-		, borderWidth = 2
+        -- , border = FullB
+		-- , borderWidth = 3
         , bgColor = "#282828"
         , fgColor = "#ebdbb2"
-        , position = TopHM 30 10 10 5 -5 
+        -- , position = TopHM 30 10 10 5 -5 
+        , position = TopHM 30 0 0 0 0
         , commands = [ Run Cpu ["-t","<total>%"] 10
                      , Run Memory ["-t","<usedratio>%"] 10
                      , Run DiskU [("/","<used>/<size>")] [] 10
                      , Run Com "uname" ["-r"] "" 36000
                      , Run CommandReader "/usr/local/bin/subs.sh" "subs"
                      , Run CommandReader "rofi -show drun" "menu"
-                     , Run Date "%b %_d - %I:%M" "date" 10
+                     , Run Date "%b %d %a - %T" "date" 10
                      , Run UnsafeStdinReader
                      ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = " <action=`dmenu_run -c -l 15` button=1> <fc=#ebdbb2,#282828></fc></action>  | %UnsafeStdinReader%  }{ [<fc=#d79921>󰻠</fc> %cpu%]  [<fc=#b16286>󰍛</fc>  %memory%]  [<fc=#b8bb26>󰥔 </fc> %date%] "
+        , template = "<action=`dmenu_run -c -l 15` button=1> <fc=#ebdbb2,#282828></fc></action> | %UnsafeStdinReader%  }{ [<fc=#d79921>󰻠</fc> %cpu%]  [<fc=#b16286>󰍛</fc> %memory%]  [<fc=#b8bb26>󰥔 </fc>%date%] "
         }
 

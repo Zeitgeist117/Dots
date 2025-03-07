@@ -1,14 +1,16 @@
-* {
+*{
   all: unset; //Unsets everything so you can style everything from scratch
 }
 
 
-.bar {
+.xmonad-bar {
 	padding: 5px;
 	min-height: 10px;
-	// border: 2px solid #ebdbb2;
+	border: 2px solid #ebdbb2;
 	background: #282828;
 	color: #ebdbb2;
+	font-family: Monaspace Krypton Var ;
+	font-size: 16;
 }
 .ws_active {
 }
@@ -22,21 +24,30 @@
 .systop {
 	padding: 5px;
 	color: #ebdbb2;
+	font-family: Monaspace Krypton Var;
+	font-size: 16;
 }
 
+.systray {
+	padding: 0 5px;
+}
 .workspaces button:hover {
 	border-radius: 0px;
 	padding: 3px;
 	background-color: #928374;
 	color: #ebdbb2;
+	font-family: Monaspace Krypton Var;
+	font-size: 16;
 
 }
 .workspaces button {
 	border-radius: 0px;
 	padding: 4px;
 	color: #ebdbb2;
-	// border: 1px solid #ebdbb2;
+	border: 1px solid #ebdbb2;
 	margin: 4px;
+	font-family: Monaspace Krypton Var;
+	font-size: 16;
 }
 
 tooltip {
@@ -45,4 +56,6 @@ tooltip {
 	color: #ebdbb2;
 	border: 1px solid #ebdbb2;
 	background-color: #282828;
+	font-family: Monaspace Krypton Var;
+	font-size: 16;
 }
