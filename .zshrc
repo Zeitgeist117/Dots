@@ -1,8 +1,9 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
+# PS1='''%F{#cc241d}❚%f%F{#fe8019}❚%f%F{#d79921}❚%f%F{#d79921}[%f%B% ツァイトガイスト%b%F{#d79921}]%f─%F{#d79921}[%f%B% アーチナイト%b%F{#d79921}]%f─%F{#d79921}[%f%~% %F{#d79921}]%f
+# %F{#cc241d}❚%f%F{#fe8019}❚%f%F{#d79921}❚%f%F{#d79921}[%fλ%F{#d79921}]%f '''
 PS1='''┌─[%B%n% %b]─[%B%M% %b]─[%~% ]
 └─[λ] '''
-
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 
@@ -59,16 +60,16 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 # Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
+# source /usr/share/zsh/plugins/fast-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2>/dev/null
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # default apps
 # export EDITOR="emacsclient -c -a emacs" 
 # export VISUAL="emacsclient -c -a emacs" 
 export EDITOR="nvim"    
 export VISUAL="nvim"    
 export TERMINAL="alacritty"
-export EXPLORER="pcmanfm"
-export BROWSER="thorium-browser"
+export EXPLORER="thunar"
+export BROWSER="firefox"
 export MANPAGER="nvim +Man!"
 export LC_ALL=en_US.UTF-8
 
