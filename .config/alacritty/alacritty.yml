@@ -14,7 +14,7 @@ font:
   italic:
     family: Monaspace Krypton Var
     style: Light italic
-  size: 16
+  size: 14
 key_bindings:
   - {key: C, mods: Alt, action: Copy}
   - {key: V, mods: Alt, action: Paste}

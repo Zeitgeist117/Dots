@@ -2,6 +2,15 @@
   all: unset; //Unsets everything so you can style everything from scratch
 }
 
+.hypr-bar {
+	padding: 5px;
+	min-height: 10px;
+	border: 2px solid #ebdbb2;
+	background: #282828;
+	color: #ebdbb2;
+	font-family: Monaspace Krypton Var ;
+	font-size: 14;
+}
 
 .xmonad-bar {
 	padding: 5px;
@@ -10,46 +19,23 @@
 	background: #282828;
 	color: #ebdbb2;
 	font-family: Monaspace Krypton Var ;
-	font-size: 16;
-}
-.ws_active {
-}
-
-.ws_inactive {
-}
-
-.ws_occupied {
+	font-size: 14;
 }
 
 .systop {
-	padding: 5px;
-	color: #ebdbb2;
-	font-family: Monaspace Krypton Var;
-	font-size: 16;
-}
-
-.systray {
-	padding: 0 5px;
-}
-.workspaces button:hover {
-	border-radius: 0px;
-	padding: 3px;
-	background-color: #928374;
-	color: #ebdbb2;
-	font-family: Monaspace Krypton Var;
-	font-size: 16;
-
-}
-.workspaces button {
-	border-radius: 0px;
-	padding: 4px;
-	color: #ebdbb2;
 	border: 1px solid #ebdbb2;
-	margin: 4px;
-	font-family: Monaspace Krypton Var;
-	font-size: 16;
 }
+.ram {
+	border: 1px solid #ebdbb2;
+	font-family: Monaspace Krypton Var ;
+	font-size: 14;
+} 
 
+.cpu {
+	border: 1px solid #ebdbb2;
+	font-family: Monaspace Krypton Var ;
+	font-size: 14;
+} 
 tooltip {
 	padding: 5px;
 	border-radius: 0px;
@@ -57,5 +43,75 @@ tooltip {
 	border: 1px solid #ebdbb2;
 	background-color: #282828;
 	font-family: Monaspace Krypton Var;
-	font-size: 16;
+	font-size: 14;
+}
+
+.systray {
+	padding: 2px 2px 2px;
+	border-radius: 0px;
+	color: #ebdbb2;
+	border: 1px solid #ebdbb2;
+	background-color: #282828;
+	font-family: Monaspace Krypton Var;
+	font-size: 14;
+
+	menu {
+		background-color: #282828;
+		border: 2px solid #ebdbb2;
+		color: #ebdbb2;
+		font-family: Monaspace Krypton Var;
+		font-size: 14;
+	}
+	menuitem {
+		background-color: #282828;
+		border: 1px solid #ebdbb2;
+		padding: 5px 1px;
+		font-family: Monaspace Krypton Var;
+		font-size: 14;
+	}
+	menuitem:hover {
+		background-color: #ebdbb2;
+		color: #282828;
+	}
+}
+
+.w0, .w01, .w02, .w03, .w04, .w05, .w06, .w07, .w08, .w09, .w011, .w022, .w033, .w044, .w055, .w066, .w077, .w088, .w099 {
+  padding: 3px 5px;
+  box-shadow: inset 0 -2px transparent;
+	border: 1px solid #282828;
+}
+
+/* Unoccupied */
+.w0 {
+  color: #a89984;
+}
+
+/* Occupied */
+.w01, .w02, .w03, .w04, .w05, .w06, .w07, .w08, .w09 {
+  color: #ebdbb2;
+  box-shadow: inset 0 -3px #ebdbb2;
+}
+
+/* Focused */
+.w011, .w022, .w033, .w044, .w055, .w066, .w077, .w088, .w099 {
+  color: #282828;
+  background-color: #ebdbb2;
+  box-shadow: inset 0 -3px #282828;
+  border: 2px solid #ebdbb2;
+}
+
+.workspace {
+padding: 0 0px;
+}
+
+.workspace button:hover {
+  // box-shadow: inset 0 -3px #ebdbb2;
+  border: 2px solid #ebdbb2;
+}
+
+.title {
+  color: #ebdbb2;
+  background-color: #282828;
+  border: 1px solid #ebdbb2;
+
 }

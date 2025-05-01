@@ -2,9 +2,9 @@
 while read file
 do
         case "$1" in
-        "D")
-                trash-put "$file";;
         "w")
+			feh --bg-fill $file && swp;;
+        "x")
 			feh --bg-fill $file
 
         esac

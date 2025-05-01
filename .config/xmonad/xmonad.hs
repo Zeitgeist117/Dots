@@ -40,6 +40,7 @@ myStartupHook = do
     spawnOnce "syncthing &"
     spawnOnce "mpDris2"
     spawnOnce "corectrl &"
+    setWMName "LG3D"
 
 main :: IO ()
 -- main = xmonad . ewmhFullscreen . ewmh =<< xmobar myConfig 
@@ -79,12 +80,14 @@ myManageHook = manageDocks <+> composeAll
 scratchpads = [ NS "pulsemixer" "alacritty --class pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating
               , NS "btop" "alacritty --class btop -e btop" (className =? "btop") centerFloating
               , NS "music" "alacritty --class music -e kew" (className =? "music") centerOther
+              , NS "fum" "alacritty --class fum -e fum" (className =? "fum") centerSmall
               , NS "term" "alacritty --class term" (className =? "term") centerFloating
               , NS "scratch" "alacritty --class scratch" (className =? "scratch") centerFloating
               ]where
 
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
     centerOther = customFloating $ W.RationalRect 0.3 0.25 0.4 0.65
+    centerSmall = customFloating $ W.RationalRect 0.37 0.45 0.25 0.20
 
 nonNSP = WSIs (return (\ws -> W.tag ws /= "NSP"))
 
@@ -111,6 +114,7 @@ myKeymap =
 
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-n"  , namedScratchpadAction scratchpads "music") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
+    ,("M-m"  , namedScratchpadAction scratchpads "fum") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop") -- Launches scratchpad of btop to quickly see whats happening and kill processess
     ,("M-i"  , namedScratchpadAction scratchpads "scratch") -- Launches scratchpad of an empty terminal to do quick stuff
     ,("M-o"  , namedScratchpadAction scratchpads "term") -- Launches scratchpad of an empty terminal to do quick stuff

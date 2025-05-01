@@ -63,6 +63,7 @@ myStartupHook = do
     spawnOnce "syncthing &"
     spawnOnce "mpDris2"
     spawnOnce "corectrl &"
+    setWMName "LG3D"
 #+end_src
 
 ** Main Config
@@ -124,6 +125,7 @@ scratchpads :: [NamedScratchpad]
 scratchpads = [ NS "pulsemixer" "st -c pulsemixer -T pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating 
               , NS "btop" "st -c btop -T btop -e btop" (className =? "btop") centerFloating
               , NS "music" "st -c music -T music -e kew" (className =? "music") centerFloating
+              , NS "fum" "st -c fum -T fum -e fum" (className =? "fum") centerFloating
               , NS "term" "st -c term -T term" (className =? "term") centerFloating
               , NS "scratch" "st -c scratch -g 80x40 -T scratch" (className =? "scratch") centerFloating
               ]where
@@ -135,12 +137,14 @@ scratchpads = [ NS "pulsemixer" "st -c pulsemixer -T pulsemixer -e pulsemixer" (
 scratchpads = [ NS "pulsemixer" "alacritty --class pulsemixer -e pulsemixer" (className =? "pulsemixer") centerFloating
               , NS "btop" "alacritty --class btop -e btop" (className =? "btop") centerFloating
               , NS "music" "alacritty --class music -e kew" (className =? "music") centerOther
+              , NS "fum" "alacritty --class fum -e fum" (className =? "fum") centerSmall
               , NS "term" "alacritty --class term" (className =? "term") centerFloating
               , NS "scratch" "alacritty --class scratch" (className =? "scratch") centerFloating
               ]where
 
     centerFloating = customFloating $ W.RationalRect (1/4) (1/4) (1/2) (1/2)
     centerOther = customFloating $ W.RationalRect 0.3 0.25 0.4 0.65
+    centerSmall = customFloating $ W.RationalRect 0.37 0.45 0.25 0.20
 #+end_src
 
 
@@ -177,6 +181,7 @@ myKeymap =
 
     ,("M-p"  , namedScratchpadAction scratchpads "pulsemixer") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-n"  , namedScratchpadAction scratchpads "music") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
+    ,("M-m"  , namedScratchpadAction scratchpads "fum") -- Launches scratchpad of pulsemixer to make quick and easy audio changes
     ,("M-g"  , namedScratchpadAction scratchpads "btop") -- Launches scratchpad of btop to quickly see whats happening and kill processess
     ,("M-i"  , namedScratchpadAction scratchpads "scratch") -- Launches scratchpad of an empty terminal to do quick stuff
     ,("M-o"  , namedScratchpadAction scratchpads "term") -- Launches scratchpad of an empty terminal to do quick stuff

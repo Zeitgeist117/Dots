@@ -1,0 +1,10 @@
+#! /bin/sh
+output='/home/nightwing/Pictures/Screenshots/'
+
+case "$1" in
+	"select") hyprshot -m region -z -o "$output" || exit ;;
+	"window") hyprshot -m output -o "$output" || exit ;;
+	*) scrot "$output" || exit ;;
+esac
+
+notify-send "  Screenshot Taken "

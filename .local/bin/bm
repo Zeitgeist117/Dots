@@ -1,0 +1,3 @@
+#!/bin/sh
+exec bemenu-run -c -l 20 -W 0.15 -B 2 --nb '#282828' --nf '#ebdbb2ff' --bdr '#ebdbb2ff' --ab '#282828' --hb '#ebdbb2ff' --hf '#282828' --tf '#282828ff' --tb '#ebdbb2ff' --ff '#ebdbb2ff' --fb '#282828' --fn 'monaspace krypton' -p '󰘧'
+

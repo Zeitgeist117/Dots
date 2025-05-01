@@ -183,6 +183,10 @@ map yy copy
 map yp yank-path
 map yn yank-basename
 
+cmd sbg %feh --bg-fill $fx && swp
+# cmd wbg %feh --bg-fill $fx 
+map xx sbg
+
 map <enter> open
 map R reload
 
