@@ -26,27 +26,34 @@
 
 ** Load Evil Mode
 #+begin_src emacs-lisp
-    (use-package evil
-      :straight t ;; install the evil package if not installed
-      :init ;; tweak evil's configuration before loading it
-      (setq evil-search-module 'evil-search)
-      (setq evil-ex-complete-emacs-commands nil)
-      (setq evil-vsplit-window-right t)
-      (setq evil-split-window-below t)
-      (setq evil-shift-round nil)
-      (setq evil-want-C-u-scroll t)
-      :config ;; tweak evil after loading it
-      (evil-mode))
-   (use-package evil-tutor
-     :straight t)
-   ;; Using RETURN to follow links in Org/Evil 
-   ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
-   (with-eval-after-load 'evil-maps
-  	(define-key evil-motion-state-map (kbd "SPC") nil)
-  	(define-key evil-motion-state-map (kbd "RET") nil)
-  	(define-key evil-motion-state-map (kbd "TAB") nil))
-   ;; Setting RETURN key in org-mode to follow links
-  	(setq org-return-follows-link  t)
+ (use-package evil
+   :straight t ;; install the evil package if not installed
+   :init ;; tweak evil's configuration before loading it
+   (setq evil-search-module 'evil-search)
+   (setq evil-ex-complete-emacs-commands nil)
+   (setq evil-vsplit-window-right t)
+   (setq evil-split-window-below t)
+   (setq evil-shift-round nil)
+   (setq evil-want-C-u-scroll t)
+   (setq evil-want-keybinding nil)
+   :config ;; tweak evil after loading it
+   (evil-mode))
+(use-package evil-tutor
+  :straight t)
+;; Using RETURN to follow links in Org/Evil 
+;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+(with-eval-after-load 'evil-maps
+	(define-key evil-motion-state-map (kbd "SPC") nil)
+	(define-key evil-motion-state-map (kbd "RET") nil)
+	(define-key evil-motion-state-map (kbd "TAB") nil))
+;; Setting RETURN key in org-mode to follow links
+	(setq org-return-follows-link  t)
+(use-package evil-collection
+  :after evil
+  :straight t
+  :config
+  (evil-collection-init)
+)
 #+end_src
 
 ** Sane Defaults
@@ -293,22 +300,28 @@
 #+end_src
 * Fonts
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil
-  :font "Monaspace Krypton Var"
-  :height 160
-  :weight 'medium)
-(set-face-attribute 'fixed-pitch nil
-  :font "Monaspace Krypton Var"
-  :height 160
-  :weight 'medium)
-(set-frame-font "Monaspace Krypton Var 14" nil t)
-;; Makes commented text and keywords italics.
-;; This is working in emacsclient but not emacs.
-;; Your font must have an italic face available.
-(set-face-attribute 'font-lock-comment-face nil
-  :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-  :slant 'italic)
+(defun my/set-fonts ()
+  (interactive)
+  ;; Set font based on existing ones
+  (cond
+   ((find-font (font-spec :name "Monaspace Krypton Var"))
+    (set-face-attribute 'default nil :font "Monaspace Krypton Var" :height 140 :weight 'medium)
+    (set-face-attribute 'bold nil :weight 'extra-bold))
+   ((find-font (font-spec :name "Monaspace Krypton Var"))
+    (set-face-attribute 'default nil :font "Monaspace Krypton Var" :height 140)))
+  (custom-set-faces
+   '(tab-bar ((t (:height 0.9))))
+   '(mode-line ((t (:height 0.9))))
+   '(mode-line-inactive ((t (:inherit mode-line))))
+   '(line-number ((t (:height 0.8 :inherit shadow))))
+   '(line-number-current-line ((t (:inherit line-number))))
+   '(breadcrumb-face ((t (:height 0.8))))
+   '(breadcrumb-imenu-leef-face ((t (:height 1.0))))
+   '(breadcrumb-project-leef-face ((t (:height 0.8))))))
+
+;; Run on start
+(add-hook 'after-init-hook #'my/set-fonts)
+(add-hook 'server-after-make-frame-hook #'my/set-fonts)
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
 (use-package rainbow-mode :straight t)
