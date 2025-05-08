@@ -2,7 +2,7 @@
 output='/home/nightwing/Pictures/Screenshots/'
 
 case "$1" in
-	"select") hyprshot -m region -z -o "$output" || exit ;;
+	"select") hyprshot -z -m region  -o "$output" || exit ;;
 	"window") hyprshot -m output -o "$output" || exit ;;
 	*) scrot "$output" || exit ;;
 esac

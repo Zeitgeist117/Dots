@@ -45,7 +45,6 @@
 )  
 
 
-
 (defwidget Left []
 	(box
 		:halighn "start"
@@ -114,8 +113,6 @@
     (label :text "${window}"))
 )   
   
-
-
 
 (defwidget systop []
 	(box :orientation "h"

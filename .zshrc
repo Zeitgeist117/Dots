@@ -63,11 +63,11 @@ bindkey -M visual '^[[P' vi-delete
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2>/dev/null
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # default apps
-# export EDITOR="emacsclient -c -a emacs" 
-# export VISUAL="emacsclient -c -a emacs" 
-export EDITOR="nvim"    
-export VISUAL="nvim"    
-export TERMINAL="alacritty"
+export EDITOR="emacsclient -c -a emacs" 
+export VISUAL="emacsclient -c -a emacs" 
+# export EDITOR="nvim"    
+# export VISUAL="nvim"    
+# export TERMINAL="alacritty"
 export EXPLORER="thunar"
 export BROWSER="firefox"
 export MANPAGER="nvim +Man!"
