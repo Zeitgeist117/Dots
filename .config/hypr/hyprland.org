@@ -1,8 +1,21 @@
+#+TITLE:Hyprland Config
+#+PROPERTY: header-args :tangle ~/.config/hypr/hyprland.conf
+* Monitors 
+#+begin_src hyprlang
+monitor=DP-1, 2560x1440@144, 0x0, 1
+#+end_src hyprlang
+
+
+* Set Programs
+#+begin_src hyprlang
 $terminal = alacritty
 $filemanager = thunar
 $menu = tofi-run | xargs hyprctl dispatch exec --
 $browser = firefox
+#+end_src
 
+* Autostart
+#+begin_src hyprlang 
 exec-once = emacs --daemon &
 exec-once = swww-daemon &
 exec-once = swp &
@@ -12,9 +25,17 @@ exec-once = ewws open hypr-bar &
 exec-once = nm-applet &
 exec-once = corectrl &
 exec-once = syncthing &
+#+end_src
 
+* Look and Feel
+** Environment Variables
+#+begin_src hyprlang 
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
+#+end_src
+
+** General
+#+begin_src hyprlang 
 
 general {
     gaps_in = 7
@@ -35,6 +56,10 @@ general {
     layout = dwindle
     layout = master
 }
+#+end_src
+
+** Decorations
+#+begin_src hyprlang 
 
 decoration {
     rounding = 0
@@ -59,6 +84,10 @@ decoration {
         vibrancy = 0.1696
     }
 }
+#+end_src
+
+** Animations
+#+begin_src hyprlang 
 
 animations {
     enabled = yes, please :)
@@ -88,7 +117,11 @@ animations {
     animation = workspacesIn, 1, 1.21, almostLinear, fade
     animation = workspacesOut, 1, 1.94, almostLinear, fade
 }
+#+end_src
 
+** Layouts
+
+#+begin_src hyprlang 
 dwindle {
     pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = true # You probably want this
@@ -104,7 +137,10 @@ misc {
   	enable_swallow = true
   	swallow_regex = ^(Alacritty|Yazi|Emacs|Emacsclient)$
 }
+#+end_src
 
+* Input
+#+begin_src hyprlang 
 input {
     kb_layout = us
     kb_variant =
@@ -132,7 +168,11 @@ device {
     name = epic-mouse-v1
     sensitivity = -0.5
 }
+#+end_src
 
+
+* Keybinds
+#+begin_src hyprlang 
 $mainMod = SUPER # Sets "Windows" key as main modifier
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
@@ -213,7 +253,10 @@ bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 bind = , XF86AudioPlay, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin play-pause
 bind = , XF86AudioPrev, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin previous
 bind = , XF86AudioNext, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin next
+#+end_src
 
+* Scratchpads
+#+begin_src hyprlang 
 workspace = special:term, on-created-empty:[float; size 1000 800] $terminal, persistent:false
 bind = super, i, togglespecialworkspace, term
 workspace = special:terminal1, on-created-empty:[float; size 1000 800] $terminal, persistent:false
@@ -224,6 +267,10 @@ workspace = special:pm, on-created-empty:[float; size 1000 800] $terminal -e pul
 bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
+#+end_src
+
+* Windows and Workspaces 
+#+begin_src hyprlang 
 
 windowrulev2 = suppressevent maximize, class:.*
 
@@ -231,3 +278,4 @@ windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinn
 windowrule = opacity 0.7,class:deadbeef
 windowrule = opacity 0.7,class:fooyin
 windowrule = opacity 0.9,class:Emacs
+#+end_src
