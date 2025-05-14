@@ -1,22 +1,26 @@
 #+TITLE:Hyprland Config
 #+PROPERTY: header-args :tangle ~/.config/hypr/hyprland.conf
 * Monitors 
+Setting the Monitors
 #+begin_src hyprlang
 monitor=DP-1, 2560x1440@144, 0x0, 1
-#+end_src hyprlang
+#+end_src
 
 
 * Set Programs
+Setting some default programs for keybinds
 #+begin_src hyprlang
 $terminal = alacritty
-$filemanager = thunar
+$filemanager = cosmic-files
 $menu = tofi-run | xargs hyprctl dispatch exec --
 $browser = firefox
 #+end_src
 
 * Autostart
+Things i want to startup
 #+begin_src hyprlang 
 exec-once = emacs --daemon &
+exec-once = xrdb ~/.Xresources &
 exec-once = swww-daemon &
 exec-once = swp &
 exec-once = dunst &
@@ -29,14 +33,15 @@ exec-once = syncthing &
 
 * Look and Feel
 ** Environment Variables
+Cursor size
 #+begin_src hyprlang 
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
 #+end_src
 
 ** General
+Gaps, border size and color, layout
 #+begin_src hyprlang 
-
 general {
     gaps_in = 7
     gaps_out = 7
@@ -53,12 +58,13 @@ general {
     # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
     allow_tearing = false
 
-    layout = dwindle
+    #layout = dwindle
     layout = master
 }
 #+end_src
 
 ** Decorations
+window decorations and effects
 #+begin_src hyprlang 
 
 decoration {
@@ -87,6 +93,7 @@ decoration {
 #+end_src
 
 ** Animations
+defining animations. i just left this at default i dont really care
 #+begin_src hyprlang 
 
 animations {
@@ -120,14 +127,14 @@ animations {
 #+end_src
 
 ** Layouts
-
+definig tiling layouts and window swallowing
 #+begin_src hyprlang 
 dwindle {
     pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = true # You probably want this
 }
 master {
-    new_status = master
+    new_status = slave
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#misc
@@ -140,6 +147,7 @@ misc {
 #+end_src
 
 * Input
+definig keyboard layout
 #+begin_src hyprlang 
 input {
     kb_layout = us
@@ -172,6 +180,7 @@ device {
 
 
 * Keybinds
+my keybindings, pretty much the same as all the other WM configs i have
 #+begin_src hyprlang 
 $mainMod = SUPER # Sets "Windows" key as main modifier
 
@@ -179,7 +188,6 @@ $mainMod = SUPER # Sets "Windows" key as main modifier
 bind = SUPER, SPACE, exec, $menu
 bind = SUPER|SHIFT, SPACE, layoutmsg, cyclenext
 bind = SUPER, PERIOD, layoutmsg, swapwithmaster
-# bind = SUPER, Q, exec, passmenu -c -l 20 -p pass
 bind = SUPER, RETURN, exec, $terminal
 bind = SUPER, E, exec, $filemanager
 bind = SUPER|SHIFT, Q, exit,
@@ -199,12 +207,12 @@ bind = SUPER, H, resizeactive, -30 0
 bind = SUPER, L, resizeactive, 30 0
 
 # Focus movement
-bind = SUPER, J, cyclenext, prev
-bind = SUPER, K, cyclenext, next
+bind = SUPER, K, cyclenext, prev
+bind = SUPER, J, cyclenext, next
 
 # Window movement (swap)
-bind = SUPER|SHIFT, K, movewindow, d
-bind = SUPER|SHIFT, J, movewindow, u
+bind = SUPER|SHIFT, K, layoutmsg, swapprev
+bind = SUPER|SHIFT, J, layoutmsg, swapnext
 
 # Toggle bar
 bind = SUPER, B, exec, ewws open --toggle hypr-bar 
@@ -256,6 +264,7 @@ bind = , XF86AudioNext, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin next
 #+end_src
 
 * Scratchpads
+Scratchpads are engrained into me now thanks to dwm if it doesn't have scratchpads it is a bad wm.
 #+begin_src hyprlang 
 workspace = special:term, on-created-empty:[float; size 1000 800] $terminal, persistent:false
 bind = super, i, togglespecialworkspace, term
@@ -270,11 +279,13 @@ bind = super, c, togglespecialworkspace, yz
 #+end_src
 
 * Windows and Workspaces 
+window rules
 #+begin_src hyprlang 
 
 windowrulev2 = suppressevent maximize, class:.*
 
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+windowrule = float,class:mpv
 windowrule = opacity 0.7,class:deadbeef
 windowrule = opacity 0.7,class:fooyin
 windowrule = opacity 0.9,class:Emacs

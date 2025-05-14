@@ -1,0 +1,19 @@
+#!/bin/sh
+
+case $1 in
+    "--hour")
+        date "+%I"
+        ;;
+    "--minutes")
+        date "+%M"
+        ;;
+    "--type")
+        date "+%p"
+        ;;
+    "--date")
+        date "+%a %b %d"
+        ;;
+    *)
+        true
+        ;;
+esac

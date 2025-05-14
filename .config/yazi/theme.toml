@@ -1,6 +1,6 @@
-# [icon]
-# prepend_conds = [
-# 	{ if = "hidden & dir",  text = "👻" },  # Hidden directories
-# 	{ if = "dir",           text = "📁" },  # Directories
-# 	{ if = "!(dir | link)", text = "📄" },  # Normal files (not directories or symlinks)
-# ]
+[icon]
+prepend_conds = [
+	{ if = "hidden & dir",  text = "" },  # Hidden directories
+	{ if = "dir",           text = "" },  # Directories
+	{ if = "!(dir | link)", text = "" },  # Normal files (not directories or symlinks)
+]
