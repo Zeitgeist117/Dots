@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Find the first hwmon device that matches k10temp
+for hwmon in /sys/class/hwmon/hwmon*; do
+    name=$(<"$hwmon/name")
+    if [[ "$name" == "k10temp" ]]; then
+        temp_raw=$(<"$hwmon/temp1_input")
+        temp_c=$((temp_raw / 1000))
+        echo " ${temp_c}°C"
+        exit 0
+    fi
+done
+
+echo "NA"
+exit 1
