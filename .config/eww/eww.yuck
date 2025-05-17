@@ -47,14 +47,14 @@
 
 (defwidget Left []
 	(box
-		:halighn "start"
+		:halign "start"
 		(ws)
 	)
 )
 
 (defwidget Lefthypr []
 	(box
-		:halighn "start"
+		:halign "start"
 		(workspaces0)
 	)
 )
@@ -74,9 +74,9 @@
   (box
     :halign "end"
     :space-evenly false
-		 (label :markup "<span font-weight=\"heavy\">[</span>")
+		 (label :markup "<span font-weight=\"regular\">[</span>")
      (systray :class "systray" :orientation "h" :icon-size 14 :space-evenly true :spacing 4)
-		 (label :markup "<span font-weight=\"heavy\">]</span>")
+		 (label :markup "<span font-weight=\"regular\">]</span>")
 	 (systop)
   )
 )
@@ -100,7 +100,7 @@
 (deflisten window :initial "..." "sh ~/.config/eww/scripts/get-window-title")
 (defwidget title []
   (box
-    (label :text "${window}"))
+    (label :markup "<span font-weight=\"regular\">${window}</span>"))
 )   
   
 
@@ -137,30 +137,25 @@
 ;; (defpoll bat :interval "1s"
 ;; 	"scripts/bat")
 
-(defwidget cpu []
-   (eventbox
-	 (label :markup "<span font-weight=\"heavy\">${CPUP}</span>")
-))
-
 (defwidget CPU []
 		   (eventbox :onhover "${RUN_EWW} update SWAP_CPU=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_CPU=0 TIME_ANIMATION='slideup'"
-      (stack :selected SWAP_CPU :transition TIME_ANIMATION :class "cpu" :same-size false
-		 (label :markup "<span font-weight=\"heavy\">${CPUP}</span>")	
-(label :markup "<span font-weight=\"heavy\">[${CPUT}]</span>" ))
+      (stack :selected SWAP_CPU :transition TIME_ANIMATION :class "cpu" :same-size true
+		 (label :markup "<span font-weight=\"regular\">${CPUP}</span>")	
+(label :markup "<span font-weight=\"regular\">[${CPUT}]</span>" ))
 ))
 
 (defwidget mem []
 		   (eventbox :onhover "${RUN_EWW} update SWAP_MEM=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_MEM=0 TIME_ANIMATION='slideup'"
       (stack :selected SWAP_MEM :transition TIME_ANIMATION :class "mem" :same-size false
-		 (label :markup "<span font-weight=\"heavy\">${memp}</span>" :tooltip mem)	
-(label :markup "<span font-weight=\"heavy\">[${mem}]</span>" ))
+		 (label :markup "<span font-weight=\"regular\">${memp}</span>" :tooltip mem)	
+(label :markup "<span font-weight=\"regular\">[${mem}]</span>" ))
 ))
 (defwidget Time []
   (eventbox :onhover "${RUN_EWW} update SWAP_TIME_DATE=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_TIME_DATE=0 TIME_ANIMATION='slideup'"
     (button :onclick "${RUN_EWW} close calendar || ${RUN_EWW} open calendar"
       (stack :selected SWAP_TIME_DATE :transition TIME_ANIMATION :class "time" :same-size false
-        (label :markup "<span font-weight=\"heavy\">[${HOUR}</span><span font-weight=\"heavy\">:${MINUTES}</span><span font-weight=\"heavy\"font-size=\"small\">${PM_OR_AM}</span><span font-weight=\"heavy\">]</span>")
-        (label :markup "<span font-weight=\"heavy\">[${DATE}]</span>" )))))
+        (label :markup "<span font-weight=\"regular\">[${HOUR}</span><span font-weight=\"regular\">:${MINUTES}</span><span font-weight=\"regular\"font-size=\"small\">${PM_OR_AM}</span><span font-weight=\"regular\">]</span>")
+        (label :markup "<span font-weight=\"regular\">[${DATE}]</span>" )))))
 
 ;;POPUP CALENDAR WINDOW
 (defwindow calendar
@@ -170,4 +165,3 @@
   :windowtype "normal"
   (box :class "popup-window" :orientation "h" :valign "fill" :halign "fill"
     (calendar :show-details true :show-heading true :show-day-names true)))
-

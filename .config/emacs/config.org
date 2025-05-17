@@ -313,11 +313,11 @@
   (interactive)
   ;; Set font based on existing ones
   (cond
-   ((find-font (font-spec :name "Monaspace Krypton Var"))
-    (set-face-attribute 'default nil :font "Monaspace Krypton Var" :height 140 :weight 'medium)
+   ((find-font (font-spec :name "CozetteVector Nerd Font"))
+    (set-face-attribute 'default nil :font "CozetteVector Nerd Font" :height 160 :weight 'medium)
     (set-face-attribute 'bold nil :weight 'extra-bold))
-   ((find-font (font-spec :name "Monaspace Krypton Var"))
-    (set-face-attribute 'default nil :font "Monaspace Krypton Var" :height 140)))
+   ((find-font (font-spec :name "CozetteVector Nerd Font"))
+    (set-face-attribute 'default nil :font "CozetteVector Nerd Font" :height 160)))
   (custom-set-faces
    '(tab-bar ((t (:height 0.9))))
    '(mode-line ((t (:height 0.9))))

@@ -1,4 +1,5 @@
 * Dotfiles
+** Hyprland
 
 ** [[file:.config/xmonad/README.org][XMonad]] 
 

@@ -1,0 +1,32 @@
+{
+  "greeting_text": "改善",
+  "background": "#000000",
+  "foreground": "#7f849c",
+  "search_engine": "https://www.google.co.id/search?q=",
+  "favourites": [
+    {
+      "key": ":we",
+      "url": "https://web.whatsapp.com/"
+    },
+    {
+      "key": ":yt",
+      "url": "http://youtu.be"
+    },
+    {
+      "key": ":gi",
+      "url": "http://github.com"
+    },
+    {
+      "key": ":pw",
+      "url": "https://www.pw.live/study/batches/study"
+    },
+    {
+      "key": ":em",
+      "url": "http://gmail.com"
+    },
+    {
+      "key": ":li",
+      "url": "https://www.linkedin.com/feed/"
+    }
+  ]
+}

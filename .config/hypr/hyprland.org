@@ -11,7 +11,7 @@ monitor=DP-1, 2560x1440@144, 0x0, 1
 Setting some default programs for keybinds
 #+begin_src hyprlang
 $terminal = alacritty
-$filemanager = cosmic-files
+$filemanager = thunar
 $menu = tofi-run | xargs hyprctl dispatch exec --
 $browser = firefox
 #+end_src
@@ -146,6 +146,13 @@ misc {
 }
 #+end_src
 
+#+begin_src hyprlang
+ecosystem {
+    no_update_news = true
+    no_donation_nag = true
+}
+#+end_src
+
 * Input
 definig keyboard layout
 #+begin_src hyprlang 
@@ -276,6 +283,8 @@ workspace = special:pm, on-created-empty:[float; size 1000 800] $terminal -e pul
 bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
+workspace = special:n, on-created-empty:[float; size 1000 1000] $terminal -e fum, persistent:false
+bind = super, n, togglespecialworkspace, n
 #+end_src
 
 * Windows and Workspaces 
