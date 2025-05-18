@@ -1,7 +1,7 @@
 #+TITLE: Xmonad Config
 #+AUTHOR: Zeitgeist
-#+PROPERTY: header-args :mkdirp yes :tangle xmonad.hs
-* Xmonad Config :toc:
+#+PROPERTY: header-args :tangle xmonad.hs
+* Table Of Contents                                                     :toc:
   - [[#imports][Imports]]
   - [[#autostart][Autostart]]
   - [[#main-config][Main Config]]
