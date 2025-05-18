@@ -1,0 +1,15 @@
+#!/bin/sh
+
+players="kew,fooyin,DeaDBeeF,Feishin"
+track=$(playerctl -p $players metadata title 2>/dev/null)
+artist=$(playerctl -p $players metadata xesam:albumArtist 2>/dev/null)
+status=$(playerctl -p $players status 2>/dev/null)
+[ -z "$track" ] && exit 0
+[ -z "$artist" ] && exit 0
+case "$status" in
+    Playing) icon="▶" ;;
+    Paused)  icon="⏸" ;;
+    Stopped) exit 0 ;;  # Nothing is playing, so no output
+    *)       icon="❓" ;;
+esac
+echo "$icon $track - $artist"

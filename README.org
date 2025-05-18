@@ -1,6 +1,6 @@
 * Dotfiles
-** Hyprland
 
+** [[file:.config/hypr/README.org][Hyprland]] 
 ** [[file:.config/xmonad/README.org][XMonad]] 
 
 [[file:.img/x1.png]]

@@ -81,27 +81,8 @@
   )
 )
 
-(defpoll workspace0 :interval "0.1s"
-  "scripts/workspace.sh 0 &")
 
-(defwidget workspaces0 []
-  (literal :content workspace0))
 
-(deflisten ws
-  "scripts/ws")
-
-(defwidget ws []
-      (box
-        :halign "start"
-        :valign "center"
-        (literal :content ws))
-      ) 
-
-(deflisten window :initial "..." "sh ~/.config/eww/scripts/get-window-title")
-(defwidget title []
-  (box
-    (label :markup "<span font-weight=\"regular\">${window}</span>"))
-)   
   
 
 (defwidget systop []
@@ -109,6 +90,7 @@
 		 :space-evenly false
 		 :spacing 5
 		 :halign "end"
+		 (music)
 		 (CPU)
 		 (mem)
 		 (Time)	
@@ -120,6 +102,8 @@
 
 
 
+(deflisten window :initial "..." "sh ~/.config/eww/scripts/get-window-title")
+(defpoll workspace0 :interval "0.1s" "scripts/workspace.sh 0 &")
 (defvar RUN_EWW "eww -c ~/.config/eww/")
 (defvar SWAP_TIME_DATE 0)
 (defvar SWAP_MEM 0)
@@ -133,9 +117,32 @@
 (defpoll DATE :interval "1s" "scripts/time_info --date")
 (defpoll mem :interval "1s" "scripts/mem")
 (defpoll memp :interval "1s"	"scripts/memp")
+(defpoll music :interval "1s" "scripts/music")
 
 ;; (defpoll bat :interval "1s"
 ;; 	"scripts/bat")
+
+(defwidget workspaces0 []
+  (literal :content workspace0))
+
+(deflisten ws
+  "scripts/ws")
+
+(defwidget ws []
+      (box
+        :halign "start"
+        :valign "center"
+        (literal :content ws))
+      ) 
+(defwidget title []
+  (eventbox
+    (label :markup "<span font-weight=\"regular\">${window}</span>")
+))   
+(defwidget music []
+		   (box
+			(label :markup "<span font-weight=\"regular\">[${music}]</span>")
+
+))
 
 (defwidget CPU []
 		   (eventbox :onhover "${RUN_EWW} update SWAP_CPU=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_CPU=0 TIME_ANIMATION='slideup'"
