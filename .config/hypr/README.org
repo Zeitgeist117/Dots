@@ -1,5 +1,7 @@
 #+TITLE:Hyprland Config
+#+AUTHOR:Zeitgeist117
 #+PROPERTY: header-args :tangle ~/.config/hypr/hyprland.conf
+
 * Monitors 
 Setting the Monitors
 #+begin_src hyprlang
