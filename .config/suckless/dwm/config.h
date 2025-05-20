@@ -29,7 +29,7 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spnc", "-g", "100x30", NULL };
 const char *spcmd2[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
-const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x30", "-e", "btop", NULL };
+const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x40", "-e", "btop", NULL };
 const char *spcmd4[] = {"st", "-n", "spst", "-g", "100x30", NULL };
 const char *spcmd5[] = {"st", "-n", "spmc", "-g", "80x40", "-e", "kew", NULL };
 static Sp scratchpads[] = {
@@ -42,7 +42,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+/* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"}; */
+static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 
 /*Window Rules*/
 static const Rule rules[] = {

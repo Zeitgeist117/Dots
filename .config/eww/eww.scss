@@ -1,13 +1,26 @@
 *{
   all: unset; //Unsets everything so you can style everything from scratch
-  font-family: CozetteVector Nerd Font;
-  font-size: 16;
+  font-family: Monaspace Krypton;
+  font-size: 14;
 }
 
 .hypr-bar {
 	padding: 5px;
 	min-height: 10px;
 	border: 2px solid #ebdbb2;
+	background: #282828;
+	color: #ebdbb2;
+}
+.river-bar {
+	padding: 5px;
+	min-height: 10px;
+	border: 2px solid #ebdbb2;
+	background: #282828;
+	color: #ebdbb2;
+}
+.hypr-bar-full {
+	padding: 5px;
+	min-height: 10px;
 	background: #282828;
 	color: #ebdbb2;
 }
@@ -84,9 +97,10 @@ padding: 0 0px;
 }
 
 .title {
-  color: #ebdbb2;
-  background-color: #282828;
-  border: 1px solid #ebdbb2;
+  // color: #ebdbb2;
+  color: #282828;
+  // background-color: #282828;
+  background-color: #ebdbb2;
 
 }
 
@@ -109,3 +123,16 @@ padding: 0 0px;
   color: #ebdbb2;
   background-color: #282828;
 }
+.tag { 
+background: #282828;
+color: #ebdbb2;
+}
+
+.active-tag {
+  color: #282828;
+  background-color: #ebdbb2;
+  box-shadow: inset 0 -3px #282828;
+  border: 2px solid #ebdbb2;
+}
+
+.empty-tag { color: #ebdbb2; }

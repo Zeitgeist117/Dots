@@ -16,20 +16,20 @@ import = ["/home/nightwing/.config/alacritty/gruvbox_dark.toml"]
 size = 14
 
 [font.bold]
-family = "CozetteVector Nerd Font"
+family = "Monaspace Krypton"
 style = "Medium"
 
 [font.italic]
-family = "CozetteVector Nerd Font"
+family = "Monaspace Krypton"
 style = "Light italic"
 
 [font.normal]
-family = "CozetteVector Nerd Font"
+family = "Monaspace Krypton"
 style = "Medium"
 
 [window]
 dynamic_padding = true
-opacity = 0.8
+opacity = 0.9
 
 [window.padding]
 x = 10

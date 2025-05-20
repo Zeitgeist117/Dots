@@ -1,7 +1,7 @@
 * Dotfiles
 
-** [[file:.config/hypr/README.org][Hyprland]] 
-** [[file:.config/xmonad/README.org][XMonad]] 
+** [[file:.config/hypr/][Hyprland]] 
+** [[file:.config/xmonad/][XMonad]] 
 
 [[file:.img/x1.png]]
 [[file:.img/x2.png]]

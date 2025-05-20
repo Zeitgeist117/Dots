@@ -43,6 +43,46 @@
   )
 
 )  
+(defwindow river-bar
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "5px"
+                               :width "99.5%" ;so that it matches the gaps of the windows on my stuff 
+                               :height "9px"
+                               :anchor "top center")
+		   :namespace "bar"
+		   :exclusive "true"
+  (centerbox
+    :orientation "h"
+    :class "container"
+	:anchor "left"
+
+    (Leftriver)
+    (Center)
+    (Right)
+  )
+
+)  
+(defwindow hypr-bar-full
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%" ;so that it matches the gaps of the windows on my stuff 
+                               :height "9px"
+                               :anchor "top center")
+		   :namespace "bar"
+		   :exclusive "true"
+  (centerbox
+    :orientation "h"
+    :class "container"
+	:anchor "left"
+
+    (Lefthypr)
+    (Center)
+    (Right)
+  )
+
+)  
 
 
 (defwidget Left []
@@ -56,6 +96,17 @@
 	(box
 		:halign "start"
 		(workspaces0)
+	)
+)
+(defwidget Leftriver []
+	(box
+		:halign "start"
+		:space-evenly false
+ 
+(for tagnum in tags
+          (tag :id tagnum
+               :symbol `${tagSymbols[tagnum - 1]}`)
+        )
 	)
 )
 
@@ -99,7 +150,25 @@
 	
 
 
+(deflisten current-json :initial "[]"
+    `ristate -t | stdbuf -o0 sed '/{"tags":{}}/d; s/├─┤ │/[]/g; s/│ ├─┤/[]/g; s/│   │/[1]/g; s/│ /[/; s/ │/]/;'`
+)
 
+(deflisten occupied-tags :initial "1" 
+    `ristate -vt | stdbuf -o0 sed '/{"viewstag":{}}/d'`
+)
+(defwidget tag [id symbol]
+    (eventbox
+        :onclick `riverctl set-focused-tags \`echo "2^${id - 1}" | bc -l\``
+        ( box 
+		:class `tag ${id == current-json["tags"]["LGDisplay"][0] ? "active-tag" : matches(occupied-tags["viewstag"]["LGDisplay"], id) == true ? "occupied-tag" : "empty-tag"}` 
+          {symbol}
+        )
+    )
+)
+
+(defvar tags "[1, 2, 3, 4, 5, 6, 7, 8, 9]")
+(defvar tagSymbols `["一", "二", "三", "四", "五", "六", "七", "八", "九"]`)
 
 
 (deflisten window :initial "..." "sh ~/.config/eww/scripts/get-window-title")
