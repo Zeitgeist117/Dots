@@ -47,7 +47,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-session=${1:-xmonad}
+session=${1:-dwm}
 
 xrdb ~/.Xresources
 case $session in

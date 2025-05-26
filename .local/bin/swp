@@ -1,3 +1,3 @@
 #!/bin/sh
 path="$(grep -oP "(?<=--bg-fill ')[^']+" ~/.fehbg)"
-exec swww  img --transition-step=10 $path
+exec swww  img $path

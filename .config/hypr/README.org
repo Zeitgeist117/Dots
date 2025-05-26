@@ -12,9 +12,9 @@ monitor=DP-1, 2560x1440@144, 0x0, 1
 * Set Programs
 Setting some default programs for keybinds
 #+begin_src hyprlang
-$terminal = alacritty
+$terminal = foot
 $filemanager = thunar
-$menu = tofi-run | xargs hyprctl dispatch exec --
+$menu = rofi -show run 
 $browser = firefox
 #+end_src
 
@@ -137,6 +137,7 @@ dwindle {
 }
 master {
     new_status = slave
+    mfact = 0.5
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#misc
@@ -144,7 +145,7 @@ misc {
     force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
     disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
   	enable_swallow = true
-  	swallow_regex = ^(Alacritty|Yazi|Emacs|Emacsclient)$
+  	swallow_regex = ^(Alacritty|foot|Emacs|Emacsclient)$
 }
 #+end_src
 
@@ -267,9 +268,9 @@ bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
 # Requires playerctl
-bind = , XF86AudioPlay, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin play-pause
-bind = , XF86AudioPrev, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin previous
-bind = , XF86AudioNext, exec, playerctl -p kew,fooyin,DeaDBeeF,Feishin next
+bind = , XF86AudioPlay, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin play-pause
+bind = , XF86AudioPrev, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin previous
+bind = , XF86AudioNext, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin next
 #+end_src
 
 * Scratchpads
@@ -285,7 +286,8 @@ workspace = special:pm, on-created-empty:[float; size 1000 800] $terminal -e pul
 bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
-workspace = special:n, on-created-empty:[float; size 1000 1000] $terminal -e kew, persistent:false
+# workspace = special:n, on-created-empty:[float; size 600 250] $terminal -e fum, persistent:false
+workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
 bind = super, n, togglespecialworkspace, n
 #+end_src
 
@@ -297,7 +299,7 @@ windowrulev2 = suppressevent maximize, class:.*
 
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 windowrule = float,class:mpv
-windowrule = opacity 0.9,class:deadbeef
-windowrule = opacity 0.9,class:fooyin
+#windowrule = opacity 0.9,class:deadbeef
+#windowrule = opacity 0.9,class:fooyin
 #windowrule = opacity 0.9,class:Emacs
 #+end_src

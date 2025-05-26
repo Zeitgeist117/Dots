@@ -76,7 +76,7 @@ mainbox {
     enabled:                     true;
     spacing:                     10px;
     margin:                      0px;
-    padding:                     40px;
+    padding:                     30px;
     border:                      0px solid;
     border-radius:               0px 0px 0px 0px;
     border-color:                @border-colour;
@@ -115,7 +115,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "C:\>";
+    placeholder:                 "C:\\>";
     placeholder-color:           inherit;
 }
 
@@ -126,7 +126,7 @@ listview {
     lines:                       10;
     cycle:                       true;
     dynamic:                     true;
-    scrollbar:                   true;
+    scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                true;
@@ -207,7 +207,7 @@ element-icon {
 element-text {
     background-color:            transparent;
     text-color:                  inherit;
-    highlight:                   none;
+    highlight:                   inherit;
     cursor:                      inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
@@ -215,7 +215,7 @@ element-text {
 
 /*****----- Mode Switcher -----*****/
 mode-switcher{
-    enabled:                     true;
+    enabled:                     false;
     spacing:                     0px;
     margin:                      0px;
     padding:                     0px;
@@ -259,7 +259,7 @@ textbox {
     text-color:                  @border-colour;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-    highlight:                   none;
+    highlight:                   inherit;
     placeholder-color:           @foreground-colour;
     blink:                       true;
     markup:                      true;

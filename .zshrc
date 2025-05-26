@@ -1,7 +1,6 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-# PS1='''%F{#cc241d}❚%f%F{#fe8019}❚%f%F{#d79921}❚%f%F{#d79921}[%f%B% ツァイトガイスト%b%F{#d79921}]%f─%F{#d79921}[%f%B% アーチナイト%b%F{#d79921}]%f─%F{#d79921}[%f%~% %F{#d79921}]%f
-# %F{#cc241d}❚%f%F{#fe8019}❚%f%F{#d79921}❚%f%F{#d79921}[%fλ%F{#d79921}]%f '''
+# PS1='''%F{#cc241d}❚%f%F{#fe8019}❚%f%F{#ebdbb2}❚%f ''' #d79921
 PS1='''┌─[%B%n% %b]─[%B%M% %b]─[%~% ]
 └─[λ] '''
 stty stop undef		# Disable ctrl-s to freeze terminal.

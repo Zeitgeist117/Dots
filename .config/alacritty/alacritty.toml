@@ -21,7 +21,7 @@ style = "Medium"
 
 [font.italic]
 family = "Monaspace Krypton"
-style = "Light italic"
+style = "italic"
 
 [font.normal]
 family = "Monaspace Krypton"
@@ -29,10 +29,12 @@ style = "Medium"
 
 [window]
 dynamic_padding = true
-opacity = 0.9
+decorations = "none"
+# opacity = 0.9
+
 
 [window.padding]
-x = 10
-y = 10
+x = 20
+y = 20
 
 [keyboard]

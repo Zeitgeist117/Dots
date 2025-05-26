@@ -27,8 +27,8 @@
            :monitor 0
            :geometry (geometry :x "0%"
                                :y "5px"
-                               :width "99.5%" ;so that it matches the gaps of the windows on my stuff 
-                               :height "9px"
+                               :width "99.48%" ;so that it matches the gaps of the windows on my stuff 
+                               :height "10px"
                                :anchor "top center")
 		   :namespace "bar"
 		   :exclusive "true"
@@ -141,7 +141,7 @@
 		 :space-evenly false
 		 :spacing 5
 		 :halign "end"
-		 (music)
+		 ;; (music-icon)
 		 (CPU)
 		 (mem)
 		 (Time)	
@@ -187,6 +187,7 @@
 (defpoll mem :interval "1s" "scripts/mem")
 (defpoll memp :interval "1s"	"scripts/memp")
 (defpoll music :interval "1s" "scripts/music")
+(defpoll musicicon :interval "1s" "scripts/music_icon")
 
 ;; (defpoll bat :interval "1s"
 ;; 	"scripts/bat")
@@ -204,9 +205,12 @@
         (literal :content ws))
       ) 
 (defwidget title []
-  (eventbox
-    (label :markup "<span font-weight=\"regular\">${window}</span>")
-))   
+    (label :text window)
+)   
+(defwidget music-icon []
+		   (eventbox
+			(label :markup "<span font-weight=\"regular\">[${musicicon}]</span>" :tooltip music)
+))
 (defwidget music []
 		   (box
 			(label :markup "<span font-weight=\"regular\">[${music}]</span>")
@@ -215,7 +219,7 @@
 
 (defwidget CPU []
 		   (eventbox :onhover "${RUN_EWW} update SWAP_CPU=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_CPU=0 TIME_ANIMATION='slideup'"
-      (stack :selected SWAP_CPU :transition TIME_ANIMATION :class "cpu" :same-size true
+      (stack :selected SWAP_CPU :transition TIME_ANIMATION :class "cpu" :same-size false
 		 (label :markup "<span font-weight=\"regular\">${CPUP}</span>")	
 (label :markup "<span font-weight=\"regular\">[${CPUT}]</span>" ))
 ))
@@ -230,8 +234,8 @@
   (eventbox :onhover "${RUN_EWW} update SWAP_TIME_DATE=1 TIME_ANIMATION='slidedown'" :onhoverlost "${RUN_EWW} update SWAP_TIME_DATE=0 TIME_ANIMATION='slideup'"
     (button :onclick "${RUN_EWW} close calendar || ${RUN_EWW} open calendar"
       (stack :selected SWAP_TIME_DATE :transition TIME_ANIMATION :class "time" :same-size false
-        (label :markup "<span font-weight=\"regular\">[${HOUR}</span><span font-weight=\"regular\">:${MINUTES}</span><span font-weight=\"regular\"font-size=\"small\">${PM_OR_AM}</span><span font-weight=\"regular\">]</span>")
-        (label :markup "<span font-weight=\"regular\">[${DATE}]</span>" )))))
+        (label :markup "<span font-weight=\"regular\">[󱑁 ${HOUR}</span><span font-weight=\"regular\">:${MINUTES}</span><span font-weight=\"regular\"font-size=\"small\">${PM_OR_AM}</span><span font-weight=\"regular\">]</span>")
+        (label :markup "<span font-weight=\"regular\">[ ${DATE}]</span>" )))))
 
 ;;POPUP CALENDAR WINDOW
 (defwindow calendar

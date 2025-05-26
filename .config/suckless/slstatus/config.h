@@ -69,5 +69,9 @@ static const struct arg args[] = {
 	{ ram_perc, "^d^ ^b#504945^^c#ebdbb2^ 󰍛 ^b#fabd2f^^c#282828^ %s%% ",   NULL},
 	{ datetime, "^d^ ^b#504945^^c#ebdbb2^  ^b#fe8019^^c#282828^ %s ",    "%a %b %d"},
 	{ datetime, "^d^ ^b#504945^^c#ebdbb2^  ^b#fb4934^^c#282828^ %s ",    "%r"},
-//	{ run_command, "%s ", "~/.config/suckless/slstatus/components/bat.sh"},
+	/* { run_command, "%s ", "~/.config/suckless/slstatus/components/bat.sh"}, */
+	/* { cpu_perc, " 󰻠 %s%% ",   NULL}, */
+	/* { ram_perc, " 󰍛 %s%% ",   NULL}, */
+	/* { datetime, "  %s ",    "%a %b %d"}, */
+	/* { datetime, "  %s ",    "%r"}, */
 };

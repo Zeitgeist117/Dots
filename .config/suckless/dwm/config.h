@@ -31,7 +31,8 @@ const char *spcmd1[] = {"st", "-n", "spnc", "-g", "100x30", NULL };
 const char *spcmd2[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
 const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x40", "-e", "btop", NULL };
 const char *spcmd4[] = {"st", "-n", "spst", "-g", "100x30", NULL };
-const char *spcmd5[] = {"st", "-n", "spmc", "-g", "80x40", "-e", "kew", NULL };
+/* const char *spcmd5[] = {"st", "-n", "spmc", "-g", "80x40", "-e", "kew", NULL }; */
+const char *spcmd5[] = {"audacious", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spnc",		spcmd1},

@@ -8,5 +8,10 @@ use = "Ape/simple-status"
 rev = "d0da104"
 hash = "68603fdd1dcaf415227e2c77a9317947"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "55bf699"
+hash = "7918aab6a71caf31b58411f789195677"
+
 [flavor]
 deps = []
