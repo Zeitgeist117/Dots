@@ -1,0 +1,11 @@
+#!/bin/sh
+while read file
+do
+        case "$1" in
+        "w")
+			feh --bg-fill $file && swp;;
+        "x")
+			feh --bg-fill $file
+
+        esac
+done
