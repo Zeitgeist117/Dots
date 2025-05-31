@@ -3,12 +3,9 @@
 ** [[file:.config/hypr/][Hyprland]] 
 [[file:.img/h1.png]]
 [[file:.img/h2.png]]
-[[file:.img/h4.png]]
 
 ** [[file:.config/xmonad/][XMonad]] 
-[[file:.img/x1.png]]
-[[file:.img/x2.png]]
-[[file:.img/x3.png]]
+[[file:.img/X1.png]]
 
 ** DWM 
 

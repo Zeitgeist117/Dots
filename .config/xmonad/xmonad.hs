@@ -31,8 +31,8 @@ myStartupHook = do
     -- spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --margin 550 &" 
     spawnOnce "/usr/bin/emacs --daemon &"
     spawnOnce "dunst"
-    spawnOnce "eww daemon"
-    spawnOnce "eww open xmonad-bar"
+    -- spawnOnce "eww daemon"
+    -- spawnOnce "eww open xmonad-bar"
     spawnOnce "nm-applet --indicator"
     spawnOnce "xclip &"
     spawnOnce "~/.fehbg"
@@ -40,11 +40,11 @@ myStartupHook = do
     spawnOnce "syncthing &"
     spawnOnce "mpDris2"
     spawnOnce "corectrl &"
-    setWMName "LG3D"
+    setWMName "XMonad"
 
 main :: IO ()
--- main = xmonad . ewmhFullscreen . ewmh =<< xmobar myConfig 
-main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ myConfig 
+main = xmonad . ewmhFullscreen . ewmh =<< xmobar myConfig 
+-- main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ myConfig 
 myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
