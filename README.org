@@ -12,4 +12,4 @@
 
 ** DWM 
 
-[[file:.img/dwm.png]]
+[[file:.img/DWM.png]]
