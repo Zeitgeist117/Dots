@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -11,7 +11,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Monaspace Krypton:size=15", "FontAwesome:size=15", "JoyPixels:pixelsize=15", "Sazanami Mincho:size=15" };
+static const char *fonts[]          = { "Monaspace Krypton:size=14", "FontAwesome:size=14", "JoyPixels:pixelsize=14", "Sazanami Mincho:size=14" };
 static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#282828";
 static const char col_gray3[]       = "#ebdbb2";
@@ -27,12 +27,15 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
+/* const char *spcmd1[] = {"alacritty", "-c", "spnc", NULL }; */
+/* const char *spcmd2[] = {"alacritty", "-c", "sppm", "-e", "pulsemixer", NULL }; */
+/* const char *spcmd3[] = {"alacritty", "-c", "spbt", "-e", "btop", NULL }; */
+/* const char *spcmd4[] = {"alacritty", "-c", "spst", NULL }; */
 const char *spcmd1[] = {"st", "-n", "spnc", "-g", "100x30", NULL };
 const char *spcmd2[] = {"st", "-n", "sppm", "-g", "100x30", "-e", "pulsemixer", NULL };
 const char *spcmd3[] = {"st", "-n", "spbt", "-g", "100x40", "-e", "btop", NULL };
 const char *spcmd4[] = {"st", "-n", "spst", "-g", "100x30", NULL };
-/* const char *spcmd5[] = {"st", "-n", "spmc", "-g", "80x40", "-e", "kew", NULL }; */
-const char *spcmd5[] = {"audacious", NULL };
+const char *spcmd5[] = {"st", "-n", "spmc", "-g", "80x40", "-e", "kew", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spnc",		spcmd1},
@@ -43,8 +46,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-/* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"}; */
-static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九"};
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+/* static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九"}; */
 
 /*Window Rules*/
 static const Rule rules[] = {

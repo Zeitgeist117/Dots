@@ -22,14 +22,14 @@ $browser = firefox
 Things i want to startup
 #+begin_src hyprlang 
 exec-once = emacs --daemon &
+exec-once = ewws daemon &
 exec-once = xrdb ~/.Xresources &
 exec-once = swww-daemon &
 exec-once = swp &
 exec-once = dunst &
 exec-once = rescrobbled &
 exec-once = mpris-discord-rpc &
-exec-once = ewws daemon &
-exec-once = ewws open hypr-bar-full &
+exec-once = ewws open hypr-bar &
 exec-once = nm-applet &
 exec-once = corectrl &
 exec-once = syncthing &
@@ -208,10 +208,11 @@ bind = SUPER, APOSTROPHE, exec, emacsclient -c
 bind = SUPER, S, exec, ~/.local/bin/scrw select
 bind=SUPER_SHIFT,S,exec, ~/.local/bin/scrw window
 
-# bind = $mainMod, P, pseudo, # dwindle
-#bind = $mainMod, J, togglesplit, # dwindle
+#bind = $mainMod, X, pseudo, # dwindle
+#bind = $mainMod, D, togglesplit, # dwindle
 bind = SUPER|SHIFT, E, exec, hyprctl reload
-
+bind=SUPER,M,fullscreen, 1 # basically monocle mode i use it for gaming
+bind = $mainMod, F, togglefloating,
 # Move focus with mainMod + arrow keys
 # Window management
 bind = SUPER, W, killactive, 
@@ -227,7 +228,7 @@ bind = SUPER|SHIFT, K, layoutmsg, swapprev
 bind = SUPER|SHIFT, J, layoutmsg, swapnext
 
 # Toggle bar
-bind = SUPER, B, exec, ewws open --toggle hypr-bar-full 
+bind = SUPER, B, exec, ewws open --toggle hypr-bar
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, exec, ~/.config/eww/scripts/dispatch.sh 1
 bind = $mainMod, 2, exec, ~/.config/eww/scripts/dispatch.sh 2
@@ -270,9 +271,9 @@ bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
 # Requires playerctl
-bind = , XF86AudioPlay, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin play-pause
-bind = , XF86AudioPrev, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin previous
-bind = , XF86AudioNext, exec, playerctl -p kew,fooyin,DeaDBeeF,audacious,Feishin next
+bind = , XF86AudioPlay, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin play-pause
+bind = , XF86AudioPrev, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin previous
+bind = , XF86AudioNext, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin next
 #+end_src
 
 * Scratchpads
@@ -301,6 +302,8 @@ windowrulev2 = suppressevent maximize, class:.*
 
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 windowrule = float,class:mpv
+windowrulev2 = float, title:^(Picture-in-Picture)$
+windowrulev2 = pin, title:^(Picture-in-Picture)$ 
 #windowrule = opacity 0.9,class:deadbeef
 #windowrule = opacity 0.9,class:fooyin
 #windowrule = opacity 0.9,class:Emacs

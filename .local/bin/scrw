@@ -1,10 +1,26 @@
-#! /bin/sh
-output='/home/nightwing/Pictures/Screenshots/'
+#!/bin/sh
+output="$HOME/Pictures/Screenshots/"
+
+# Ensure output directory exists
+mkdir -p "$output"
 
 case "$1" in
-	"select") hyprshot -z -m region  -o "$output" || exit ;;
-	"window") hyprshot -m output -o "$output" || exit ;;
-	*) scrot "$output" || exit ;;
+	"select")
+		filename="/tmp/screenshot-$(date +%d-%m-%Y-%H-%M).png"
+		if grim -g "$(slurp)" "$filename"; then
+			magick "$filename" \( +clone -background black -shadow 80x10+0+0 -fill "#171b24" \) +swap -background "#504945" -layers merge +repage "$filename"
+			mv "$filename" "$output"
+			notify-send "grim" "Screenshot Saved"
+		else
+			notify-send "grim" "Screenshot Cancelled"
+		fi
+		;;
+	"full")
+		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).png"
+		notify-send "grim" "Screenshot Saved"
+		;;
+	*)
+		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).Emotionalpng" || exit
+		notify-send "grim" "Screenshot Cancelled"
+		;;
 esac
-
-notify-send "  Screenshot Taken "

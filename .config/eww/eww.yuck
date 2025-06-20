@@ -125,13 +125,22 @@
   (box
     :halign "end"
     :space-evenly false
-		 (label :markup "<span font-weight=\"regular\">[</span>")
-     (systray :class "systray" :orientation "h" :icon-size 14 :space-evenly true :spacing 4)
-		 (label :markup "<span font-weight=\"regular\">]</span>")
-	 (systop)
+	:spacing 5
+	 (Tray)
+	 (systop :spacing "5")
   )
 )
 
+(defwidget Tray []
+  (box
+    :halign "end"
+    :space-evenly false
+	;; :spacing 5
+	 (label :markup "<span font-weight=\"regular\">[</span>")
+     (systray :class "systray" :orientation "h" :icon-size 14 :space-evenly true :spacing 2)
+	 (label :markup "<span font-weight=\"regular\">]</span>")
+  )
+)
 
 
   

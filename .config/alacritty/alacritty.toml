@@ -13,7 +13,7 @@ mods = "Alt"
 import = ["/home/nightwing/.config/alacritty/gruvbox_dark.toml"]
 
 [font]
-size = 14
+size = 10
 
 [font.bold]
 family = "Monaspace Krypton"
