@@ -13,7 +13,7 @@ monitor=DP-1, 2560x1440@144, 0x0, 1
 Setting some default programs for keybinds
 #+begin_src hyprlang
 $terminal = foot
-$filemanager = thunar
+$filemanager = pcmanfm
 $menu = rofi -show run 
 $browser = firefox
 #+end_src
@@ -22,14 +22,14 @@ $browser = firefox
 Things i want to startup
 #+begin_src hyprlang 
 exec-once = emacs --daemon &
-exec-once = ewws daemon &
-exec-once = xrdb ~/.Xresources &
+exec-once = ~/.local/bin/ewws daemon &
+exec-once = ~/.local/bin/ewws open hypr-bar &
 exec-once = swww-daemon &
+exec-once = xrdb ~/.Xresources &
+exec-once = /sbin/rescrobbled &
+exec-once = /sbin/mpris-discord-rpc &
 exec-once = swp &
 exec-once = dunst &
-exec-once = rescrobbled &
-exec-once = mpris-discord-rpc &
-exec-once = ewws open hypr-bar &
 exec-once = nm-applet &
 exec-once = corectrl &
 exec-once = syncthing &
@@ -228,7 +228,7 @@ bind = SUPER|SHIFT, K, layoutmsg, swapprev
 bind = SUPER|SHIFT, J, layoutmsg, swapnext
 
 # Toggle bar
-bind = SUPER, B, exec, ewws open --toggle hypr-bar
+bind = SUPER, B, exec, ~/.local/bin/ewws open --toggle hypr-bar
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, exec, ~/.config/eww/scripts/dispatch.sh 1
 bind = $mainMod, 2, exec, ~/.config/eww/scripts/dispatch.sh 2
@@ -271,9 +271,9 @@ bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
 # Requires playerctl
-bind = , XF86AudioPlay, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin play-pause
-bind = , XF86AudioPrev, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin previous
-bind = , XF86AudioNext, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin next
+bind = , XF86AudioPlay, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin play-pause  
+bind = , XF86AudioPrev, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin previous
+bind = , XF86AudioNext, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin next
 #+end_src
 
 * Scratchpads
@@ -290,7 +290,8 @@ bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
 # workspace = special:n, on-created-empty:[float; size 600 250] $terminal -e fum, persistent:false
-workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
+# workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
+workspace = special:n, on-created-empty:[float; size 1800 850] $terminal -e rmpc, persistent:false
 bind = super, n, togglespecialworkspace, n
 #+end_src
 

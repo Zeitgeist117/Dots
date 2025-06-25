@@ -450,6 +450,9 @@ which fucking keys do i use, is this moonlight sonata?
 * Org Mode
 ** Enabling table of contents
 #+begin_src emacs-lisp
+(use-package org
+  :straight t
+)
 (use-package toc-org
     :straight t
 	:commands toc-org-enable

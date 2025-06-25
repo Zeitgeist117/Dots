@@ -80,3 +80,4 @@ function reload_gtk_theme() {
   sleep 1
   gsettings set org.gnome.desktop.interface gtk-theme $theme
 }
+compdef -d beet
