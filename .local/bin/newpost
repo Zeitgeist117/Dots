@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 \"Post Title\""
+  exit 1
+fi
+
+DATE=$(date +%F)
+TITLE_SLUG=$(echo "$1" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-|-$//g')
+FILE="blog/${DATE}-${TITLE_SLUG}.org"
+
+mkdir -p blog
+
+cat > "$FILE" << EOF
+#+TITLE: $1
+#+OPTIONS: toc:nil
+#+HTML_HEAD: <link rel="stylesheet" href="style.css" type="text/css" />
+#+BEGIN_EXPORT html
+<div class="post-content">
+#+END_EXPORT
+
+** $DATE
+
+Write your content here...
+
+#+BEGIN_EXPORT html
+<button onclick="history.back()" class="back-button">← Go Back</button>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+</div>
+#+END_EXPORT
+
+EOF
+
+echo "Created new org post: $FILE"
