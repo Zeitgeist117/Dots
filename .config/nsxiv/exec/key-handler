@@ -3,7 +3,7 @@ while read file
 do
         case "$1" in
         "w")
-			feh --bg-fill $file && swp;;
+			feh --bg-fill $file && /home/nightwing/.local/bin/swp;;
         "x")
 			feh --bg-fill $file
 

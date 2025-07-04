@@ -7,13 +7,11 @@ fi
 
 DATE=$(date +%F)
 TITLE_SLUG=$(echo "$1" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-|-$//g')
-FILE="blog/${DATE}-${TITLE_SLUG}.org"
-
-mkdir -p blog
+FILE="/home/nightwing/Documents/xfsite/blog/${DATE}-${TITLE_SLUG}.org"
 
 cat > "$FILE" << EOF
 #+TITLE: $1
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil num:nil
 #+HTML_HEAD: <link rel="stylesheet" href="style.css" type="text/css" />
 #+BEGIN_EXPORT html
 <div class="post-content">

@@ -13,7 +13,7 @@ monitor=DP-1, 2560x1440@144, 0x0, 1
 Setting some default programs for keybinds
 #+begin_src hyprlang
 $terminal = foot
-$filemanager = pcmanfm
+$filemanager = thunar
 $menu = rofi -show run 
 $browser = firefox
 #+end_src
@@ -54,7 +54,7 @@ general {
 
     # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
     col.active_border = rgba(ebdbb2ff)
-    col.inactive_border = rgba(282828ff)
+    col.inactive_border = rgba(504945ff)
 
     # Set to true enable resizing windows by clicking and dragging on borders and gaps
     resize_on_border = false
@@ -101,7 +101,7 @@ defining animations. i just left this at default i dont really care
 #+begin_src hyprlang 
 
 animations {
-    enabled = yes, please :)
+    enabled = yes, 
 
     # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
@@ -290,8 +290,8 @@ bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
 # workspace = special:n, on-created-empty:[float; size 600 250] $terminal -e fum, persistent:false
-# workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
-workspace = special:n, on-created-empty:[float; size 1800 850] $terminal -e rmpc, persistent:false
+workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
+# workspace = special:n, on-created-empty:[float; size 1800 850] $terminal -e rmpc, persistent:false
 bind = super, n, togglespecialworkspace, n
 #+end_src
 

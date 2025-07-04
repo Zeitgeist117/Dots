@@ -70,20 +70,20 @@
 
 ** Load Evil Mode
 #+begin_src emacs-lisp
- (use-package evil
-   :straight t ;; install the evil package if not installed
-   :init ;; tweak evil's configuration before loading it
-   (setq evil-search-module 'evil-search)
-   (setq evil-ex-complete-emacs-commands nil)
-   (setq evil-vsplit-window-right t)
-   (setq evil-split-window-below t)
-   (setq evil-shift-round nil)
-   (setq evil-want-C-u-scroll t)
-   (setq evil-want-keybinding nil)
-   :config ;; tweak evil after loading it
-   (evil-mode))
-(use-package evil-tutor
-  :straight t)
+(use-package evil
+    :straight t
+	:init
+	(setq evil-want-integration t)
+	(setq evil-want-keybinding nil)
+	(setq evil-vsplit-window-right t)
+	(evil-mode))  
+(use-package evil-collection
+    :straight t
+	:after evil
+	:config
+	(setq evil-collection-mode-list '(dashboard dired ibuffer))
+	(evil-collection-init))
+(use-package evil-tutor :straight t)
 ;; Using RETURN to follow links in Org/Evil 
 ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
 (with-eval-after-load 'evil-maps
@@ -92,12 +92,6 @@
 	(define-key evil-motion-state-map (kbd "TAB") nil))
 ;; Setting RETURN key in org-mode to follow links
 	(setq org-return-follows-link  t)
-(use-package evil-collection
-  :after evil
-  :straight t
-  :config
-  (evil-collection-init)
-)
 #+end_src
 
 ** Sane Defaults
@@ -178,6 +172,8 @@
 	  "b C" '(clone-indirect-buffer-other-window :wk "Clone indirect buffer in new window")
 	  "b d" '(bookmark-delete :wk "Delete bookmark")
 	  "b i" '(ibuffer :wk "Ibuffer")
+	  "b n" '(next-buffer :wk "Next buffer")
+	  "b p" '(previous-buffer :wk "Previous buffer")
 	  "b k" '(kill-current-buffer :wk "Kill current buffer")
 	  "b K" '(kill-some-buffers :wk "Kill multiple buffers")
 	  "b l" '(list-bookmarks :wk "List bookmarks")
@@ -773,7 +769,7 @@ the building blocks of rice
 
 ** Dashboard
 #+begin_src emacs-lisp
-  (use-package dashboard
+(use-package dashboard
 	:straight t 
 	:init
 	(setq initial-buffer-choice 'dashboard-open)
@@ -784,9 +780,7 @@ the building blocks of rice
 	(setq dashboard-startup-banner "/home/nightwing/.config/emacs/images/emacs-dash.txt")  ;; use custom image as banner
 	(setq dashboard-center-content t) ;; set to 't' for centered content
 	(setq dashboard-items '((recents . 5)
-							(agenda . 3)
-							;; (bookmarks . 3)
-							(projects . 3)))
+							))
 	:custom
 	(dashboard-modify-heading-icons '((recents . "file-text")
 									  (bookmarks . "book")))

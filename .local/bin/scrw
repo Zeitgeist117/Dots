@@ -20,7 +20,7 @@ case "$1" in
 		notify-send "grim" "Screenshot Saved"
 		;;
 	*)
-		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).Emotionalpng" || exit
-		notify-send "grim" "Screenshot Cancelled"
+		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).png" || exit
+		notify-send "grim" "Screenshot Saved"
 		;;
 esac

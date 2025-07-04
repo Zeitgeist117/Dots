@@ -1,7 +1,5 @@
-#!/bin/sh
-# Prints all batteries, their percentage remaining and an emoji corresponding
-# to charge status (🔌 for plugged up, 🔋 for discharging on battery, etc.).
 
+#!/bin/sh
 notify() {
     notify-send -i battery-good-symbolic \
         -h string:x-canonical-private-synchronous:battery \
