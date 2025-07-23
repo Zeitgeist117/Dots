@@ -88,6 +88,7 @@ image_alloc      = 536870912  # 512MB
 image_bound      = [ 5000, 5000 ]
 suppress_preload = false
 
+
 [plugin]
 fetchers = [
 	# Mimetype
@@ -152,6 +153,10 @@ previewers = [
 	{ name = "*", run = "file" },
 ]
 
+[plugins]
+preload = [
+    "~/.config/yazi/ui.lua"
+]
 [input]
 cursor_blink = false
 

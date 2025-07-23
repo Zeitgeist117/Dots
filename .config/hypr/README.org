@@ -290,7 +290,7 @@ bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
 # workspace = special:n, on-created-empty:[float; size 600 250] $terminal -e fum, persistent:false
-workspace = special:n, on-created-empty:[float; size 700 850] $terminal -e kew, persistent:false
+workspace = special:n, on-created-empty:[float; size 950 400] $terminal -e kew, persistent:false
 # workspace = special:n, on-created-empty:[float; size 1800 850] $terminal -e rmpc, persistent:false
 bind = super, n, togglespecialworkspace, n
 #+end_src

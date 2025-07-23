@@ -244,7 +244,7 @@
     (button :onclick "${RUN_EWW} close calendar || ${RUN_EWW} open calendar"
       (stack :selected SWAP_TIME_DATE :transition TIME_ANIMATION :class "time" :same-size false
         (label :markup "<span font-weight=\"regular\">[󱑁 ${HOUR}</span><span font-weight=\"regular\">:${MINUTES}</span><span font-weight=\"regular\"font-size=\"small\">${PM_OR_AM}</span><span font-weight=\"regular\">]</span>")
-        (label :markup "<span font-weight=\"regular\">[ ${DATE}]</span>" )))))
+        (label :markup "<span font-weight=\"regular\">[${DATE}]</span>" )))))
 
 ;;POPUP CALENDAR WINDOW
 (defwindow calendar

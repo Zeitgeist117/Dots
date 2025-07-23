@@ -344,11 +344,11 @@
   (interactive)
   ;; Set font based on existing ones
   (cond
-   ((find-font (font-spec :name "Monaspace Krypton"))
-    (set-face-attribute 'default nil :font "Monaspace Krypton" :height 160 :weight 'medium)
+   ((find-font (font-spec :name "Departure Mono"))
+    (set-face-attribute 'default nil :font "Departure Mono" :height 140 :weight 'medium)
     (set-face-attribute 'bold nil :weight 'extra-bold))
-   ((find-font (font-spec :name "Monaspace Krypton"))
-    (set-face-attribute 'default nil :font "Monaspace Krypton" :height 160)))
+   ((find-font (font-spec :name "Departure Mono"))
+    (set-face-attribute 'default nil :font "Departure Mono" :height 140)))
   (custom-set-faces
    '(tab-bar ((t (:height 0.9))))
    '(mode-line ((t (:height 0.9))))
