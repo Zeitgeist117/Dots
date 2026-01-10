@@ -115,7 +115,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "C:\\>";
+    placeholder:                 "λ";
     placeholder-color:           inherit;
 }
 

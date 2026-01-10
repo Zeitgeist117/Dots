@@ -26,7 +26,7 @@ exec-once = ~/.local/bin/ewws daemon &
 exec-once = ~/.local/bin/ewws open hypr-bar &
 exec-once = swww-daemon &
 exec-once = xrdb ~/.Xresources &
-exec-once = /sbin/rescrobbled &
+# exec-once = /sbin/rescrobbled &
 exec-once = /sbin/mpris-discord-rpc &
 exec-once = swp &
 exec-once = dunst &
@@ -78,6 +78,7 @@ decoration {
     active_opacity = 1.0
     inactive_opacity = 1.0
 
+    dim_special=0
     shadow {
         enabled = true
         range = 4
@@ -179,7 +180,7 @@ input {
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
 gestures {
-    workspace_swipe = false
+    #workspace_swipe = false
 }
 
 # Example per-device config
@@ -271,9 +272,9 @@ bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
 # Requires playerctl
-bind = , XF86AudioPlay, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin play-pause  
-bind = , XF86AudioPrev, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin previous
-bind = , XF86AudioNext, exec, playerctl -p kew,mpd,fooyin,DeaDBeeF,audacious,Feishin next
+bind = , XF86AudioPlay, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin play-pause  
+bind = , XF86AudioPrev, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin previous
+bind = , XF86AudioNext, exec, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin next
 #+end_src
 
 * Scratchpads
@@ -302,7 +303,7 @@ window rules
 windowrulev2 = suppressevent maximize, class:.*
 
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
-windowrule = float,class:mpv
+windowrule = match:class mpv, float yes
 windowrulev2 = float, title:^(Picture-in-Picture)$
 windowrulev2 = pin, title:^(Picture-in-Picture)$ 
 #windowrule = opacity 0.9,class:deadbeef

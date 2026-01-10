@@ -100,7 +100,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-p", "󰘧", "-c", "-l", "15", NULL };
 static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *filecmd[]  = { "thunar", NULL };
 static const char *emacscmd[]  = { "emacsclient", "-c", "-a", "emacs", NULL };
 static const char *ecmd[] = { "firefox", NULL };
@@ -172,9 +172,9 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioLowerVolume,	                     spawn,		SHCMD("pamixer -d 5 && getvol") },
 
 	/*Media Keys*/
-	{ 0, XF86XK_AudioPlay,	                             spawn,		SHCMD("playerctl -p kew,DeaDBeeF,Feishin play-pause") },
-	{ 0, XF86XK_AudioNext,                               spawn,		SHCMD("playerctl -p kew,DeaDBeeF,Feishin next") },
-	{ 0, XF86XK_AudioPrev,                               spawn,		SHCMD("playerctl -p kew,DeaDBeeF,Feishin previous") },
+	{ 0, XF86XK_AudioPlay,	                             spawn,		SHCMD("playerctl -p kew,fooyin,DeaDBeeF,Feishin play-pause") },
+	{ 0, XF86XK_AudioNext,                               spawn,		SHCMD("playerctl -p kew,fooyin,DeaDBeeF,Feishin next") },
+	{ 0, XF86XK_AudioPrev,                               spawn,		SHCMD("playerctl -p kew,fooyin,DeaDBeeF,Feishin previous") },
 
 	{ 0, XF86XK_MonBrightnessUp,	                     spawn,		SHCMD("brightnessctl s 10%+") },
 	{ 0, XF86XK_MonBrightnessDown,	                     spawn,		SHCMD("brightnessctl s 10%-") },

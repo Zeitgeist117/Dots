@@ -1,14 +1,35 @@
 #!/bin/sh
 output="$HOME/Pictures/Screenshots/"
-
-# Ensure output directory exists
 mkdir -p "$output"
 
+# Default: no shadow
+apply_shadow=false
+
+# Check for --shadow flag
+for arg in "$@"; do
+	case "$arg" in
+		--shadow|-s)
+			apply_shadow=true
+			;;
+	esac
+done
+
+# Helper: add shadow using ImageMagick if enabled
+add_shadow() {
+	local img="$1"
+	if $apply_shadow; then
+		magick "$img" \
+			\( +clone -background black -shadow 80x10+0+0 -fill "#171b24" \) \
+			+swap -background "#504945" -layers merge +repage "$img"
+	fi
+}
+
+timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
 case "$1" in
 	"select")
-		filename="/tmp/screenshot-$(date +%d-%m-%Y-%H-%M).png"
+		filename="/tmp/screenshot-$timestamp.png"
 		if grim -g "$(slurp)" "$filename"; then
-			magick "$filename" \( +clone -background black -shadow 80x10+0+0 -fill "#171b24" \) +swap -background "#504945" -layers merge +repage "$filename"
+			add_shadow "$filename"
 			mv "$filename" "$output"
 			notify-send "grim" "Screenshot Saved"
 		else
@@ -16,11 +37,13 @@ case "$1" in
 		fi
 		;;
 	"full")
-		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).png"
+		filename="$output/screenshot-$timestamp.png"
+		grim "$filename"
+		add_shadow "$filename"
 		notify-send "grim" "Screenshot Saved"
 		;;
 	*)
-		grim "$output/screenshot-$(date +%d-%m-%Y-%H-%M).png" || exit
-		notify-send "grim" "Screenshot Saved"
+		echo "Usage: $0 {select|full} [--shadow|-s]" >&2
+		exit 1
 		;;
 esac
