@@ -1,6 +1,0 @@
-[epub]
-run="zathura \"$@\""
-[*.epub]
-run = "zathura \"$@\""
-[extension.epub]
-run = "zathura \"$@\""

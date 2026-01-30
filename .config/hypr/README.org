@@ -207,7 +207,7 @@ bind = SUPER|SHIFT, Q, exit,
 bind = SUPER, V, exec, $browser
 bind = SUPER, APOSTROPHE, exec, emacsclient -c
 bind = SUPER, S, exec, ~/.local/bin/scrw select
-bind=SUPER_SHIFT,S,exec, ~/.local/bin/scrw window
+bind=SUPER_SHIFT,S,exec, ~/.local/bin/scrw full
 
 #bind = $mainMod, X, pseudo, # dwindle
 #bind = $mainMod, D, togglesplit, # dwindle
@@ -286,12 +286,12 @@ workspace = special:terminal1, on-created-empty:[float; size 1000 800] $terminal
 bind = super, o, togglespecialworkspace, terminal1
 workspace = special:btop, on-created-empty:[float; size 1000 850] $terminal -e btop, persistent:false
 bind = super, g, togglespecialworkspace, btop
-workspace = special:pm, on-created-empty:[float; size 1000 800] $terminal -e pulsemixer, persistent:false
+workspace = special:pm, on-created-empty:[float; size 1000 800] $terminal -e wiremix, persistent:false
 bind = super, p, togglespecialworkspace, pm
 workspace = special:yz, on-created-empty:[float; size 1000 800] $terminal -e yazi, persistent:false
 bind = super, c, togglespecialworkspace, yz
 # workspace = special:n, on-created-empty:[float; size 600 250] $terminal -e fum, persistent:false
-workspace = special:n, on-created-empty:[float; size 950 400] $terminal -e kew, persistent:false
+workspace = special:n, on-created-empty:[float; size 1100 450] $terminal -e kew, persistent:false
 # workspace = special:n, on-created-empty:[float; size 1800 850] $terminal -e rmpc, persistent:false
 bind = super, n, togglespecialworkspace, n
 #+end_src
@@ -300,12 +300,32 @@ bind = super, n, togglespecialworkspace, n
 window rules
 #+begin_src hyprlang 
 
-windowrulev2 = suppressevent maximize, class:.*
+windowrule {
+  name = windowrule-1
+  suppress_event = maximize
+  match:class = .*
+}
 
-windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+
+windowrule {
+  name = windowrule-2
+  no_focus = on
+  match:class = ^$
+  match:title = ^$
+  match:xwayland = 1
+  match:float = 1
+  match:fullscreen = 0
+  match:pin = 0
+}
+
 windowrule = match:class mpv, float yes
-windowrulev2 = float, title:^(Picture-in-Picture)$
-windowrulev2 = pin, title:^(Picture-in-Picture)$ 
+windowrule {
+  name = windowrule-3
+  float = on
+  pin = on
+  match:title = ^(Picture-in-Picture)$
+}
+
 #windowrule = opacity 0.9,class:deadbeef
 #windowrule = opacity 0.9,class:fooyin
 #windowrule = opacity 0.9,class:Emacs

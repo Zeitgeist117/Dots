@@ -1,5 +1,6 @@
 ! *.font: CozetteVector Nerd Font-14
-*.font: Monaspace Krypton-14
+! *.font: Monaspace Krypton-14
+*.font: Departure Mono-10
 !!*.font:TerminessTTF Nerd Font Mono-16
 
 !!*.alpha: 0.9
