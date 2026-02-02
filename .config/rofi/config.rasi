@@ -46,7 +46,7 @@ configuration {
     alternate-urgent-foreground: var(background);
     alternate-active-background: var(active);
     alternate-active-foreground: var(background);
-	font: "Monaspace Krypton 14";
+	font: "Departure Mono 14";
 }
 
 /*****----- Main Window -----*****/

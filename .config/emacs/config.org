@@ -233,13 +233,14 @@
 	   "m" '(:ignore t :wk "Org")
 	   "m a" '(org-agenda :wk "Org agenda")
 	   "m e" '(org-export-dispatch :wk "Org export dispatch")
-	   "m i" '(org-toggle-item :wk "Org toggle item")
+	   "m f" '(org-toggle-item :wk "Org toggle item")
 	   "m t" '(org-todo :wk "Org todo")
 	   "m B" '(org-babel-tangle :wk "Org babel tangle")
 	   "m p" '(org-latex-preview :wk "Org Latex Math Preview")
 	   "m T" '(org-todo-list :wk "Org todo list")
 	   "m x" '(org-toggle-checkbox :wk "Org toggle checkbox")
 	   "m m" '(org-roam-node-find :wk "Org Roam find node")
+	   "m i" '(org-roam-node-insert-immediate :wk "Org Roam insert node immediately")
 	   "m I" '(org-roam-node-insert :wk "Org Roam insert node"))
 
 	 (zg/leader-keys
@@ -572,6 +573,13 @@ an org mode package that is installed with emacs but not enabled by default that
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 #+end_src
 
 ** Org Agenda
@@ -608,6 +616,7 @@ Emacs has built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM,
   (use-package yuck-mode :straight t)
   (use-package markdown-mode :straight t)
   (use-package typescript-mode :straight t)
+  (use-package qml-mode :straight t)
 #+end_src
 ** Diminish
 #+begin_src emacs-lisp

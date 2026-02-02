@@ -6,7 +6,5 @@
 
 config_version: 2
 settings:
-  statusbar.show:
-    global: always
-  tabs.show:
-    global: always
+  url.start_pages:
+    global: https://100.80.30.88:32773

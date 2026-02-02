@@ -1,0 +1,15 @@
+directory: ~/Music
+languages: en 
+import:
+   write: yes
+   copy: yes
+   resume: no
+   move: yes
+
+paths:
+  default: $albumartist/$album%aunique{}/$track $title
+plugins: fetchart embedart scrub musicbrainz
+art_filename: cover
+threaded: yes
+ui:
+  color: yes

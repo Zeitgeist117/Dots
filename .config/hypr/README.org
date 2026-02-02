@@ -13,7 +13,7 @@ monitor=DP-1, 2560x1440@144, 0x0, 1
 Setting some default programs for keybinds
 #+begin_src hyprlang
 $terminal = foot
-$filemanager = thunar
+$filemanager = pcmanfm
 $menu = rofi -show run 
 $browser = firefox
 #+end_src
