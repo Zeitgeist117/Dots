@@ -1,0 +1,13 @@
+[flavor]
+dark = "gruvbox-dark"
+[manager]
+border_fg     = "blue"               # Panel border color
+cwd_fg        = "cyan"               # Current working directory text
+hovered       = { bg = "blue", bold = true }   # Hovered file row
+selected      = { bg = "magenta" }             # Multi-selected files
+finded        = { fg = "yellow", underline = true } 
+[status]
+separator = { fg = "black", bg = "white" }
+mode_normal  = { fg = "black", bg = "cyan", bold = true }
+mode_select  = { fg = "black", bg = "yellow", bold = true }
+progress_label = { bold = true }

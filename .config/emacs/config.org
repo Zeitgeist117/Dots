@@ -38,6 +38,7 @@
   - [[#transparency][Transparency]]
   - [[#modeline][Modeline]]
   - [[#dashboard][Dashboard]]
+  - [[#misc][Misc]]
 
 ** package manger
 #+begin_src emacs-lisp
@@ -795,4 +796,11 @@ the building blocks of rice
 									  (bookmarks . "book")))
 	:config
 	(dashboard-setup-startup-hook))
+#+end_src
+
+** Misc
+#+begin_src emacs-lisp
+(use-package ement
+  :straight t
+)
 #+end_src
