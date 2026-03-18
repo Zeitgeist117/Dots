@@ -19,11 +19,11 @@ PanelWindow {
     property string fontFamily: "DepartureMono Nerd Font"
     property int fontSize: 16   // slightly smaller for compact feel
 
-    // CPU & Mem (your existing logic – fill in the Process blocks)
     property int cpuUsage: 0
     property var lastCpuIdle: 0
     property var lastCpuTotal: 0
 
+    // ── CPUproc ───────────────────────────────────────────────────────────────
 	Process {
 		id: cpuProc
 		command: ["sh", "-c", "head -1 /proc/stat"]
@@ -41,7 +41,7 @@ PanelWindow {
 		}
 		Component.onCompleted: running = true
 	}
-	// memory widget
+    // ── MEMproc ───────────────────────────────────────────────────────────────
 	property int memUsage: 0
 	Process {
 		id: memProc
@@ -115,7 +115,7 @@ PanelWindow {
                                 let exists = Hyprland.workspaces.values.some(w => w.id === wsId)
                                 return active ? root.colFg : (exists ? root.colMute : root.colGray)
                             }
-                            font { family: root.fontFamily; pixelSize: 14 ; bold: true }
+                            font { family: root.fontFamily; pixelSize: 14 ; bold: false}
                         }
 
                         // Thin underline only on active
@@ -136,6 +136,35 @@ PanelWindow {
                 layoutDirection: Qt.RightToLeft  // tray last → very right
 
                 // System tray (compact, small icons)
+
+
+                Text {
+                    id: clock
+                    color: root.colFg
+                    font { family: root.fontFamily; pixelSize: 12; bold: true }
+
+                    Timer {
+                        interval: 1000; running: true; repeat: true
+                        property date now: new Date()
+                        onTriggered: now = new Date()
+                        onNowChanged: {
+                            let h = now.getHours()
+                            let m = now.getMinutes().toString().padStart(2,'0')
+                            let ampm = h >= 12 ? "PM" : "AM"
+                            h = h % 12 || 12
+                            clock.text = h + ":" + m + ampm
+                        }
+                        triggeredOnStart: true
+                    }
+                }
+
+
+                Rectangle { width: 1; height: 16; color: root.colGray }
+                Text { text: " " + memUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: 12; bold: true } }
+                Rectangle { width: 1; height: 16; color: root.colGray }
+                Text { text: "󰻠 " + cpuUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: 12; bold: true } }
+
+                Rectangle { width: 1; height: 16; color: root.colGray }
                 Row {
                     spacing: 5
                     Repeater {
@@ -163,36 +192,6 @@ PanelWindow {
                         }
                     }
                 }
-
-                Rectangle { width: 1; height: 16; color: root.colGray }
-
-                // Clock (12h + PM, compact)
-                Text {
-                    id: clock
-                    color: root.colFg
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-
-                    Timer {
-                        interval: 1000; running: true; repeat: true
-                        property date now: new Date()
-                        onTriggered: now = new Date()
-                        onNowChanged: {
-                            let h = now.getHours()
-                            let m = now.getMinutes().toString().padStart(2,'0')
-                            let ampm = h >= 12 ? "PM" : "AM"
-                            h = h % 12 || 12
-                            clock.text = h + ":" + m + ampm
-                        }
-                        triggeredOnStart: true
-                    }
-                }
-
-                Rectangle { width: 1; height: 16; color: root.colGray }
-
-                Text { text: "󰻠 " + cpuUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: root.fontSize; bold: true } }
-                Rectangle { width: 1; height: 16; color: root.colGray }
-
-                Text { text: " " + memUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: root.fontSize; bold: true } }
 
                 // If you have battery, add here (example with UPower or Process parse)
                 // Rectangle { width: 1; height: 16; color: root.colGray }

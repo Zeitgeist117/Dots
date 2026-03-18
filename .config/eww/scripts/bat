@@ -1,4 +1,3 @@
-
 #!/bin/sh
 notify() {
     notify-send -i battery-good-symbolic \

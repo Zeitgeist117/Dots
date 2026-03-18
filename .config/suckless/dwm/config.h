@@ -11,7 +11,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Monaspace Krypton:size=14", "FontAwesome:size=14", "JoyPixels:pixelsize=14", "Sazanami Mincho:size=14" };
+static const char *fonts[]          = { "Departure Mono:size=14", "FontAwesome:size=14", "JoyPixels:pixelsize=14", "Sazanami Mincho:size=14" };
 static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#282828";
 static const char col_gray3[]       = "#ebdbb2";
