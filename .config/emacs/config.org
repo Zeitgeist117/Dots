@@ -58,13 +58,14 @@
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 (straight-use-package 'use-package)
+(straight-use-package 'org)
 #+end_src
 ** Scripts
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/.config/emacs/scripts/")
 (require 'buffer-move)
 (require 'package)
-(package-initialize)
+;; (package-initialize)
 (add-to-list 'package-archives
       '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 #+end_src
@@ -448,9 +449,9 @@ which fucking keys do i use, is this moonlight sonata?
 * Org Mode
 ** Enabling table of contents
 #+begin_src emacs-lisp
-(use-package org
-  :straight t
-)
+;; (use-package org
+;;   :straight t
+;; )
 (use-package toc-org
     :straight t
 	:commands toc-org-enable
@@ -463,12 +464,12 @@ which fucking keys do i use, is this moonlight sonata?
 ** Org styling
 *** Superstar
 #+begin_src emacs-lisp
-(use-package org-superstar :straight t)
-(setq
-;;    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
-)
-;;(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-(setq org-ellipsis " ≫");; 
+;;(use-package org-superstar :straight t)
+;;(setq
+;;;;    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
+;;)
+;;;;(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+;;(setq org-ellipsis " ≫");; 
 #+end_src
 
 *** Olivetti
@@ -494,24 +495,30 @@ which fucking keys do i use, is this moonlight sonata?
   :hook
   (org-mode . global-org-modern-mode)
   :custom ;; disable a bunch of shit i find useless
- (org-modern-todo nil)
- (org-modern-todo-faces nil)
- (org-modern-date nil)
- (org-modern-date-active nil)
- (org-modern-date-inactive nil)
- (org-modern-done nil)
- (org-modern-label nil)
- (org-modern-agenda nil)
- (org-modern-timestamp nil)
- (org-modern-progress nil)
- (org-modern-progress-faces nil)
- (org-modern-priority nil)
- (org-modern-priority-faces nil)
- (org-modern-symbol nil)
- (org-modern-statistics nil)
- (org-modern-tags nil)
- (org-modern-faces nil)
- (org-modern-label-border nil)
+  (org-modern-fold-stars
+   '(("◉" . "◯")
+     ("│" . "└")
+     (" │" . " └")
+     (" │" . " └")))
+  (org-modern-hide-stars "  ")   ; <-- moved here
+;;  (org-modern-todo nil)
+;;  (org-modern-todo-faces nil)
+;;  (org-modern-date nil)
+;;  (org-modern-date-active nil)
+;;  (org-modern-date-inactive nil)
+;;  (org-modern-done nil)
+;;  (org-modern-label nil)
+;;  (org-modern-agenda nil)
+;;  (org-modern-timestamp nil)
+;;  (org-modern-progress nil)
+;;  (org-modern-progress-faces nil)
+;;  (org-modern-priority nil)
+;;  (org-modern-priority-faces nil)
+;;  (org-modern-symbol nil)
+;;  (org-modern-statistics nil)
+;;  (org-modern-tags nil)
+;;  (org-modern-faces nil)
+;;  (org-modern-label-border nil)
 )
 #+end_src
 
@@ -755,6 +762,18 @@ the building blocks of rice
   ;;       doom-themes-enable-italic t)
   ;; (doom-themes-org-config)
 )
+
+(use-package nano-theme
+  :straight t
+  :ensure t
+  :init
+  (require 'nano-theme-support)
+  (nano-mode)
+  :config
+  ;;(load-theme 'nano-dark t) ;; Sets dark-mode to default
+  ;;(setq nano-fonts-use nil) ;; Allow font overrides elsewhere in config
+  ;; (load-theme 'nano-dark t)
+)
 #+end_src
 
 ** Transparency
@@ -764,15 +783,41 @@ the building blocks of rice
 
 ** Modeline
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-	:straight t
-	:init (doom-modeline-mode 1)
-	:config
-	(setq doom-modeline-height 35      ;; sets modeline height
-		  doom-modeline-bar-width 5    ;; sets right bar width
-		  doom-modeline-persp-name t   ;; adds perspective name to modeline
-		  doom-modeline-persp-icon t
-		  doom-modeline-enable-word-count t)) ;; adds folder icon next to persp name
+;; (use-package doom-modeline
+;; 	:straight t
+;; 	:init (doom-modeline-mode 1)
+;; 	:config
+;; 	(setq doom-modeline-height 35      ;; sets modeline height
+;; 		  doom-modeline-bar-width 5    ;; sets right bar width
+;; 		  doom-modeline-persp-name t   ;; adds perspective name to modeline
+;; 		  doom-modeline-persp-icon t
+;; 		  doom-modeline-enable-word-count t)) ;; adds folder icon next to persp name
+
+(use-package svg-tag-mode
+:straight t)
+(setq-default mode-line-format nil)
+(use-package nano-modeline
+  :ensure t
+  :after nano-theme
+  :custom
+  (nano-modeline-position #'nano-modeline-footer)  ;; <-- function, not symbol
+  :hook
+  (prog-mode            . nano-modeline-prog-mode)
+  (text-mode            . nano-modeline-text-mode)
+  (org-mode             . nano-modeline-org-mode)
+  (pdf-view-mode        . nano-modeline-pdf-mode)
+  (term-mode            . nano-modeline-term-mode)
+  (xwidget-webkit-mode  . nano-modeline-xwidget-mode)
+  (messages-buffer-mode . nano-modeline-message-mode)
+  (org-capture-mode     . nano-modeline-org-capture-mode)
+  (org-agenda-mode      . nano-modeline-org-agenda-mode)
+  :init
+  (setq-default mode-line-format nil)
+  :config
+  (require 'nano-modeline)
+  (nano-modeline-prog-mode t)
+  :hook
+  (after-init . nano-modeline-prog-mode))
 #+end_src
 
 
