@@ -25,7 +25,7 @@ count_selected = { fg = "#282828", bg = "#fbf1c7" }
 
 # Border
 border_symbol = "│"
-border_style  = { fg = "#ebdbb2" }
+border_style  = { fg = "#665c54" }
 # : }}}
 
 
@@ -74,8 +74,8 @@ padding = { open = "█", close = "█" }
 
 [status]
 overall = { }
-sep_left = { open = " ", close = " " }
-sep_right = { open = " ", close = " " }
+sep_left = { open = "\ue0be", close = "\ue0b8" }
+sep_right = { open = "\ue0be", close = "\ue0b8" }
 # Permissions
 perm_sep   = { fg = "#665c54" }
 perm_type  = { fg = "#504945" }

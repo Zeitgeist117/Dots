@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+
+def get_cpu_stats():
+    stats = []
+    with open("/proc/stat", "r") as f:
+        for line in f:
+            if line.startswith("cpu") and not line.startswith("cpu "):
+                parts = line.split()
+                cpu_id = int(parts[0][3:])
+                total = sum(map(int, parts[1:]))
+                idle = int(parts[4])
+                stats.append((cpu_id, total, idle))
+    return stats
+
+def read_cache(cache_file):
+    if os.path.exists(cache_file):
+        with open(cache_file, "r") as f:
+            return [tuple(map(int, line.split())) for line in f]
+    return []
+
+def write_cache(cache_file, stats):
+    with open(cache_file, "w") as f:
+        for stat in stats:
+            f.write(f"{stat[0]} {stat[1]} {stat[2]}\n")
+
+def calculate_load(old_stats, new_stats):
+    old_stats_dict = {stat[0]: stat for stat in old_stats}
+    bars = ""
+    for cpu_id, total, idle in new_stats:
+        if cpu_id in old_stats_dict:
+            old_total, old_idle = old_stats_dict[cpu_id][1], old_stats_dict[cpu_id][2]
+            if total != old_total:
+                load = 1 - (idle - old_idle) / (total - old_total)
+                bar_index = min(int(load * 100 / 12.5), 8)
+                bars += ["\u2581", "\u2582", "\u2583", "\u2584", "\u2585", "\u2586", "\u2587", "\u2588", "\u2588"][bar_index]
+            else:
+                bars += "\u2581"  # Default to the lowest bar if no change
+        else:
+            bars += "\u2581"  # Default for new CPUs
+    return bars
+
+def main():
+    cache_file = "/tmp/cpubarscache"
+
+    # Get current stats
+    new_stats = get_cpu_stats()
+
+    # Read old stats from cache
+    old_stats = read_cache(cache_file)
+
+    # Calculate load and generate bars
+    bars = calculate_load(old_stats, new_stats)
+
+    # Print CPU load bars
+    print(f"{bars}")
+
+    # Update cache
+    write_cache(cache_file, new_stats)
+
+if __name__ == "__main__":
+    main()

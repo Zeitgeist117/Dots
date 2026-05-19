@@ -1,5 +1,12 @@
-[plugin]
-deps = []
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "5d5c480"
+hash = "7b625412411be411153886894d9acaf"
+
+[[plugin.deps]]
+use = "Ape/smart-enter"
+rev = "778839f"
+hash = "7429078f60e02543c8b7b9213c2b22d3"
 
 [[flavor.deps]]
 use = "bennyyip/gruvbox-dark"

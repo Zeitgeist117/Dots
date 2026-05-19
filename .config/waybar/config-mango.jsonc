@@ -1,0 +1,142 @@
+{
+  "layer": "bottom",
+  "position": "top",
+  "height": 27,
+  "reload_style_on_change": true,
+
+  "modules-left": [
+    "ext/workspaces",
+    "custom/icon",
+    "custom/nowplaying"
+  ],
+  "modules-center": [
+    "dwl/window"
+],
+  "modules-right": [
+    // "custom/archupdates",
+    // "custom/nettrf",
+    "custom/tray-start",
+    "tray",
+    "custom/tray-end",
+    //"custom/cpubars",
+    "cpu",
+    "memory",
+    "pulseaudio",
+    "clock"
+  ],
+
+  "ext/workspaces": {
+    "format": "{icon}",
+    "ignore-hidden": true,
+    "on-click": "activate",
+    "on-click-right": "deactivate",
+    "sort-by-id": true
+  },
+
+  // Shows current layout name (e.g. "T", "M", "S") — or window title
+  // Use "format": "{layout}" for layout, "{title}" for window title
+  "dwl/window": {
+    "format": "[{}]",
+    "max-length": 30,
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "scroll-step": 2,
+    "format": "[{icon}{volume}%]",
+    "format-muted": "<span color=\"#b4befe\">Muted: </span>...",
+    "format-icons": {
+      "default": ["<span>VOL: </span>"]
+    },
+    "on-click": "pamixer -t"
+  },
+
+  "custom/nowplaying": {
+    "format": " {}",
+    "interval": 1,
+    "escape": true,
+    "exec": "~/.config/waybar/scripts/nowPlaying.sh",
+    "on-click": "~/.config/waybar/scripts/playtoggle.sh"
+  },
+
+  "memory": {
+    "interval": 2,
+    "format": "[<span><span color=\"#cba6f7\"></span>RAM: {used:0.1f}G/{total:0.0f}G</span>] "
+  },
+
+  "custom/tray-start": {
+    "format": " [",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/tray-end": {
+    "format": "]",
+    "interval": "once",
+    "tooltip": false
+  },
+
+  "tray": {
+    "spacing": 2,
+    "icon-size": 14,
+    "show-passive-items": true
+  },
+
+  "custom/nettrf": {
+    "format": "{}",
+    "interval": 2,
+    "escape": true,
+    "exec": "~/src/nettrf/target/debug/nettrf",
+    "on-click": "exec firefox https://fast.com"
+  },
+
+  "custom/cpubars": {
+    "format": "{}",
+    "interval": 2,
+    "escape": true,
+    "exec": "~/.config/waybar/scripts/cpubars"
+  },
+
+  "custom/archupdates": {
+    "format": "</span>{}</span>",
+    "interval": 20,
+    "escape": true,
+    "exec": "~/.config/waybar/scripts/arch_updates",
+    "on-click": "~/.config/waybar/scripts/notify_arch_updates"
+  },
+
+  "custom/icon": {
+    "format": " []= ",
+    "interval": "once",
+    "tooltip": false
+  },
+
+  "cpu": {
+    "interval": 2,
+    "format": "[<span><span color=\"#ea6962\"></span>CPU: {usage}%</span>]"
+  },
+
+  "clock": {
+    "format": "[<span><span color=\"#ea6962\"></span>{:%a %b %d] [%I:%M %p]}</span>",
+    "timezones": ["Australia/Melbourne"],
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "format": {
+        "months":   "<span color='#a6e3a1'><b>{}</b></span>",
+        "days":     "<span color='#cdd6f4'>{}</span>",
+        "weeks":    "<span color='#74c7ec'><b>W{}</b></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "today":    "<span background='#f38ba8' color='#1e1e2e'><b>{}</b></span>"
+      }
+    },
+    "actions": {
+      "on-click": "tz_up",
+      "on-click-right": "tz_down",
+      "on-click-forward": "shift_up",
+      "on-click-backward": "shift_down",
+      "on-click-middle": "mode"
+    }
+  }
+}

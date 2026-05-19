@@ -1,0 +1,123 @@
+@import "colors.css";
+/*@import "mode.css";*/
+#backlight, #battery, #cpu, #disk, #idle_inhibitor, #keyboard-state,
+#pulseaudio, #clock, #tags, #language, #memory, #network, #sndio,
+#mode, #window, #workspaces, #temperature, #taskbar, #workspaces,
+#custom-treefetch-downloads, #custom-archupdates , #custom-axyl-downloads,
+#custom-gpu-temp, #custom-artix, #custom-cpubars, #custom-nettrf, #custom-showmode,#custom-nowplaying{
+  background: @background;
+  color: @foreground;
+  font-size: 15px;
+}
+
+* {
+  font-family: "Departure Mono Nerd Font";
+  /* font-size: 1px; */
+}
+#custom-tray-start,
+#custom-tray-end {
+    padding: 0;
+    margin: 0;
+}
+
+#tray {
+    padding: 0 2px;
+}
+
+window#waybar { 
+  background-color: @color1; 
+  color: @foreground;    
+  font-size: 12px;
+}
+
+
+.modules-left {
+  background-color: @color0; 
+  padding: 0px 0px 0px 0px;
+}
+
+
+.modules-right {
+  background-color: @color0; 
+  padding: 0px 5px 0px 0px;
+}
+
+#workspaces {
+  font-size: 20px;
+  border-radius: 0px; /* <--- Add this line */
+}
+
+
+#workspaces button {
+  font-size: 13px;
+  padding: 0px 8px 0px 8px; 
+  min-width: 1px;
+  border-radius: 0px; /* <--- Add this line */
+}
+
+#workspaces button.empty {
+  color: @foreground;
+}
+
+#workspaces button.visible {
+  font-size: 20px;
+  padding: 0px 8px 0px 8px; 
+  min-width: 1px;
+  color: #ea6962;
+}
+
+#workspaces button.focused { 
+  font-size: 20px;
+  padding: 0px 8px 0px 8px; 
+  padding: 0px 8px 0px 8px; 
+  background-color: @color1; 
+  color: @foreground;    
+}
+
+#workspaces button.active {
+  font-size: 20px;
+  padding: 0px 8px 0px 8px; 
+  background-color: @color1; 
+  color: @forground;    
+}
+
+
+#custom-nowplaying,#window {
+  font-size: 16px;
+  color: @foreground;    
+  background-color: @color1; 
+  padding: 0px 10px 0px 10px;
+}
+
+
+window#waybar.empty #window {
+  font-size: 13px;
+  background-color: transparent;
+  color: transparent;
+}
+
+
+window#waybar.empty {
+  font-size: 13px;
+  background-color: @color0; 
+}
+
+
+#custom-archupdates,#cpu,#clock,#custom-nettrf,#custom-showmode {
+  margin: 0px 8px 0px 8px;
+  background-color: @color0; 
+  color: @foreground;    
+}
+
+    
+/*#clock {*/
+/*	margin: 0px 15px 0px 15px;*/
+/*}*/
+/*#custom-nettrf {*/
+/*	margin: 0px 15px 0px 15px;*/
+/*}*/
+/*#custom-showmode {*/
+/*	margin: 0px 15px 0px 15px;*/
+/*  background-color: @color0; */
+/*  color: @foreground;    */
+/*}*/

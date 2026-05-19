@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+
+
+def update(*args):
+    total_sum = 0
+
+    # Sum up the contents of the provided files
+    for arg in args:
+        with open(arg, 'r') as f:
+            total_sum += int(f.read().strip())
+
+    # Create a cache file based on the first argument
+    cache = f"/tmp/{os.path.basename(args[0])}"
+
+    # Read the old value from the cache or initialize to 0
+    if os.path.exists(cache):
+        with open(cache, 'r') as f:
+            try:
+                old = int(f.read().strip())
+            except ValueError:
+                old = 0
+    else:
+        old = 0
+
+    # Write the new total to the cache
+    with open(cache, 'w') as f:
+        f.write(f"{total_sum}\n")
+
+    # Return the difference
+    return total_sum - old
+
+
+# Get the network statistics
+rx_files = subprocess.getoutput("echo /sys/class/net/[ew]*/statistics/rx_bytes").split()
+tx_files = subprocess.getoutput("echo /sys/class/net/[ew]*/statistics/tx_bytes").split()
+
+rx = update(*rx_files)
+tx = update(*tx_files)
+
+# Format the output using numfmt
+rx_human_readable = subprocess.getoutput(f"numfmt --to=iec {rx}")
+tx_human_readable = subprocess.getoutput(f"numfmt --to=iec {tx}")
+
+# Print the formatted output
+print(f"\uf103 {rx_human_readable:>4}B \uf102 {tx_human_readable:>4}B")
