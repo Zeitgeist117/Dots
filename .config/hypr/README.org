@@ -22,9 +22,9 @@ $browser = firefox
 Things i want to startup
 #+begin_src hyprlang 
 exec-once = emacs --daemon &
-#exec-once = ~/.local/bin/ewws daemon &
-#exec-once = ~/.local/bin/ewws open hypr-bar &
-exec-once = waybar -c ~/.config/waybar/config-hypr.jsonc &
+exec-once = ~/.local/bin/ewws daemon &
+exec-once = ~/.local/bin/ewws open hypr-bar &
+#exec-once = waybar -c ~/.config/waybar/config-hypr.jsonc &
 exec-once = awww-daemon &
 exec-once = cclipd &
 exec-once = xrdb ~/.Xresources &
@@ -233,8 +233,8 @@ bind = SUPER|SHIFT, K, layoutmsg, swapprev
 bind = SUPER|SHIFT, J, layoutmsg, swapnext
 
 # Toggle bar
-#bind = SUPER, B, exec, ~/.local/bin/ewws open --toggle hypr-bar
-bind = SUPER, B, exec, pkill -SIGUSR1 waybar
+bind = SUPER, B, exec, ~/.local/bin/ewws open --toggle hypr-bar
+#bind = SUPER, B, exec, pkill -SIGUSR1 waybar
 # toggle hyprshade
 bind = SUPER|SHIFT, f, exec, hyprshade toggle fuji_acros
 # Switch workspaces with mainMod + [0-9]

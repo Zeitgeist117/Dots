@@ -1,3 +1,9 @@
+#+TITLE:Hyprland Config
+#+AUTHOR:Zeitgeist117
+#+PROPERTY: header-args :tangle ~/.config/mango/config.conf
+
+* Autostart 
+#+begin_src sh 
 exec-once = emacs --daemon & # emacs is a fully hackable system
 exec-once = waybar -c ~/.config/waybar/config-mango.jsonc & # status-bar
 exec-once = awww-daemon & # wallpaper daemon
@@ -9,7 +15,11 @@ exec-once = nm-applet & # system tray wifi widget
 exec-once = corectrl & # overclock/undervolt gpu and fan control
 exec-once = syncthing & # sync folders between devices
 exec-once = pano-scrobbler & # scrobble music
+#+end_src
 
+* Theming
+** Colors
+#+begin_src sh
 rootcolor     = 0x282828ff   # gruvbox bg
 bordercolor   = 0x504945ff   # gruvbox bg2 (inactive)
 focuscolor 	  = 0xebdbb2ff
@@ -23,15 +33,26 @@ overlaycolor  = 0x14a57cff
 
 borderpx = 2
 border_radius = 0
+#+end_src
 
+** Gaps
+#+begin_src sh
 gappih = 7
 gappiv = 7
 gappoh = 7
 gappov = 7
+#+end_src
 
+** Opacity
+#+begin_src sh
 focused_opacity   = 1.0
 unfocused_opacity = 1.0
+#+end_src
 
+** Window Effects
+
+*** Blur
+#+begin_src sh
 blur                    = 0
 blur_layer              = 1
 blur_optimized          = 1
@@ -41,7 +62,10 @@ blur_params_noise       = 0.02
 blur_params_brightness  = 0.9
 blur_params_contrast    = 0.9
 blur_params_saturation  = 1.2
+#+end_src
 
+*** Shadow
+#+begin_src sh
 shadows              = 0
 layer_shadows        = 0
 shadow_only_floating = 1
@@ -50,7 +74,10 @@ shadows_blur         = 4
 shadows_position_x   = 0
 shadows_position_y   = 0
 shadowscolor         = 0x1a1a1aee
+#+end_src
 
+*** Animations
+#+begin_src sh
 animations       = 1
 layer_animations = 1
 animation_type_open  = slide
@@ -66,7 +93,12 @@ animation_curve_open  = 0.23,1,0.32,1
 animation_curve_move  = 0.23,1,0.32,1
 animation_curve_close = 0.08,0.92,0,1
 animation_curve_tag   = 0.46,1.0,0.29,1
+#+end_src
 
+* Window Managment
+
+** Layouts
+#+begin_src sh
 tagrule = id:1,layout_name:tile
 tagrule = id:2,layout_name:tile
 tagrule = id:3,layout_name:tile
@@ -81,7 +113,10 @@ new_is_master    = 0 # 0: current window will stay as master and not be pushed d
 default_mfact    = 0.5 
 default_nmaster  = 1
 smartgaps        = 0
+#+end_src
 
+** Window Rules
+#+begin_src sh
 # Float scratchpad-style terminals launched via keybinds above
 windowrule = class:foot,isfloating:1,size 1000 800
 
@@ -97,20 +132,29 @@ windowrule = title:Mpv,isfloating:1
 windowrule = title:^(Picture-in-Picture)$,isfloating:1
 
 windowrule=isterm:1,noswallow:0,appid:foot
+#+end_src
 
+* Input
+#+begin_src sh
 xkb_rules_layout = us
 repeat_rate  = 25
 repeat_delay = 600
 cursor_size  = 24
 sloppyfocus  = 1
 warpcursor   = 1
+#+end_src
 
+* Misc
+#+begin_src sh
 focus_on_activate = 1
 no_border_when_single = 0
 enable_floating_snap  = 0
 snap_distance = 30
 drag_tile_to_tile = 1
+#+end_src
 
+* Keybinds
+#+begin_src sh
 # Reload
 bind = SUPER+SHIFT,r, reload_config
 
@@ -184,14 +228,20 @@ bind = SUPER+SHIFT,6, tag, 6, 0
 bind = SUPER+SHIFT,7, tag, 7, 0
 bind = SUPER+SHIFT,8, tag, 8, 0
 bind = SUPER+SHIFT,9, tag, 9, 0
+#+end_src
 
+** Mouse Binds
+#+begin_src sh
 mousebind = SUPER,btn_left,  moveresize, curmove
 mousebind = SUPER,btn_right, moveresize, curresize
 
 # Scroll through tags
 axisbind = SUPER,UP,   viewtoleft_have_client
 axisbind = SUPER,DOWN, viewtoright_have_client
+#+end_src
 
+** Media Keys
+#+begin_src sh
 bind = NONE,XF86AudioRaiseVolume, spawn, sh -c 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && ~/.local/bin/getvol'
 bind = NONE,XF86AudioLowerVolume, spawn, sh -c 'wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && ~/.local/bin/getvol'
 bind = NONE,XF86AudioMute,        spawn, sh -c 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ~/.local/bin/getvol'
@@ -200,7 +250,10 @@ bind = NONE,XF86AudioMicMute,     spawn, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ t
 bind = NONE,XF86AudioPlay, spawn, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin play-pause
 bind = NONE,XF86AudioPrev, spawn, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin previous
 bind = NONE,XF86AudioNext, spawn, playerctl -p kew,tauon,fooyin,DeaDBeeF,audacious,Feishin next
+#+end_src
 
+* Scratchpads
+#+begin_src sh
 windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-term
 windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-term2
 windowrule=isnamedscratchpad:1,width:1000,height:850,appid:scratch-btop
@@ -223,3 +276,4 @@ bind=SUPER+SHIFT,B,toggle_named_scratchpad,scratch-bluetui,none,foot --app-id sc
 
 layerrule = animation_type_open:zoom,  layer_name:rofi
 layerrule = animation_type_close:zoom, layer_name:rofi
+#+end_src

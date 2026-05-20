@@ -21,7 +21,7 @@
     //"custom/cpubars",
     "cpu",
     "memory",
-    "pulseaudio",
+    //"pulseaudio",
     "clock"
   ],
 
@@ -30,15 +30,26 @@
     "ignore-hidden": true,
     "on-click": "activate",
     "on-click-right": "deactivate",
-    "sort-by-id": true
+    "sort-by-id": true,
+	"format-icons": {
+	"1": "一",
+	"2": "二",
+	"3": "三",
+	"4": "四",
+	"5": "五",
+	"6": "六", 
+	"7": "七", 
+	"8": "八", 
+	"9": "九", 
+	}
   },
 
   // Shows current layout name (e.g. "T", "M", "S") — or window title
   // Use "format": "{layout}" for layout, "{title}" for window title
   "dwl/window": {
-    "format": "[{}]",
+    "format": "{}",
     "max-length": 30,
-    "tooltip": false
+    "tooltip": false,
   },
 
   "pulseaudio": {
@@ -61,7 +72,7 @@
 
   "memory": {
     "interval": 2,
-    "format": "[<span><span color=\"#cba6f7\"></span>RAM: {used:0.1f}G/{total:0.0f}G</span>] "
+    "format": "[<span><span color=\"#cba6f7\"></span>RAM: {used:0.1f}G/{total:0.0f}G</span>]"
   },
 
   "custom/tray-start": {
