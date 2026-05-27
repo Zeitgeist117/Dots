@@ -3,7 +3,7 @@
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
 #+PROPERTY: header-args :tangle ~/.config/emacs/config.el
-** Table of Contents :toc:
+* Table of Contents                                                     :toc:
   - [[#package-manger][package manger]]
   - [[#scripts][Scripts]]
   - [[#load-evil-mode][Load Evil Mode]]
@@ -464,12 +464,13 @@ which fucking keys do i use, is this moonlight sonata?
 ** Org styling
 *** Superstar
 #+begin_src emacs-lisp
-;;(use-package org-superstar :straight t)
-;;(setq
-;;;;    org-superstar-headline-bullets-list '("⁖" "⁖" "⁖" "⁖" "⁖")
-;;)
-;;;;(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-;;(setq org-ellipsis " ≫");; 
+;;(use-package org-superstar
+  ;;:straight t
+  ;;:config
+  ;;(setq org-superstar-headline-bullets-list '("⬢" "◆" "▲" "■")))
+;;
+;;(add-hook 'org-mode-hook 'org-superstar-mode)
+;;(setq org-ellipsis " ≫")
 #+end_src
 
 *** Olivetti
@@ -478,7 +479,7 @@ which fucking keys do i use, is this moonlight sonata?
   :straight t
   :config
   (message "Olivetti configuration loaded")
-  (setq-default olivetti-body-width 110))
+  (setq-default olivetti-body-width 120))
 
 (add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
@@ -494,32 +495,15 @@ which fucking keys do i use, is this moonlight sonata?
   :straight t
   :hook
   (org-mode . global-org-modern-mode)
-  :custom ;; disable a bunch of shit i find useless
+  :custom
   (org-modern-fold-stars
-   '(("◉" . "◯")
-     ("│" . "└")
-     (" │" . " └")
-     (" │" . " └")))
-  (org-modern-hide-stars "  ")   ; <-- moved here
-;;  (org-modern-todo nil)
-;;  (org-modern-todo-faces nil)
-;;  (org-modern-date nil)
-;;  (org-modern-date-active nil)
-;;  (org-modern-date-inactive nil)
-;;  (org-modern-done nil)
-;;  (org-modern-label nil)
-;;  (org-modern-agenda nil)
-;;  (org-modern-timestamp nil)
-;;  (org-modern-progress nil)
-;;  (org-modern-progress-faces nil)
-;;  (org-modern-priority nil)
-;;  (org-modern-priority-faces nil)
-;;  (org-modern-symbol nil)
-;;  (org-modern-statistics nil)
-;;  (org-modern-tags nil)
-;;  (org-modern-faces nil)
-;;  (org-modern-label-border nil)
-)
+   '(("⬢" . "⬡")
+	 ("◆" . "◇")
+	 ("▲" . "△")
+	 ("■" . "□")))
+  (org-modern-hide-stars "  ") 
+
+  )
 #+end_src
 
 *** Org Tempo 
@@ -588,6 +572,80 @@ an org mode package that is installed with emacs but not enabled by default that
         (org-roam-capture-templates (list (append (car org-roam-capture-templates)
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
+#+end_src
+
+*** Org-Roam Media Organisation
+#+begin_src emacs-lisp 
+(with-eval-after-load 'org-roam
+
+  (defvar my/org-roam-media-types
+    '(("book"      . (("Title"    . "id-link")
+                      ("Genre"    . "GENRE")
+                      ("Author"   . "AUTHOR")
+                      ("Year"     . "YEAR")
+                      ("Status"   . "STATUS")))
+      ("anime"     . (("Title"    . "id-link")
+                      ("Genre"    . "GENRE")
+                      ("Author"   . "AUTHOR")
+                      ("Studio"   . "STUDIO")))
+      ("tv"        . (("Title"    . "id-link")
+                      ("Genre"    . "GENRE")
+                      ("Creator"  . "CREATOR")
+                      ("Platform" . "PLATFORM")
+                      ("Aired"    . "YEAR")))
+      ("game"       . (("Title"     . "id-link")
+                      ("Genre"     . "GENRE")
+                      ("Developer" . "DEVELOPER")
+                      ("Publisher" . "PUBLISHER")
+                      ("Year"      . "YEAR")
+                      ("Status"    . "STATUS")))
+      ("movie"     . (("Title"    . "id-link")
+                      ("Genre"    . "GENRE")
+                      ("Director"  . "Director")
+                      ("Platform" . "PLATFORM")
+                      ("Released"    . "YEAR")))
+	  ))
+(defvar my/org-roam-media-table-files
+  '(("book"      . "~/Notes/roam/20260209174404-books.org")
+    ("anime"     . "~/Notes/roam/20260206174751-anime.org")
+    ("tv"        . "~/Notes/roam/20260206173132-tv.org")
+    ("videogame" . "~/Notes/roam/20260206172943-games.org")
+    ("movie"     . "~/Notes/roam/20260206173211-movies.org")))
+  (defun org-dblock-write:media-table (params)
+
+    (let* ((type    (plist-get params :type))
+           (columns (alist-get type my/org-roam-media-types nil nil #'string=))
+           (nodes   (org-roam-db-query [:select [id title properties]
+                                        :from nodes])))
+      (when (and type columns)
+        (insert (concat "| " (mapconcat #'car columns " | ") " |\n"))
+        (insert (concat "|-" (mapconcat (lambda (_) "-") columns "-+-") "-|\n"))
+        (dolist (node nodes)
+          (let* ((id    (nth 0 node))
+                 (title (nth 1 node))
+                 (props (nth 2 node)))
+            (when (equal (alist-get "TYPE" props nil nil #'string=) type)
+              (insert (concat "| "
+                              (mapconcat
+                               (lambda (col)
+                                 (if (equal (cdr col) "id-link")
+                                     (format "[[id:%s][%s]]" id title)
+                                   (or (alist-get (cdr col) props nil nil #'string=) "")))
+                               columns
+                               " | ")
+                              " |\n"))))))))
+
+(defun my/org-roam-refresh-media-tables ()
+  (when (org-roam-file-p)
+    (let* ((type      (org-entry-get (point-min) "TYPE"))
+           (table-file (alist-get type my/org-roam-media-table-files nil nil #'string=)))
+      (when table-file
+        (with-current-buffer (find-file-noselect table-file)
+          (org-update-all-dblocks)
+          (save-buffer))))))
+
+  (add-hook 'after-save-hook #'my/org-roam-refresh-media-tables))
+
 #+end_src
 
 ** Org Agenda

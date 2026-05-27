@@ -101,7 +101,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run","-p", "󰘧", "-c", "-l", "15", NULL };
 static const char *pmenucmd[] = { "passmenu","-c", "-l", "20", NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *filecmd[]  = { "thunar", NULL };
+static const char *filecmd[]  = { "pcmanfm", NULL };
 static const char *emacscmd[]  = { "emacsclient", "-c", "-a", "emacs", NULL };
 static const char *ecmd[] = { "firefox", NULL };
 static const char *scrwcmd[] = { "scr", "select",  NULL };
@@ -118,7 +118,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,            spawn,           {.v = dmenucmd } },
 	{ MODKEY,			            XK_Return,           spawn,           {.v = termcmd } },
 	{ MODKEY,			            XK_apostrophe,       spawn,       {.v = emacscmd } },
-	{ MODKEY,                       XK_q,                spawn,          {.v = filecmd} },
+	{ MODKEY,                       XK_e,                spawn,          {.v = filecmd} },
 	{ MODKEY,                       XK_b,                togglebar,      {0} },
 	{ MODKEY,                       XK_j,                focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                focusstack,     {.i = -1 } },
@@ -135,7 +135,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,                setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,                setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,		                XK_v,                spawn,	        {.v = ecmd} },
-	{ MODKEY,		                XK_e,                spawn,          {.v = pmenucmd} },
+	{ MODKEY|ShiftMask,             XK_e,                spawn,          {.v = pmenucmd} },
 	{ MODKEY|ControlMask,           XK_space,            setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,            togglefloating, {0} },
 	{ MODKEY,                       XK_0,                view,           {.ui = ~0 } },

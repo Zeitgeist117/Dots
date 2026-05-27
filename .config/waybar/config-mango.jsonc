@@ -6,8 +6,8 @@
 
   "modules-left": [
     "ext/workspaces",
-    "custom/icon",
-    "custom/nowplaying"
+    "custom/icon"
+//    "custom/nowplaying"
   ],
   "modules-center": [
     "dwl/window"
@@ -127,7 +127,7 @@
   },
 
   "clock": {
-    "format": "[<span><span color=\"#ea6962\"></span>{:%a %b %d] [%I:%M %p]}</span>",
+    "format": "[CAL: <span ><span color=\"#ea6962\"></span>{:%a %b %d] [TIME: %I:%M %p]}</span>",
     "timezones": ["Australia/Melbourne"],
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {

@@ -16,6 +16,9 @@
 }
 #custom-tray-start,
 #custom-tray-end {
+  background-color: @background; 
+  color: @foreground;    
+  font-size: 15px;
     padding: 0;
     margin: 0;
 }
