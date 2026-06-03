@@ -1,4 +1,4 @@
-#+TITLE:Hyprland Config
+#+TITLE:MangoWM Config
 #+AUTHOR:Zeitgeist117
 #+PROPERTY: header-args :tangle ~/.config/mango/config.conf
 
