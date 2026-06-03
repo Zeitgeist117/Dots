@@ -1,4 +1,8 @@
-* Dotfiles
+#+TITLE:Dotfiles
+
+* Window Managers
+
+** [[file:.config/mango/][MangoWM]] 
 
 ** [[file:.config/hypr/][Hyprland]] 
 [[file:.img/h1.png]]

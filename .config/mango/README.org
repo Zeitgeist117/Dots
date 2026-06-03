@@ -2,6 +2,23 @@
 #+AUTHOR:Zeitgeist117
 #+PROPERTY: header-args :tangle ~/.config/mango/config.conf
 
+* Table of Contents :toc:
+- [[#autostart][Autostart]]
+- [[#theming][Theming]]
+  - [[#colors][Colors]]
+  - [[#gaps][Gaps]]
+  - [[#opacity][Opacity]]
+  - [[#window-effects][Window Effects]]
+- [[#window-managment][Window Managment]]
+  - [[#layouts][Layouts]]
+  - [[#window-rules][Window Rules]]
+- [[#input][Input]]
+- [[#misc][Misc]]
+- [[#keybinds][Keybinds]]
+  - [[#mouse-binds][Mouse Binds]]
+  - [[#media-keys][Media Keys]]
+- [[#scratchpads][Scratchpads]]
+
 * Autostart 
 #+begin_src sh 
 exec-once = emacs --daemon & # emacs is a fully hackable system
