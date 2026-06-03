@@ -208,8 +208,8 @@ bind = SUPER,J, focusstack, next
 bind = SUPER,K, focusstack, prev
 
 # Swap windows
-bind = SUPER+SHIFT,J, exchange_client, down
-bind = SUPER+SHIFT,K, exchange_client, up
+bind = SUPER+SHIFT,J, exchange_stack_client, next
+bind = SUPER+SHIFT,K, exchange_stack_client, prev
 
 # Resize (same h/l as Hyprland)
 bind = SUPER,H, resizewin, -30 0
