@@ -139,7 +139,7 @@ windowrule = class:foot,isfloating:1,size 1000 800
 
 # App → tag assignments 
 windowrule = title:Firefox, tags: 3
-windowrule = title:Discord, tags: 4
+windowrule = title:Discord, title:Vesktop, tags: 4
 windowrule = title:Steam,   tags: 5
 
 # Float mpv
@@ -180,7 +180,7 @@ bind = SUPER+SHIFT,r, reload_config
 bind = SUPER,SPACE,  spawn, rofi -show run
 bind = CTRL,SPACE,   spawn, vicinae toggle 
 bind = SUPER,RETURN, spawn, foot
-bind = SUPER,E,      spawn, pcmanfm
+bind = SUPER,E,      spawn, thunar
 bind = SUPER,V,      spawn, firefox
 bind = SUPER,Y,      spawn, obsidian
 bind = SUPER+SHIFT,P,      spawn, sioyek
@@ -202,7 +202,8 @@ bind = SUPER,B,            spawn, pkill -SIGUSR1 waybar
 
 # Window state
 bind = SUPER,M,            togglemaximizescreen,   # monocle / fullscreen
-bind = SUPER,F,            togglefullscreen,
+bind = SUPER,F,            togglefloating,
+bind = SUPER+SHIFT,F,      togglefullscreen,
 bind = SUPER,BACKSLASH,    togglefloating,
 
 # Focus
@@ -279,7 +280,7 @@ windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-term2
 windowrule=isnamedscratchpad:1,width:1000,height:850,appid:scratch-btop
 windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-wiremix
 windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-yazi
-windowrule=isnamedscratchpad:1,width:1100,height:450,appid:scratch-kew
+windowrule=isnamedscratchpad:1,width:1100,height:550,appid:scratch-mus
 windowrule=isnamedscratchpad:1,width:1000,height:650,appid:scratch-tomato
 windowrule=isnamedscratchpad:1,width:500,height:650,appid:scratch-bluetui
 
@@ -290,7 +291,7 @@ bind=SUPER,O,      toggle_named_scratchpad,scratch-term2,none,foot --app-id scra
 bind=SUPER,G,      toggle_named_scratchpad,scratch-btop,none,foot --app-id scratch-btop -e btop
 bind=SUPER,P,      toggle_named_scratchpad,scratch-wiremix,none,foot --app-id scratch-wiremix -e wiremix
 bind=SUPER,C,      toggle_named_scratchpad,scratch-yazi,none,foot --app-id scratch-yazi -e yazi
-bind=SUPER,N,      toggle_named_scratchpad,scratch-kew,none,foot --app-id scratch-kew -e kew
+bind=SUPER,N,      toggle_named_scratchpad,scratch-mus,none,foot --app-id scratch-mus -e kew
 bind=SUPER,U,      toggle_named_scratchpad,scratch-tomato,none,foot --app-id scratch-tomato -e tomato
 bind=SUPER+SHIFT,B,toggle_named_scratchpad,scratch-bluetui,none,foot --app-id scratch-bluetui -e bluetui
 
