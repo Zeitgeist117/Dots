@@ -1,0 +1,205 @@
+/* =========================================================
+   Gruvbox Dark — Waybar stylesheet
+   Drop this in as ~/.config/waybar/style.css
+   (or `waybar -s /path/to/style.css`)
+   ========================================================= */
+
+@define-color bg0      #282828;
+@define-color bg1      #3c3836;
+@define-color bg2      #504945;
+@define-color bg3      #665c54;
+@define-color fg        #ebdbb2;
+@define-color fg1       #d5c4a1;
+@define-color fg2       #bdae93;
+@define-color gray      #928374;
+
+@define-color red       #fb4934;
+@define-color green     #b8bb26;
+@define-color yellow    #fabd2f;
+@define-color blue      #83a598;
+@define-color purple    #d3869b;
+@define-color aqua      #8ec07c;
+@define-color orange    #fe8019;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", "Font Awesome 6 Free", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 0;
+}
+
+window#waybar {
+    background: @bg0;
+    color: @fg;
+    border-bottom: 2px solid @bg2;
+}
+
+tooltip {
+    background: @bg1;
+    border: 1px solid @bg3;
+}
+tooltip label {
+    color: @fg;
+}
+
+/* generic module pill */
+#workspaces,
+#window,
+#clock,
+#battery,
+#memory,
+#cpu,
+#disk,
+#network,
+#pulseaudio,
+#bluetooth,
+#custom-cava,
+#custom-spotify,
+#custom-power,
+#custom-notification,
+#idle_inhibitor,
+#backlight,
+#tray,
+#mode,
+#language {
+    background: @bg1;
+    color: @fg1;
+    padding: 0 10px;
+    margin: 4px 3px;
+}
+
+/* ---------------- workspaces ---------------- */
+#workspaces {
+    padding: 0 4px;
+    margin: 4px 3px;
+}
+#workspaces button {
+    color: @fg2;
+    background: transparent;
+    padding: 0 6px;
+    margin: 2px;
+    min-width: 20px;
+}
+#workspaces button:hover {
+    background: @bg2;
+    color: @fg;
+}
+#workspaces button.active {
+    background: @yellow;
+    color: @bg0;
+    font-weight: 700;
+}
+#workspaces button.urgent {
+    background: @red;
+    color: @bg0;
+}
+
+/* ---------------- window / now playing ---------------- */
+#window {
+    color: @fg1;
+    font-weight: 500;
+}
+
+/* ---------------- cava visualizer ---------------- */
+#custom-cava {
+    color: @aqua;
+    padding: 0 12px;
+}
+
+/* ---------------- spotify / media ---------------- */
+#custom-spotify {
+    color: @green;
+}
+
+/* ---------------- system stats ---------------- */
+#battery {
+    color: @green;
+}
+#battery.charging, #battery.plugged {
+    color: @aqua;
+}
+#battery.warning:not(.charging) {
+    color: @orange;
+}
+#battery.critical:not(.charging) {
+    color: @red;
+    animation: blink 1s linear infinite;
+}
+
+#memory {
+    color: @purple;
+}
+#cpu {
+    color: @blue;
+}
+#disk {
+    color: @orange;
+}
+
+/* ---------------- audio / network / bt ---------------- */
+#pulseaudio {
+    color: @yellow;
+}
+#pulseaudio.muted {
+    color: @gray;
+}
+#network {
+    color: @blue;
+}
+#network.disconnected {
+    color: @red;
+}
+#bluetooth {
+    color: @blue;
+}
+#bluetooth.disabled {
+    color: @gray;
+}
+
+/* ---------------- clock / date ---------------- */
+#clock {
+    color: @fg;
+    font-weight: 700;
+}
+
+/* ---------------- idle inhibitor / DND ---------------- */
+#idle_inhibitor {
+    color: @fg1;
+}
+#idle_inhibitor.activated {
+    background: @red;
+    color: @bg0;
+}
+
+/* ---------------- tray ---------------- */
+#tray {
+    padding: 0 10px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: @red;
+}
+
+/* ---------------- misc ---------------- */
+#mode {
+    background: @orange;
+    color: @bg0;
+}
+#language {
+    color: @purple;
+}
+#custom-power {
+    color: @red;
+    padding: 0 12px;
+    margin-right: 8px;
+}
+
+@keyframes blink {
+    to {
+        color: @fg;
+        background: @red;
+    }
+}

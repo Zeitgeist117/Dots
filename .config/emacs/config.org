@@ -347,11 +347,11 @@
   (interactive)
   ;; Set font based on existing ones
   (cond
-   ((find-font (font-spec :name "Departure Mono"))
-    (set-face-attribute 'default nil :font "Departure Mono" :height 140 :weight 'medium)
+   ((find-font (font-spec :name "CozetteVector"))
+    (set-face-attribute 'default nil :font "CozetteVector" :height 140 :weight 'medium)
     (set-face-attribute 'bold nil :weight 'extra-bold))
-   ((find-font (font-spec :name "Departure Mono"))
-    (set-face-attribute 'default nil :font "Departure Mono" :height 140)))
+   ((find-font (font-spec :name "CozetteVector"))
+    (set-face-attribute 'default nil :font "CozetteVector" :height 140)))
   (custom-set-faces
    '(tab-bar ((t (:height 0.9))))
    '(mode-line ((t (:height 0.9))))
@@ -447,6 +447,12 @@ which fucking keys do i use, is this moonlight sonata?
 								 'ivy-rich-switch-buffer-transformer))
 #+end_src
 * Org Mode
+#+begin_src emacs-lisp
+(use-package ox-typst
+  :straight t
+  :after org)
+(setq org-typst-link-roam-as-text t)
+#+end_src
 ** Enabling table of contents
 #+begin_src emacs-lisp
 ;; (use-package org
@@ -479,7 +485,7 @@ which fucking keys do i use, is this moonlight sonata?
   :straight t
   :config
   (message "Olivetti configuration loaded")
-  (setq-default olivetti-body-width 120))
+  (setq-default olivetti-body-width 160))
 
 (add-hook 'org-mode-hook 'olivetti-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode 0)))
@@ -602,6 +608,7 @@ an org mode package that is installed with emacs but not enabled by default that
     '(("book"      . (("Title"    . "id-link")
                       ("Genre"    . "GENRE")
                       ("Author"   . "AUTHOR")
+					  ("Series" . "SERIES")
                       ("Year"     . "YEAR")
                       ("Status"   . "STATUS")))
       ("anime"     . (("Title"    . "id-link")
@@ -621,15 +628,16 @@ an org mode package that is installed with emacs but not enabled by default that
                       ("Status"    . "STATUS")))
       ("movie"     . (("Title"    . "id-link")
                       ("Genre"    . "GENRE")
-                      ("Director"  . "Director")
+                      ("Director"  . "DIRECTOR")
+                      ("Starring"  . "STARRING")
                       ("Platform" . "PLATFORM")
                       ("Released"    . "YEAR")))
 	  ))
 (defvar my/org-roam-media-table-files
-  '(("book"      . "~/Notes/roam/20260209174404-books.org")
+  '(("book"      . "~/Notes/roam/20260617081526-books.org")
     ("anime"     . "~/Notes/roam/20260206174751-anime.org")
     ("tv"        . "~/Notes/roam/20260206173132-tv.org")
-    ("videogame" . "~/Notes/roam/20260206172943-games.org")
+    ("game" . "~/Notes/roam/20260206172943-games.org")
     ("movie"     . "~/Notes/roam/20260206173211-movies.org")))
   (defun org-dblock-write:media-table (params)
 
@@ -667,6 +675,9 @@ an org mode package that is installed with emacs but not enabled by default that
   (add-hook 'after-save-hook #'my/org-roam-refresh-media-tables))
 
 #+end_src
+
+#+RESULTS:
+| my/org-roam-refresh-media-tables | doom-modeline-update-vcs | doom-modeline-update-buffer-file-name |
 
 ** Org Agenda
 #+begin_src emacs-lisp

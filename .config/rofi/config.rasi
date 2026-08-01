@@ -46,7 +46,7 @@ configuration {
     alternate-urgent-foreground: var(background);
     alternate-active-background: var(active);
     alternate-active-foreground: var(background);
-	font: "Departure Mono 14";
+	font: "CozetteVector 14";
 }
 
 /*****----- Main Window -----*****/

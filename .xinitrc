@@ -62,6 +62,7 @@ case $session in
     # gnome  ) export XDG_SESSION_TYPE=x11 && export GDK_BACKEND=x11 && exec gnome-session && exec syncthing;;
     kde	   ) export DESKTOP_SESSION=plasma && exec startplasma-x11 ;;
     xfce   ) export XDG_SESSION_TYPE=x11 && exec startxfce4 ;;
+	lxqt   ) exec startlxqt
     # icewm  ) export XDG_SESSION_TYPE=x11 && exec icewm-session ;;
     *      ) exec $1;;
 esac
