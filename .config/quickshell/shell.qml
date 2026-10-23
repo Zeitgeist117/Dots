@@ -339,7 +339,7 @@ PanelWindow {
                         focus: true
 
                         Text {
-                            text: "              COMMAND"
+                            text: "             :COMMAND:"
                             color: root.colMute
                             font.family: root.fontFamily
                             font.pixelSize: root.fontSize

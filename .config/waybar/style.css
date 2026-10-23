@@ -1,4 +1,8 @@
-@import "colors.css";
+@define-color foreground #ebdbb2;
+@define-color background #282828;
+
+@define-color color0 #282828;
+@define-color color1 #504945;
 /*@import "mode.css";*/
 #backlight, #battery, #cpu, #disk, #idle_inhibitor, #keyboard-state,
 #pulseaudio, #clock, #tags, #language, #memory, #network, #sndio,
@@ -10,8 +14,10 @@
   font-size: 15px;
 }
 
+
 * {
-  font-family: "CozetteVector";
+	all: unset; /* wipes GTK theme inheritance */
+	font-family: "CozetteVector";
   /* font-size: 1px; */
 }
 #custom-tray-start,
@@ -36,18 +42,22 @@ window#waybar {
 
 .modules-left {
   background-color: @color0; 
+  color: @foreground;    
   padding: 0px 0px 0px 0px;
 }
 
 
 .modules-right {
   background-color: @color0; 
+  color: @foreground;    
   padding: 0px 5px 0px 0px;
 }
 
 #workspaces {
   font-size: 20px;
   border-radius: 0px; /* <--- Add this line */
+  background-color: @color0; 
+  color: @foreground;    
 }
 
 
@@ -60,13 +70,15 @@ window#waybar {
 
 #workspaces button.empty {
   color: @foreground;
+  background-color: @color0; 
 }
 
 #workspaces button.visible {
   font-size: 20px;
   padding: 0px 8px 0px 8px; 
   min-width: 1px;
-  color: #ea6962;
+  color: @foreground;
+  background-color: @color1; 
 }
 
 #workspaces button.focused { 
@@ -81,7 +93,7 @@ window#waybar {
   font-size: 20px;
   padding: 0px 8px 0px 8px; 
   background-color: @color1; 
-  color: @forground;    
+  color: @foreground;    
 }
 
 

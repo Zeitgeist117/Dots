@@ -10,6 +10,7 @@
     "custom/icon",
     "custom/nowplaying"
   ],
+
   "modules-center": [],
 	"modules-right": [
 	    "hyprland/submap",

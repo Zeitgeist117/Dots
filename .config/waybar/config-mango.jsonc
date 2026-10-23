@@ -7,10 +7,9 @@
   "modules-left": [
     "ext/workspaces",
     "custom/icon"
-//    "custom/nowplaying"
   ],
   "modules-center": [
-    "dwl/window"
+    "mango/window"
 ],
   "modules-right": [
     // "custom/archupdates",
@@ -18,10 +17,8 @@
     "custom/tray-start",
     "tray",
     "custom/tray-end",
-    //"custom/cpubars",
     "cpu",
     "memory",
-    //"pulseaudio",
     "clock"
   ],
 
@@ -46,29 +43,10 @@
 
   // Shows current layout name (e.g. "T", "M", "S") — or window title
   // Use "format": "{layout}" for layout, "{title}" for window title
-  "dwl/window": {
-    "format": "{}",
-    "max-length": 30,
-    "tooltip": false,
-  },
-
-  "pulseaudio": {
-    "scroll-step": 2,
-    "format": "[{icon}{volume}%]",
-    "format-muted": "<span color=\"#b4befe\">Muted: </span>...",
-    "format-icons": {
-      "default": ["<span>VOL: </span>"]
-    },
-    "on-click": "pamixer -t"
-  },
-
-  "custom/nowplaying": {
-    "format": " {}",
-    "interval": 1,
-    "escape": true,
-    "exec": "~/.config/waybar/scripts/nowPlaying.sh",
-    "on-click": "~/.config/waybar/scripts/playtoggle.sh"
-  },
+	 "mango/window": {
+	    "format": "{title}",
+		  "icon-size": 20
+	  },
 
   "memory": {
     "interval": 2,
