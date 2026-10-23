@@ -21,43 +21,44 @@
 
 * Autostart 
 #+begin_src sh 
-exec-once = emacs --daemon & # emacs is a fully hackable system
-exec-once = waybar -c ~/.config/waybar/config-mango.jsonc & # status-bar
-exec-once = awww-daemon & # wallpaper daemon
-exec-once = cclipd & # clipboard
-exec-once = xrdb ~/.Xresources & # set font and colors for terminal
-exec-once = swp & # set wallpaper script 
-exec-once = dunst & # notification daemon
-exec-once = nm-applet & # system tray wifi widget
-exec-once = corectrl & # overclock/undervolt gpu and fan control
-exec-once = syncthing & # sync folders between devices
-exec-once = pano-scrobbler & # scrobble music
+exec_once = emacs --daemon & # emacs is a fully hackable system
+#exec_once = waybar -c ~/.config/waybar/config-mango.jsonc & # status-bar
+exec_once = qs & # status-bar
+exec_once = awww-daemon & # wallpaper daemon
+exec_once = cclipd & # clipboard
+exec_once = xrdb ~/.Xresources & # set font and colors for terminal
+exec_once = swp & # set wallpaper script 
+exec_once = dunst & # notification daemon
+exec_once = nm-applet & # system tray wifi widget
+exec_once = corectrl & # overclock/undervolt gpu and fan control
+exec_once = syncthing & # sync folders between devices
+exec_once = pano-scrobbler & # scrobble music
 #+end_src
 
 * Theming
 ** Colors
 #+begin_src sh
-rootcolor     = 0x282828ff   # gruvbox bg
-bordercolor   = 0x504945ff   # gruvbox bg2 (inactive)
-focuscolor 	  = 0xebdbb2ff
-urgentcolor   = 0xad401fff
-scratchpadcolor = 0xebdbb2ff
-dropcolor     = 0x8FBA7C55
-splitcolor    = 0xEB441EFF
-maximizescreencolor = 0x89aa61ff
-globalcolor   = 0xb153a7ff
-overlaycolor  = 0x14a57cff
+root_color     = 0x282828ff   # gruvbox bg
+border_color   = 0x504945ff   # gruvbox bg2 (inactive)
+focus_color    = 0xebdbb2ff
+urgent_color   = 0xad401fff
+scratchpad_color = 0xebdbb2ff
+drop_color     = 0x8FBA7C55
+split_color    = 0xEB441EFF
+maximized_screen_color = 0x89aa61ff
+global_color   = 0xb153a7ff
+overlay_color  = 0x14a57cff
 
-borderpx = 2
+border_px = 2
 border_radius = 0
 #+end_src
 
 ** Gaps
 #+begin_src sh
-gappih = 7
-gappiv = 7
-gappoh = 7
-gappov = 7
+gap_inner_horizontal = 7
+gap_inner_vertical = 7
+gap_outer_horizontal = 7
+gap_outer_vertical = 7
 #+end_src
 
 ** Opacity
@@ -90,7 +91,7 @@ shadows_size         = 4
 shadows_blur         = 4
 shadows_position_x   = 0
 shadows_position_y   = 0
-shadowscolor         = 0x1a1a1aee
+shadows_color         = 0x1a1a1aee
 #+end_src
 
 *** Animations
@@ -116,40 +117,36 @@ animation_curve_tag   = 0.46,1.0,0.29,1
 
 ** Layouts
 #+begin_src sh
-tagrule = id:1,layout_name:tile
-tagrule = id:2,layout_name:tile
-tagrule = id:3,layout_name:tile
-tagrule = id:4,layout_name:tile
-tagrule = id:5,layout_name:tile
-tagrule = id:6,layout_name:tile
-tagrule = id:7,layout_name:tile
-tagrule = id:8,layout_name:tile
-tagrule = id:9,layout_name:tile
+tag_rule = id:1,layout_name:tile
+tag_rule = id:2,layout_name:tile
+tag_rule = id:3,layout_name:tile
+tag_rule = id:4,layout_name:tile
+tag_rule = id:5,layout_name:tile
+tag_rule = id:6,layout_name:tile
+tag_rule = id:7,layout_name:tile
+tag_rule = id:8,layout_name:tile
+tag_rule = id:9,layout_name:tile
 
 new_is_master    = 0 # 0: current window will stay as master and not be pushed down the stack
-default_mfact    = 0.5 
-default_nmaster  = 1
-smartgaps        = 0
+default_master_factor = 0.5
+default_master_count  = 1
+smart_gaps       = 0
 #+end_src
 
 ** Window Rules
 #+begin_src sh
-# Float scratchpad-style terminals launched via keybinds above
-windowrule = class:foot,isfloating:1,size 1000 800
-
 # App → tag assignments 
-windowrule = title:Firefox, tags: 3
-windowrule = title:Discord, title:Vesktop, tags: 4
-windowrule = title:Steam,   tags: 5
+window_rule = title:Firefox,tags:3
+window_rule = title:Discord,tags:4
+window_rule = title:Steam,tags:5
 
 # Float mpv
-windowrule = title:Mpv,isfloating:1 
+window_rule = title:Mpv,is_floating:1
 
 # PiP
-windowrule = title:^(Picture-in-Picture)$,isfloating:1
+window_rule = title:^(Picture-in-Picture)$,is_floating:1
 
-windowrule=isterm:1,noswallow:0,appid:foot
-windowrule=isnamedscratchpad:1
+window_rule=is_term:1,no_swallow:0,app_id:foot
 #+end_src
 
 * Input
@@ -158,8 +155,8 @@ xkb_rules_layout = us
 repeat_rate  = 25
 repeat_delay = 600
 cursor_size  = 24
-sloppyfocus  = 1
-warpcursor   = 1
+sloppy_focus = 1
+warp_cursor  = 1
 #+end_src
 
 * Misc
@@ -177,7 +174,8 @@ drag_tile_to_tile = 1
 bind = SUPER+SHIFT,r, reload_config
 
 # Launch apps
-bind = SUPER,SPACE,  spawn, rofi -show run
+#bind = SUPER,SPACE,  spawn, rofi -show run
+bind = SUPER,SPACE,  spawn, qs ipc call launcher toggle
 bind = CTRL,SPACE,   spawn, vicinae toggle 
 bind = SUPER,RETURN, spawn, foot
 bind = SUPER,E,      spawn, thunar
@@ -198,7 +196,8 @@ bind = SUPER,W,            killclient,
 bind = SUPER+SHIFT,Q,      quit
 
 # Toggle bar
-bind = SUPER,B,            spawn, pkill -SIGUSR1 waybar
+# (needs the "bar" IpcHandler in the quickshell config)
+bind = SUPER,B,            spawn, qs ipc call bar toggle
 
 # Window state
 bind = SUPER,M,            togglemaximizescreen,   # monocle / fullscreen
@@ -221,12 +220,10 @@ bind = SUPER,L, resizewin, +30 0
 # Workspace navigation (Left/Right arrows + Ctrl)
 bind = SUPER,Left,         viewtoleft,  0
 bind = SUPER,Right,        viewtoright, 0
-bind=SUPER+SHIFT,H		   ,viewtoleft, 0
-bind=SUPER+SHIFT,L		   ,viewtoright,0
-bind = CTRL,Left,          viewtoleft_have_client,  0
-bind = CTRL,Right,         viewtoright_have_client, 0
-bind = SUPER+SHIFT,H,      workspace, r-1   # same as Hyprland SUPER+SHIFT+H
-bind = SUPER+SHIFT,L,      workspace, r+1   # same as Hyprland SUPER+SHIFT+L
+bind = SUPER+SHIFT,H,      viewtoleft, 0
+bind = SUPER+SHIFT,L,      viewtoright,0
+bind = CTRL+SHIFT,H,       viewtoleft_have_client,  0
+bind = CTRL+SHIFT,L,       viewtoright_have_client, 0
 
 # Switch to tag by number
 bind = SUPER,1, view, 1, 0
@@ -275,28 +272,28 @@ bind = NONE,XF86AudioNext, spawn, playerctl -p kew,subtui,tauon,fooyin,DeaDBeeF,
 
 * Scratchpads
 #+begin_src sh
-windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-term
-windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-term2
-windowrule=isnamedscratchpad:1,width:1000,height:850,appid:scratch-btop
-windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-wiremix
-windowrule=isnamedscratchpad:1,width:1000,height:800,appid:scratch-yazi
-windowrule=isnamedscratchpad:1,width:1100,height:550,appid:scratch-mus
-windowrule=isnamedscratchpad:1,width:1000,height:650,appid:scratch-tomato
-windowrule=isnamedscratchpad:1,width:1000,height:650,appid:scratch-rec
-windowrule=isnamedscratchpad:1,width:500,height:650,appid:scratch-bluetui
+window_rule=is_named_scratchpad:1,width:1000,height:800,app_id:scratch-term
+window_rule=is_named_scratchpad:1,width:1000,height:800,app_id:scratch-term2
+window_rule=is_named_scratchpad:1,width:1000,height:850,app_id:scratch-btop
+window_rule=is_named_scratchpad:1,width:1000,height:800,app_id:scratch-wiremix
+window_rule=is_named_scratchpad:1,width:1000,height:800,app_id:scratch-yazi
+window_rule=is_named_scratchpad:1,width:1100,height:550,app_id:scratch-mus
+window_rule=is_named_scratchpad:1,width:1000,height:650,app_id:scratch-tomato
+window_rule=is_named_scratchpad:1,width:1000,height:650,app_id:scratch-rec
+window_rule=is_named_scratchpad:1,width:500,height:650,app_id:scratch-bluetui
 
 bind = SUPER,Z,        toggle_scratchpad       # built-in scratchpad
 
-bind=SUPER,I,      toggle_named_scratchpad,scratch-term,none,foot --app-id scratch-term
-bind=SUPER,O,      toggle_named_scratchpad,scratch-term2,none,foot --app-id scratch-term2
-bind=SUPER,G,      toggle_named_scratchpad,scratch-btop,none,foot --app-id scratch-btop -e btop
-bind=SUPER,P,      toggle_named_scratchpad,scratch-wiremix,none,foot --app-id scratch-wiremix -e wiremix
-bind=SUPER,C,      toggle_named_scratchpad,scratch-yazi,none,foot --app-id scratch-yazi -e yazi
-bind=SUPER,N,      toggle_named_scratchpad,scratch-mus,none,foot --app-id scratch-mus -e kew
-bind=SUPER,U,      toggle_named_scratchpad,scratch-tomato,none,foot --app-id scratch-tomato -e tomato
-bind=SUPER+SHIFT,B,toggle_named_scratchpad,scratch-bluetui,none,foot --app-id scratch-bluetui -e bluetui
+bind=SUPER,I,      toggle_named_scratchpad,scratch-term,none,foot --app-id=scratch-term
+bind=SUPER,O,      toggle_named_scratchpad,scratch-term2,none,foot --app-id=scratch-term2
+bind=SUPER,G,      toggle_named_scratchpad,scratch-btop,none,foot --app-id=scratch-btop -e btop
+bind=SUPER,P,      toggle_named_scratchpad,scratch-wiremix,none,foot --app-id=scratch-wiremix -e wiremix
+bind=SUPER,C,      toggle_named_scratchpad,scratch-yazi,none,foot --app-id=scratch-yazi -e yazi
+bind=SUPER,N,      toggle_named_scratchpad,scratch-mus,none,foot --app-id=scratch-mus -e subtui
+bind=SUPER,U,      toggle_named_scratchpad,scratch-tomato,none,foot --app-id=scratch-tomato -e tomato
+bind=SUPER+SHIFT,B,toggle_named_scratchpad,scratch-bluetui,none,foot --app-id=scratch-bluetui -e bluetui
 bind=SUPER,R,      toggle_named_scratchpad,scratch-rec,none,obs
 
-layerrule = animation_type_open:zoom,  layer_name:rofi
-layerrule = animation_type_close:zoom, layer_name:rofi
+layer_rule = animation_type_open:zoom,  layer_name:rofi
+layer_rule = animation_type_close:zoom, layer_name:rofi
 #+end_src

@@ -1,202 +1,686 @@
+//@ pragma UseQApplication
+
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
+import QtQuick.Effects
 import Quickshell
-import Quickshell.Wayland
-import Quickshell.Hyprland
-import Quickshell.Services.SystemTray
 import Quickshell.Io
+import Quickshell.Wayland
+import Quickshell.WindowManager
+import Quickshell.Services.SystemTray
+import Quickshell.Services.UPower
 
 PanelWindow {
     id: root
 
-    // ── Colors ───────────────────────────────────────────────────────────────
-    property color colBg:   "#282828"   // dark bg
-    property color colFg:   "#ebdbb2"   // beige/gold text & accents
-    property color colGray: "#504945"
-    property color colMute: "#928374"
+    // ── Keyboard Focus Handling ──────────────────────────────────────────
+    WlrLayershell.keyboardFocus: root.launcherOpen 
+        ? WlrKeyboardFocus.Exclusive 
+        : WlrKeyboardFocus.None
 
+    // ── IPC Handler for Keybinds ─────────────────────────────────────────
+    IpcHandler {
+        target: "launcher"
+        function toggle(): void {
+            root.launcherOpen = !root.launcherOpen
+            root.trayOpen = false
+            root.batteryOpen = false
+        }
+    }
+
+    IpcHandler {
+        target: "bar"
+        function toggle(): void {
+            root.forcedByLauncher = false
+            root.trayOpen = false
+            root.batteryOpen = false
+            root.launcherOpen = false
+            root.barVisible = !root.barVisible
+        }
+    }
+
+    // ── Theme ────────────────────────────────────────────────────────────
+    property color colBg:       "#282828"
+    property color colFg:       "#ebdbb2"
+    property color colDim:      "#928374"
+    property color colMute:     "#504945"
+    property color colUrgent:   "#fb4934"
+    property color colBatActive:"#B8BB26"
+    property color colBatInactive: "#504945"
     property string fontFamily: "DepartureMono Nerd Font"
-    property int fontSize: 16   // slightly smaller for compact feel
+    property int fontSize: 13
+    property int gap: 24
+    property int rowHeight: 24
+    property bool trayTint: true
+    property bool traySilhouette: false
+    property bool kanjiTags: true
+    readonly property var kanji: ["一","二","三","四","五","六","七","八","九"]
 
+    // ── Window ───────────────────────────────────────────────────────────
+    color: colBg
+    anchors { top: true; left: true; right: true }
+    implicitHeight: 31
+  visible: root.barVisible
+    property bool barVisible: true
+    property bool forcedByLauncher: false
+
+    // If the bar is hidden, the launcher lives inside it, so show the bar
+    // while the launcher is open and hide it again afterwards.
+    onLauncherOpenChanged: {
+        if (launcherOpen && !barVisible) {
+            barVisible = true
+            forcedByLauncher = true
+        } else if (!launcherOpen && forcedByLauncher) {
+            barVisible = false
+            forcedByLauncher = false
+        }
+    }
+    // ── State & Autocomplete Engine ──────────────────────────────────────
+    readonly property var tags: WindowManager.windowsets.filter(w => w.shouldDisplay)
     property int cpuUsage: 0
-    property var lastCpuIdle: 0
-    property var lastCpuTotal: 0
+    property real lastCpuIdle: 0
+    property real lastCpuTotal: 0
+    property string ramText: "0.0G/0G"
+    property bool trayOpen: false
+    property bool launcherOpen: false
+    property bool batteryOpen: false
 
-    // ── CPUproc ───────────────────────────────────────────────────────────────
-	Process {
-		id: cpuProc
-		command: ["sh", "-c", "head -1 /proc/stat"]
-		stdout: SplitParser {
-			onRead: data => {
-				var p = data.trim().split(/\s+/)
-				var idle = parseInt(p[4]) + parseInt(p[5])
-				var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
-				if (lastCpuTotal > 0) {
-					cpuUsage = Math.round(100 * (1 - (idle - lastCpuIdle) / (total - lastCpuTotal)))
-				}
-				lastCpuTotal = total
-				lastCpuIdle = idle
-			}
-		}
-		Component.onCompleted: running = true
-	}
-    // ── MEMproc ───────────────────────────────────────────────────────────────
-	property int memUsage: 0
-	Process {
-		id: memProc
-		command: ["sh", "-c", "free | grep Mem"]
-		stdout: SplitParser {
-			onRead: data => {
-				var parts = data.trim().split(/\s+/)
-				var total = parseInt(parts[1]) || 1
-				var used = parseInt(parts[2]) || 0
-				memUsage = Math.round(100 * used / total)
-			}
-		}
-		Component.onCompleted: running = true
-	}
+    property var activeTrayItem: null
+    property var activeMenuHandle: null
+
+    property var allApps: []
+
+    readonly property string topSuggestion: {
+        const text = cmdInput.text.trim()
+        if (text === "") return ""
+        const q = text.toLowerCase()
+        const match = root.allApps.find(app => app.toLowerCase().startsWith(q))
+        return match || ""
+    }
+
+    readonly property string ghostText: {
+        const text = cmdInput.text
+        if (!topSuggestion || text === "") return ""
+        if (topSuggestion.toLowerCase().startsWith(text.toLowerCase())) {
+            return topSuggestion.substring(text.length)
+        }
+        return ""
+    }
+
+    // ── Adaptive Battery State (Uncomment mock lines below if testing on desktop) ──
+
+    readonly property var batDevice: UPower.displayDevice
+    readonly property bool hasBattery: batDevice ? batDevice.isPresent : false
+    readonly property bool isCharging: batDevice ? (batDevice.state === UPowerDeviceState.Charging) : false
+    readonly property real batRaw: batDevice ? batDevice.percentage : 0
+    readonly property int battery: Math.round(batRaw <= 1 ? batRaw * 100 : batRaw)
+    readonly property real energyRate: batDevice ? batDevice.energyRate : 0
+    readonly property real timeToEmpty: batDevice ? batDevice.timeToEmpty : 0
+    readonly property real timeToFull: batDevice ? batDevice.timeToFull : 0
+
+    function formatDuration(seconds) {
+        if (!seconds || seconds <= 0) return "Calculating..."
+        const h = Math.floor(seconds / 3600)
+        const m = Math.floor((seconds % 3600) / 60)
+        if (h > 0) return h + " Hours " + m + " Minutes"
+        return m + " Minutes"
+    }
+
+    Process {
+        id: appScraper
+        running: true
+        command: ["sh", "-c", "grep -h '^Name=' /usr/share/applications/*.desktop ~/.local/share/applications/*.desktop 2>/dev/null | cut -d= -f2- | sort -u"]
+        stdout: SplitParser {
+            onRead: data => {
+                const name = data.trim()
+                if (name && !root.allApps.includes(name)) {
+                    root.allApps.push(name)
+                }
+            }
+        }
+    }
+
+    Process {
+        id: launcherProc
+    }
+
+    function runLauncherCommand(cmd) {
+        if (cmd && cmd.trim() !== "") {
+            launcherProc.command = ["sh", "-c", cmd + " &"]
+            launcherProc.running = true
+        }
+        root.launcherOpen = false
+        cmdInput.text = ""
+    }
+
+    SystemClock { id: clock; precision: SystemClock.Minutes }
+
+    // ── System Stats Processes ───────────────────────────────────────────
+    Process {
+        id: cpuProc
+        command: ["sh", "-c", "head -1 /proc/stat"]
+        stdout: SplitParser {
+            onRead: data => {
+                const p = data.trim().split(/\s+/)
+                const idle = parseInt(p[4]) + parseInt(p[5])
+                const total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
+                if (root.lastCpuTotal > 0)
+                    root.cpuUsage = Math.round(100 * (1 - (idle - root.lastCpuIdle) / (total - root.lastCpuTotal)))
+                root.lastCpuTotal = total
+                root.lastCpuIdle = idle
+            }
+        }
+    }
+
+    Process {
+        id: memProc
+        command: ["sh", "-c", "free -m | grep Mem"]
+        stdout: SplitParser {
+            onRead: data => {
+                const p = data.trim().split(/\s+/)
+                const totalM = parseInt(p[1]) || 1
+                const usedM = parseInt(p[2]) || 0
+                const usedG = (usedM / 1024).toFixed(1)
+                const totalG = Math.round(totalM / 1024)
+                root.ramText = usedG + "G/" + totalG + "G"
+            }
+        }
+    }
 
     Timer {
-        interval: 2000; running: true; repeat: true
+        interval: 2000; running: true; repeat: true; triggeredOnStart: true
         onTriggered: { cpuProc.running = true; memProc.running = true }
     }
 
-    // ── Window setup: floating + transparent bg ──────────────────────────────
-    color: "transparent"
-    anchors {
-        top: true
-        left: true
-        right: true
-    }
-    implicitHeight: 36          // thin but enough for border/shadow space
-    exclusiveZone: 36          // reserve space (no overlap with maximized windows)
-
-    // Main floating panel container
+    // ── Layout: Left Workspaces ──────────────────────────────────────────
+    Rectangle { width: 1; height: 22; color: root.colDim; x: 14; anchors.verticalCenter: parent.verticalCenter }
     Rectangle {
-        id: frame
-        anchors {
-            fill: parent
-            topMargin: 6        // distance from screen top → floating feel
-            leftMargin: 7
-            rightMargin: 7
-        }
+        id: tagBox
+        x: 28
+        anchors.verticalCenter: parent.verticalCenter
+        width: tagRow.width + 24
+        height: 24
+        color: "transparent"
+        border { width: 1; color: root.colDim }
 
-        color: root.colBg
-        radius: 0              // subtle rounded corners like many EWW bars
+        Row {
+            id: tagRow
+            anchors.centerIn: parent
+            height: parent.height
 
-        border {
-            color: root.colFg
-            width: 2          // thin gold/beige outline – matches your screenshots
-        }
+            Repeater {
+                model: root.tags
+                delegate: Item {
+                    required property var modelData
+                    readonly property var set: modelData
+                    readonly property bool active: set ? set.active : false
+                    readonly property string label: {
+                        const n = parseInt(set.name)
+                        return (root.kanjiTags && n >= 1 && n <= 9) ? root.kanji[n - 1] : set.name
+                    }
+                    implicitWidth: 38
+                    height: tagBox.height
 
-        // Inner content with padding
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: 6   // inner padding – creates the framed look
-            spacing: 12          // space between major sections
-
-            // ── Left: Japanese kanji workspaces ──────────────────────────────
-            Row {
-                spacing: 14
-
-                Repeater {
-                    model: ["一","二","三","四","五","六","七","八","九"]
-
-                    delegate: Item {
-                        width: 14; height: 19
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: modelData
-                            color: {
-                                let wsId = index + 1
-                                let active = Hyprland.focusedWorkspace?.id === wsId
-                                let exists = Hyprland.workspaces.values.some(w => w.id === wsId)
-                                return active ? root.colFg : (exists ? root.colMute : root.colGray)
-                            }
-                            font { family: root.fontFamily; pixelSize: 14 ; bold: false}
-                        }
-
-                        // Thin underline only on active
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: Hyprland.dispatch("workspace " + (index + 1))
-                        }
+                    Text {
+                        anchors.fill: parent
+                        text: parent.active ? "[ " + parent.label + " ]" : parent.label
+                        color: parent.active ? root.colFg : (parent.set.urgent ? root.colUrgent : root.colDim)
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize
+                        font.letterSpacing: 0.5
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        renderType: Text.NativeRendering
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: if (parent.set.canActivate) parent.set.activate()
                     }
                 }
             }
+        }
+    }
+    Rectangle { width: 1; height: 22; color: root.colDim; x: tagBox.x + tagBox.width + 14; anchors.verticalCenter: parent.verticalCenter }
 
-            Item { Layout.fillWidth: true }  // push right side away
+    // ── Center Bar Container (Bordered Title / Animated Launcher) ────────
+    Item {
+        id: centerContainer
+        anchors.centerIn: parent
+        width: root.launcherOpen ? 300 : titleLabel.implicitWidth + 24
+        height: 24
 
-            // ── Right side: compact icons + separators ───────────────────────
+        Behavior on width {
+            NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+        }
+
+        // Mode A: Bordered Title Box
+        Rectangle {
+            id: titleBox
+            opacity: root.launcherOpen ? 0 : 1
+            visible: opacity > 0
+            anchors.fill: parent
+            color: "transparent"
+            border { width: 1; color: root.colDim }
+
+            Behavior on opacity { NumberAnimation { duration: 100 } }
+
+            Text {
+                id: titleLabel
+                anchors.centerIn: parent
+                text: root.trayOpen ? "[ ZEITGEIST117 ]" : "ZEITGEIST117"
+                color: root.colFg
+                font.family: root.fontFamily
+                font.pixelSize: root.fontSize
+                font.letterSpacing: 0.5
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                renderType: Text.NativeRendering
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: {
+                    root.trayOpen = !root.trayOpen
+                    root.batteryOpen = false
+                }
+            }
+        }
+
+        // Mode B: Box Outline with Expanding Animation & Inline Launcher
+        Rectangle {
+            id: inlineLauncher
+            opacity: root.launcherOpen ? 1 : 0
+            visible: opacity > 0
+            anchors.fill: parent
+            color: "transparent"
+            border { width: 1; color: root.colDim }
+            clip: true
+
+            Behavior on opacity { NumberAnimation { duration: 120 } }
+
+            onVisibleChanged: {
+                if (visible) {
+                    Qt.callLater(() => cmdInput.forceActiveFocus())
+                }
+            }
+
             Row {
-                spacing: 10
-                layoutDirection: Qt.RightToLeft  // tray last → very right
-
-                // System tray (compact, small icons)
-
+                anchors.centerIn: parent
+                height: parent.height
+                spacing: 6
 
                 Text {
-                    id: clock
-                    color: root.colFg
-                    font { family: root.fontFamily; pixelSize: 12; bold: true }
+                    text: "["
+                    color: root.colDim
+                    font.family: root.fontFamily
+                    font.pixelSize: root.fontSize
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    renderType: Text.NativeRendering
+                }
 
-                    Timer {
-                        interval: 1000; running: true; repeat: true
-                        property date now: new Date()
-                        onTriggered: now = new Date()
-                        onNowChanged: {
-                            let h = now.getHours()
-                            let m = now.getMinutes().toString().padStart(2,'0')
-                            let ampm = h >= 12 ? "PM" : "AM"
-                            h = h % 12 || 12
-                            clock.text = h + ":" + m + ampm
+                Item {
+                    width: 220
+                    height: parent.height
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    TextInput {
+                        id: cmdInput
+                        anchors.fill: parent
+                        verticalAlignment: TextInput.AlignVCenter
+                        horizontalAlignment: TextInput.AlignLeft
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize
+                        renderType: Text.NativeRendering
+                        clip: true
+                        focus: true
+
+                        Text {
+                            text: "              COMMAND"
+                            color: root.colMute
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            visible: !cmdInput.text && !cmdInput.inputMethodComposing
+                            anchors.fill: parent
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignLeft
+                            renderType: Text.NativeRendering
                         }
-                        triggeredOnStart: true
+
+                        Keys.onTabPressed: {
+                            if (root.topSuggestion) {
+                                cmdInput.text = root.topSuggestion
+                                cmdInput.cursorPosition = cmdInput.text.length
+                            }
+                        }
+                        Keys.onReturnPressed: root.runLauncherCommand(cmdInput.text)
+                        Keys.onEnterPressed: root.runLauncherCommand(cmdInput.text)
+                        Keys.onEscapePressed: {
+                            root.launcherOpen = false
+                            cmdInput.text = ""
+                        }
+                    }
+
+                    // Subtle ghost text autocomplete suggestion
+                    Text {
+                        id: ghostLabel
+                        anchors.fill: parent
+                        x: textMetrics.width
+                        text: root.ghostText
+                        color: root.colMute
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize
+                        verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering
+                        visible: root.ghostText !== ""
+                    }
+
+                    TextMetrics {
+                        id: textMetrics
+                        font: cmdInput.font
+                        text: cmdInput.text
                     }
                 }
 
-
-                Rectangle { width: 1; height: 16; color: root.colGray }
-                Text { text: " " + memUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: 12; bold: true } }
-                Rectangle { width: 1; height: 16; color: root.colGray }
-                Text { text: "󰻠 " + cpuUsage + "%"; color: root.colFg; font { family: root.fontFamily; pixelSize: 12; bold: true } }
-
-                Rectangle { width: 1; height: 16; color: root.colGray }
-                Row {
-                    spacing: 5
-                    Repeater {
-                        model: SystemTray.items
-                        delegate: MouseArea {
-                            width: 16; height: 16
-                            hoverEnabled: true
-
-                            Image {
-                                anchors.centerIn: parent
-                                source: modelData.icon
-                                sourceSize: Qt.size(24,24)
-                                width: 18; height: 18
-                                smooth: true
-                            }
-
-                            ToolTip.visible: containsMouse
-                            ToolTip.text: modelData.tooltipTitle || modelData.title || ""
-                            ToolTip.delay: 600
-
-                            onClicked: (mouse) => {
-                                if (mouse.button === Qt.LeftButton) modelData.activate()
-                                else if (mouse.button === Qt.RightButton && modelData.hasMenu) modelData.display()
-                            }
-                        }
-                    }
+                Text {
+                    text: "      ]"
+                    color: root.colDim
+                    font.family: root.fontFamily
+                    font.pixelSize: root.fontSize
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    renderType: Text.NativeRendering
                 }
-
-                // If you have battery, add here (example with UPower or Process parse)
-                // Rectangle { width: 1; height: 16; color: root.colGray }
-                // Text { text: " " + batteryPercent + "%"; ... }
             }
         }
     }
+
+    // ── System Tray Popup ────────────────────────────────────────────────
+    PopupWindow {
+        id: trayPopup
+        visible: root.trayOpen
+        color: "transparent"
+        anchor.window: root
+        anchor.rect.x: centerContainer.x + centerContainer.width / 2 - width / 2
+        anchor.rect.y: root.height + 2
+        implicitWidth: 260
+        implicitHeight: Math.min(400, trayCol.height + 16)
+        grabFocus: true
+
+        onVisibleChanged: {
+            if (!visible && root.trayOpen) {
+                root.trayOpen = false
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: root.colBg
+            border { width: 1; color: root.colDim }
+
+            Column {
+                id: trayCol
+                x: 8; y: 8
+                width: parent.width - 16
+
+                Repeater {
+                    model: SystemTray.items
+                    delegate: MouseArea {
+                        id: trayItem
+                        required property var modelData
+                        width: trayCol.width
+                        height: root.rowHeight
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                        Rectangle {
+                            anchors.fill: parent
+                            color: trayItem.containsMouse ? root.colMute : "transparent"
+                        }
+                        Image {
+                            id: iconImg
+                            x: 6
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 16; height: 16
+                            source: trayItem.modelData.icon
+                            sourceSize: Qt.size(32, 32)
+                            smooth: true
+                            visible: !root.trayTint
+                        }
+                        MultiEffect {
+                            anchors.fill: iconImg
+                            source: iconImg
+                            visible: root.trayTint
+                            saturation: -1.0
+                            brightness: root.traySilhouette ? 1.0 : 0.25
+                            colorization: 1.0
+                            colorizationColor: root.colFg
+                        }
+                        Text {
+                            anchors { left: iconImg.right; leftMargin: 10; right: parent.right; rightMargin: 6 }
+                            text: (trayItem.modelData.tooltipTitle || trayItem.modelData.title || trayItem.modelData.id).toUpperCase()
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            font.letterSpacing: 0.5
+                            height: root.rowHeight
+                            verticalAlignment: Text.AlignVCenter
+                            renderType: Text.NativeRendering
+                            elide: Text.ElideRight
+                        }
+                        onClicked: mouse => {
+                            if (mouse.button === Qt.MiddleButton) {
+                                modelData.secondaryActivate()
+                            } else if (mouse.button === Qt.RightButton || (modelData.onlyMenu && modelData.hasMenu)) {
+                                if (modelData.hasMenu && modelData.menu) {
+                                    root.activeMenuHandle = modelData.menu
+                                    root.activeTrayItem = modelData
+                                    root.trayOpen = false
+                                    Qt.callLater(() => {
+                                        nativeMenuAnchor.open()
+                                    })
+                                }
+                            } else {
+                                modelData.activate()
+                                root.trayOpen = false
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    QsMenuAnchor {
+        id: nativeMenuAnchor
+        menu: root.activeMenuHandle
+        anchor.window: root
+        anchor.rect.x: centerContainer.x + centerContainer.width / 2 - 130
+        anchor.rect.y: root.height + 2
+
+        onClosed: {
+            root.activeTrayItem = null
+            root.activeMenuHandle = null
+        }
+    }
+
+    // ── Mockup-Styled Battery Submenu Popup (grabFocus: false) ───────────
+    PopupWindow {
+        id: batteryPopup
+        visible: root.batteryOpen && root.hasBattery
+        color: "transparent"
+        anchor.window: root
+        anchor.rect.x: rightRow.x + batContainer.x + batContainer.width / 2 - width / 2
+        anchor.rect.y: root.height + 2
+        implicitWidth: 380
+        implicitHeight: batMainCol.height + 36
+        grabFocus: false
+
+        onVisibleChanged: {
+            if (!visible && root.batteryOpen) {
+                root.batteryOpen = false
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: root.colBg
+            border { width: 1; color: root.colDim }
+
+            Column {
+                id: batMainCol
+                x: 18; y: 18
+                width: parent.width - 36
+                spacing: 14
+
+                // Header: BATTERY :: State
+                Text {
+                    text: "BATTERY :: " + (root.isCharging ? "Charging" : "Discharging")
+                    color: root.colFg
+                    font.family: root.fontFamily
+                    font.pixelSize: root.fontSize
+                    font.letterSpacing: 0.5
+                    renderType: Text.NativeRendering
+                }
+
+                // Middle Row: Segmented Bar + Percentage Text
+                Row {
+                    spacing: 16
+                    height: 16
+
+                    // Segmented Progress Bar (15 blocks)
+                    Row {
+                        spacing: 4
+                        height: 16
+                        Repeater {
+                            model: 15
+                            Rectangle {
+                                required property int index
+                                width: 14
+                                height: 16
+                                color: (index / 15 < (root.battery / 100)) ? root.colBatActive : root.colBatInactive
+                            }
+                        }
+                    }
+
+                    // Percentage Display
+                    Text {
+                        text: root.battery + "%"
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize + 4
+                        font.bold: true
+                        height: 16
+                        verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering
+                    }
+                }
+
+                // Footer Stats: Time Left / Power Rate
+                Column {
+                    spacing: 4
+                    Text {
+                        text: (root.isCharging ? "Time to Full: " : "Time Left: ") + root.formatDuration(root.isCharging ? root.timeToFull : root.timeToEmpty)
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize - 1
+                        renderType: Text.NativeRendering
+                    }
+                    Text {
+                        text: (root.isCharging ? "Charging: +" : "Discharging: ") + root.energyRate.toFixed(1) + "W"
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize - 1
+                        renderType: Text.NativeRendering
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Right Side Status Modules ────────────────────────────────────────
+    Rectangle { width: 1; height: 22; color: root.colDim; x: rightRow.x - 14; anchors.verticalCenter: parent.verticalCenter }
+    Row {
+        id: rightRow
+        anchors { right: parent.right; rightMargin: 30; verticalCenter: parent.verticalCenter }
+        spacing: root.gap
+
+        Text { 
+            text: "[CPU: " + root.cpuUsage + "%]"
+            color: root.colFg
+            font.family: root.fontFamily
+            font.pixelSize: root.fontSize
+            font.letterSpacing: 0.5
+            height: root.rowHeight
+            verticalAlignment: Text.AlignVCenter
+            renderType: Text.NativeRendering 
+        }
+
+        Text { 
+            text: "[RAM: " + root.ramText + "]"
+            color: root.colFg
+            font.family: root.fontFamily
+            font.pixelSize: root.fontSize
+            font.letterSpacing: 0.5
+            height: root.rowHeight
+            verticalAlignment: Text.AlignVCenter
+            renderType: Text.NativeRendering 
+        }
+
+        Text { 
+            text: "[CAL: " + Qt.formatDateTime(clock.date, "ddd MMM dd") + "]"
+            color: root.colFg
+            font.family: root.fontFamily
+            font.pixelSize: root.fontSize
+            font.letterSpacing: 0.5
+            height: root.rowHeight
+            verticalAlignment: Text.AlignVCenter
+            renderType: Text.NativeRendering 
+        }
+
+        Text { 
+            text: "[TIME: " + Qt.formatDateTime(clock.date, "hh:mm AP") + "]"
+            color: root.colFg
+            font.family: root.fontFamily
+            font.pixelSize: root.fontSize
+            font.letterSpacing: 0.5
+            height: root.rowHeight
+            verticalAlignment: Text.AlignVCenter
+            renderType: Text.NativeRendering 
+        }
+        
+        // Interactive Battery Module Container
+        Item {
+            id: batContainer
+            visible: root.hasBattery
+            implicitWidth: batText.implicitWidth
+            height: root.rowHeight
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                id: batText
+                anchors.fill: parent
+                text: root.isCharging ? "[CHARGING: " + root.battery + "%]" : "[BATTERY: " + root.battery + "%]"
+                color: root.colFg
+                font.family: root.fontFamily
+                font.pixelSize: root.fontSize
+                font.letterSpacing: 0.5
+                verticalAlignment: Text.AlignVCenter
+                renderType: Text.NativeRendering 
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    root.batteryOpen = !root.batteryOpen
+                    root.trayOpen = false
+                }
+            }
+        }
+    }
+    Rectangle { width: 1; height: 22; color: root.colDim; anchors { right: parent.right; rightMargin: 14; verticalCenter: parent.verticalCenter } }
 }
