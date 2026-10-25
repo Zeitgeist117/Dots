@@ -55,10 +55,10 @@ border_radius = 0
 
 ** Gaps
 #+begin_src sh
-gap_inner_horizontal = 7
-gap_inner_vertical = 7
-gap_outer_horizontal = 7
-gap_outer_vertical = 7
+gap_inner_horizontal = 10
+gap_inner_vertical = 10
+gap_outer_horizontal = 10
+gap_outer_vertical = 10
 #+end_src
 
 ** Opacity
