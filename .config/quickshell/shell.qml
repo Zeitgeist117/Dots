@@ -1,3 +1,4 @@
+
 //@ pragma UseQApplication
 
 import QtQuick
@@ -22,7 +23,7 @@ Scope {
     property color colUrgent:         "#fb4934"
     property color colBatActive:      "#B8BB26"
     property color colBatInactive:    "#504945"
-    property string fontFamily:       "DepartureMono Nerd Font"
+    property string fontFamily:       "CozzetteVector Mono"
     property int fontSize:            13
     property int gap:                 24
     property int rowHeight:           24
@@ -45,7 +46,19 @@ Scope {
 
     property var activeTrayItem: null
     property var activeMenuHandle: null
+
+    // Every executable on $PATH (like `rofi -show run`). Assigned as a whole
+    // so the autocomplete bindings update.
     property var allApps: []
+
+    // Visualizer: 5 levels (0-9). Fed by `cava` when it is installed, otherwise by a
+    // random fallback, so the bars never depend on declarative animations.
+    property var vizLevels: [0, 0, 0, 0, 0]
+    property string cavaMethod: "pipewire"   // or "pulse" / "alsa" -- must match your audio server
+    property bool vizFallback: false          // true = random bars when cava gives no signal
+    property bool cavaWorking: false     // true once cava has delivered a non-zero frame
+    readonly property bool musicPlaying: leftMusicContainer.player ? leftMusicContainer.player.isPlaying : false
+    onMusicPlayingChanged: if (!musicPlaying) cavaWorking = false
 
     // ── IPC Handlers ─────────────────────────────────────────────────────
     IpcHandler {
@@ -80,23 +93,20 @@ Scope {
         }
     }
 
-    // ── Autocomplete & System Processes ──────────────────────────────────
+    // ── Run-launcher autocomplete ────────────────────────────────────────
+    // Completes only the first word, so arguments are left alone.
+    // Case-sensitive (commands are) and prefers the shortest match.
     readonly property string topSuggestion: {
-        const text = cmdInput.text.trim()
-        if (text === "") return ""
-        const q = text.toLowerCase()
-        const match = root.allApps.find(app => app.toLowerCase().startsWith(q))
-        return match || ""
+        const text = cmdInput.text
+        if (text === "" || /\s/.test(text)) return ""
+        let best = ""
+        for (const c of root.allApps)
+            if (c.startsWith(text) && c !== text && (best === "" || c.length < best.length))
+                best = c
+        return best
     }
 
-    readonly property string ghostText: {
-        const text = cmdInput.text
-        if (!topSuggestion || text === "") return ""
-        if (topSuggestion.toLowerCase().startsWith(text.toLowerCase())) {
-            return topSuggestion.substring(text.length)
-        }
-        return ""
-    }
+    readonly property string ghostText: topSuggestion ? topSuggestion.substring(cmdInput.text.length) : ""
 
     readonly property var batDevice: UPower.displayDevice
     readonly property bool hasBattery: batDevice ? batDevice.isPresent : false
@@ -122,25 +132,81 @@ Scope {
         return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s)
     }
 
+    // Scan every directory on $PATH (following symlinks) for executables.
     Process {
         id: appScraper
         running: true
-        command: ["sh", "-c", "for d in /usr/bin /usr/local/bin; do [ -d \"$d\" ] && command ls -1 \"$d\"; done 2>/dev/null | sort -u"]
-        stdout: SplitParser {
-            onRead: data => {
-                const name = data.trim()
-                if (name && !root.allApps.includes(name)) {
-                    root.allApps.push(name)
-                }
-            }
+        command: ["bash", "-c",
+            "IFS=:; find -L $PATH -maxdepth 1 -type f -executable -printf '%f\\n' 2>/dev/null | sort -u"]
+        stdout: StdioCollector {
+            onStreamFinished: root.allApps = text.split("\n").filter(c => c !== "")
         }
     }
 
     Process { id: launcherProc }
 
+    // Real audio levels from cava, only while something is playing.
+    Process {
+        id: cavaProc
+        running: root.musicPlaying
+        command: ["sh", "-c", [
+            "command -v cava >/dev/null 2>&1 || exit 127",
+            "cat > /tmp/qs-cava.conf <<'EOF'",
+            "[general]",
+            "bars = 5",
+            "framerate = 30",
+            "[input]",
+            "method = " + root.cavaMethod,
+            "source = auto",
+            "[smoothing]",
+            "noise_reduction = 60",
+            "[output]",
+            "method = raw",
+            "channels = mono",
+            "mono_option = average",
+            "raw_target = /dev/stdout",
+            "data_format = ascii",
+            "ascii_max_range = 9",
+            "bar_delimiter = 59",
+            "frame_delimiter = 10",
+            "EOF",
+            "exec cava -p /tmp/qs-cava.conf"
+        ].join("\n")]
+        stdout: SplitParser {
+            onRead: data => {
+                const v = data.split(";").filter(x => x !== "").map(Number)
+                if (v.some(x => x > 0)) {
+                    if (!root.cavaWorking) console.log("[viz] using cava")
+                    root.cavaWorking = true
+                    root.vizLevels = v
+                } else if (root.cavaWorking) {
+                    root.vizLevels = v     // real silence once cava is known to work
+                }
+            }
+        }
+        stderr: StdioCollector {
+            onStreamFinished: if (text.trim() !== "") console.log("[viz] cava says: " + text.trim())
+        }
+        onExited: (code, status) => console.log("[viz] cava exited, code " + code + (code === 127 ? " (not installed)" : ""))
+    }
+
+    // Fallback while cava is missing, silent or not working: lively random levels
+    Timer {
+        interval: 130
+        repeat: true
+        running: root.vizFallback && root.musicPlaying && !root.cavaWorking
+        onTriggered: root.vizLevels = Array.from({ length: 5 }, () => Math.floor(Math.random() * 10))
+    }
+
+    // Hand the typed text to the shell, detached (setsid) so the program
+    // outlives the bar. The text is passed as a quoted argument, so spaces,
+    // pipes, quotes and arguments behave as they would in a terminal.
     function runLauncherCommand(cmd) {
-        if (cmd && cmd.trim() !== "") {
-            launcherProc.command = ["sh", "-c", cmd + " &"]
+        const c = cmd.trim()
+        if (c !== "") {
+            launcherProc.running = false
+            launcherProc.command = ["sh", "-c",
+                "setsid -f sh -c \"$1\" >/dev/null 2>&1 </dev/null", "sh", c]
             launcherProc.running = true
         }
         root.launcherOpen = false
@@ -214,8 +280,8 @@ Scope {
         visible: root.barVisible
 
         WlrLayershell.layer: WlrLayer.Top
-        WlrLayershell.keyboardFocus: root.launcherOpen 
-            ? WlrKeyboardFocus.Exclusive 
+        WlrLayershell.keyboardFocus: root.launcherOpen
+            ? WlrKeyboardFocus.Exclusive
             : WlrKeyboardFocus.None
 
         // ── Layout: Left Workspaces & SubTUI ─────────────────────────
@@ -314,48 +380,31 @@ Scope {
                     anchors.rightMargin: 8
                     spacing: 6
 
-                    // Tiny Visualizer Bars
+                    // Tiny Visualizer Bars (animate while the player is playing)
                     Row {
                         id: vizRow
                         spacing: 2
                         height: 12
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: leftMusicContainer.player && leftMusicContainer.player.isPlaying
+                        visible: leftMusicContainer.player ? leftMusicContainer.player.isPlaying : false
 
                         Repeater {
-                            model: 3
+                            model: 5
                             Rectangle {
                                 required property int index
                                 width: 2
-                                height: 3
+                                height: 3 + Math.max(0, Math.min(9, root.vizLevels[index] || 0))
                                 color: root.colBatActive
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                SequentialAnimation {
-                                    running: vizRow.visible
-                                    loops: Animation.Infinite
-                                    PropertyAnimation {
-                                        target: parent
-                                        property: "height"
-                                        to: 3 + (index === 0 ? 7 : (index === 1 ? 11 : 5))
-                                        duration: 180 + index * 70
-                                        easing.type: Easing.InOutSine
-                                    }
-                                    PropertyAnimation {
-                                        target: parent
-                                        property: "height"
-                                        to: 3
-                                        duration: 180 + index * 70
-                                        easing.type: Easing.InOutSine
-                                    }
-                                }
+                                Behavior on height { NumberAnimation { duration: 90 } }
                             }
                         }
                     }
 
                     // Static Prefix
                     Text {
-                        text: "SUBTUI:"
+                        text: ""
                         color: root.colFg
                         font.family: root.fontFamily
                         font.pixelSize: root.fontSize
@@ -369,7 +418,7 @@ Scope {
                         id: marqueeClip
                         height: parent.height
                         anchors.verticalCenter: parent.verticalCenter
-                        width: leftMusicContainer.width - (vizRow.visible ? vizRow.width + 6 : 0) - 75
+                        width: leftMusicContainer.width - (vizRow.visible ? vizRow.width + 6 : 0) - 15
                         clip: true
 
                         Text {
@@ -557,10 +606,13 @@ Scope {
                             }
                         }
 
+                        // Ghost-text autocomplete: starts where the typed text ends
+                        // (anchors.fill used to override x and drew it over the input)
                         Text {
                             id: ghostLabel
-                            anchors.fill: parent
-                            x: textMetrics.width
+                            x: textMetrics.advanceWidth
+                            width: parent.width - x
+                            height: parent.height
                             text: root.ghostText
                             color: root.colMute
                             font.family: root.fontFamily
@@ -597,7 +649,7 @@ Scope {
             anchors { right: parent.right; rightMargin: 30; verticalCenter: parent.verticalCenter }
             spacing: root.gap
 
-            Text { 
+            Text {
                 text: "[CPU: " + root.cpuUsage + "%]"
                 color: root.colFg
                 font.family: root.fontFamily
@@ -605,10 +657,10 @@ Scope {
                 font.letterSpacing: 0.5
                 height: root.rowHeight
                 verticalAlignment: Text.AlignVCenter
-                renderType: Text.NativeRendering 
+                renderType: Text.NativeRendering
             }
 
-            Text { 
+            Text {
                 text: "[RAM: " + root.ramText + "]"
                 color: root.colFg
                 font.family: root.fontFamily
@@ -616,10 +668,10 @@ Scope {
                 font.letterSpacing: 0.5
                 height: root.rowHeight
                 verticalAlignment: Text.AlignVCenter
-                renderType: Text.NativeRendering 
+                renderType: Text.NativeRendering
             }
 
-            Text { 
+            Text {
                 text: "[CAL: " + Qt.formatDateTime(clock.date, "ddd MMM dd") + "]"
                 color: root.colFg
                 font.family: root.fontFamily
@@ -627,10 +679,10 @@ Scope {
                 font.letterSpacing: 0.5
                 height: root.rowHeight
                 verticalAlignment: Text.AlignVCenter
-                renderType: Text.NativeRendering 
+                renderType: Text.NativeRendering
             }
 
-            Text { 
+            Text {
                 text: "[TIME: " + Qt.formatDateTime(clock.date, "hh:mm AP") + "]"
                 color: root.colFg
                 font.family: root.fontFamily
@@ -638,9 +690,9 @@ Scope {
                 font.letterSpacing: 0.5
                 height: root.rowHeight
                 verticalAlignment: Text.AlignVCenter
-                renderType: Text.NativeRendering 
+                renderType: Text.NativeRendering
             }
-            
+
             Item {
                 id: batContainer
                 visible: root.hasBattery
@@ -657,7 +709,7 @@ Scope {
                     font.pixelSize: root.fontSize
                     font.letterSpacing: 0.5
                     verticalAlignment: Text.AlignVCenter
-                    renderType: Text.NativeRendering 
+                    renderType: Text.NativeRendering
                 }
 
                 MouseArea {
@@ -856,7 +908,7 @@ Scope {
 
                         Text {
                             anchors.centerIn: parent
-                            text: "|<<"
+                            text: "<<"
                             color: root.colFg
                             font.family: root.fontFamily
                             font.pixelSize: root.fontSize
@@ -911,7 +963,7 @@ Scope {
 
                         Text {
                             anchors.centerIn: parent
-                            text: ">>|"
+                            text: ">>"
                             color: root.colFg
                             font.family: root.fontFamily
                             font.pixelSize: root.fontSize
