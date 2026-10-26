@@ -2,31 +2,33 @@
 
 import QtQuick
 import QtQuick.Effects
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.WindowManager
 import Quickshell.Services.SystemTray
 import Quickshell.Services.UPower
+import Quickshell.Services.Mpris
 
 Scope {
     id: root
 
     // ── Shared Theme & State ─────────────────────────────────────────────
-    property color colBg:           "#282828"
-    property color colFg:           "#ebdbb2"
-    property color colDim:          "#928374"
-    property color colMute:         "#504945"
-    property color colUrgent:       "#fb4934"
-    property color colBatActive:    "#B8BB26"
-    property color colBatInactive:  "#504945"
-    property string fontFamily:     "DepartureMono Nerd Font"
-    property int fontSize:          13
-    property int gap:               24
-    property int rowHeight:         24
-    property bool trayTint:         true
-    property bool traySilhouette:   false
-    property bool kanjiTags:        true
+    property color colBg:             "#282828"
+    property color colFg:             "#ebdbb2"
+    property color colDim:            "#928374"
+    property color colMute:           "#504945"
+    property color colUrgent:         "#fb4934"
+    property color colBatActive:      "#B8BB26"
+    property color colBatInactive:    "#504945"
+    property string fontFamily:       "DepartureMono Nerd Font"
+    property int fontSize:            13
+    property int gap:                 24
+    property int rowHeight:           24
+    property bool trayTint:           true
+    property bool traySilhouette:     false
+    property bool kanjiTags:          true
     readonly property var kanji: ["一","二","三","四","五","六","七","八","九"]
 
     property bool barVisible: true
@@ -34,6 +36,7 @@ Scope {
     property bool trayOpen: false
     property bool launcherOpen: false
     property bool batteryOpen: false
+    property bool musicOpen: false
 
     property int cpuUsage: 0
     property real lastCpuIdle: 0
@@ -51,6 +54,7 @@ Scope {
             root.launcherOpen = !root.launcherOpen
             root.trayOpen = false
             root.batteryOpen = false
+            root.musicOpen = false
         }
     }
 
@@ -61,6 +65,7 @@ Scope {
             root.trayOpen = false
             root.batteryOpen = false
             root.launcherOpen = false
+            root.musicOpen = false
             root.barVisible = !root.barVisible
         }
     }
@@ -110,10 +115,17 @@ Scope {
         return m + " Minutes"
     }
 
+    function formatTime(sec) {
+        if (!sec || sec <= 0 || isNaN(sec)) return "00:00"
+        const m = Math.floor(sec / 60)
+        const s = Math.floor(sec % 60)
+        return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s)
+    }
+
     Process {
         id: appScraper
         running: true
-        command: ["sh", "-c", "grep -h '^Name=' /usr/share/applications/*.desktop ~/.local/share/applications/*.desktop 2>/dev/null | cut -d= -f2- | sort -u"]
+        command: ["sh", "-c", "for d in /usr/bin /usr/local/bin; do [ -d \"$d\" ] && command ls -1 \"$d\"; done 2>/dev/null | sort -u"]
         stdout: SplitParser {
             onRead: data => {
                 const name = data.trim()
@@ -183,17 +195,17 @@ Scope {
 
         Item {
             anchors.fill: parent
-            anchors.margins: 0 // Distance from physical screen edge
+            anchors.margins: 0
 
             Rectangle {
                 anchors.fill: parent
                 color: "transparent"
-                border { width: 5; color: root.colBg } // Substantial border thickness
+                border { width: 5; color: root.colBg }
             }
         }
     }
 
-    // ── WINDOW 2: Top Status Bar & Widgets (Top Layer) ───────────────────
+    // ── WINDOW 2: Top Status Bar (Top Layer) ─────────────────────────────
     PanelWindow {
         id: topBarWindow
         anchors { top: true; left: true; right: true }
@@ -206,7 +218,7 @@ Scope {
             ? WlrKeyboardFocus.Exclusive 
             : WlrKeyboardFocus.None
 
-        // ── Layout: Left Workspaces ──────────────────────────────────────
+        // ── Layout: Left Workspaces & SubTUI ─────────────────────────
         Rectangle { width: 1; height: 22; color: root.colDim; x: 14; anchors.verticalCenter: parent.verticalCenter }
         Rectangle {
             id: tagBox
@@ -255,7 +267,174 @@ Scope {
                 }
             }
         }
-        Rectangle { width: 1; height: 22; color: root.colDim; x: tagBox.x + tagBox.width + 14; anchors.verticalCenter: parent.verticalCenter }
+        Rectangle { id: leftSep2; width: 1; height: 22; color: root.colDim; x: tagBox.x + tagBox.width + 14; anchors.verticalCenter: parent.verticalCenter }
+
+        // ── SubTUI Music Widget (Ignores Web Browsers / YouTube) ───────────
+        Item {
+            id: leftMusicContainer
+            readonly property var player: {
+                const players = Mpris.players.values
+                if (!players || players.length === 0) return null
+
+                // Keywords to identify web browsers and browser media integrations
+                const ignoreKeywords = ["firefox", "chrome", "chromium", "brave", "edge", "opera", "browser", "plasma-browser-integration"]
+
+                // 1. Try to find a preferred dedicated music player first
+                const preferred = players.find(p => {
+                    const id = (p.identity || "").toLowerCase()
+                    return id.includes("subtui") || id.includes("mpv") || id.includes("spotify") || id.includes("vlc")
+                })
+                if (preferred) return preferred
+
+                // 2. Otherwise, filter out any browser-based players
+                const nonBrowserPlayers = players.filter(p => {
+                    const id = (p.identity || "").toLowerCase()
+                    const entry = (p.desktopEntry || "").toLowerCase()
+                    return !ignoreKeywords.some(kw => id.includes(kw) || entry.includes(kw))
+                })
+
+                return nonBrowserPlayers.length > 0 ? nonBrowserPlayers[0] : null
+            }
+            visible: player !== null
+            x: leftSep2.x + 14
+            anchors.verticalCenter: parent.verticalCenter
+            width: visible ? 240 : 0
+            height: 24
+
+            Behavior on width { NumberAnimation { duration: 150 } }
+
+            Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                border { width: 1; color: root.musicOpen ? root.colFg : root.colDim }
+
+                Row {
+                    anchors.fill: parent
+                    anchors.leftMargin: 8
+                    anchors.rightMargin: 8
+                    spacing: 6
+
+                    // Tiny Visualizer Bars
+                    Row {
+                        id: vizRow
+                        spacing: 2
+                        height: 12
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: leftMusicContainer.player && leftMusicContainer.player.isPlaying
+
+                        Repeater {
+                            model: 3
+                            Rectangle {
+                                required property int index
+                                width: 2
+                                height: 3
+                                color: root.colBatActive
+                                anchors.verticalCenter: parent.verticalCenter
+
+                                SequentialAnimation {
+                                    running: vizRow.visible
+                                    loops: Animation.Infinite
+                                    PropertyAnimation {
+                                        target: parent
+                                        property: "height"
+                                        to: 3 + (index === 0 ? 7 : (index === 1 ? 11 : 5))
+                                        duration: 180 + index * 70
+                                        easing.type: Easing.InOutSine
+                                    }
+                                    PropertyAnimation {
+                                        target: parent
+                                        property: "height"
+                                        to: 3
+                                        duration: 180 + index * 70
+                                        easing.type: Easing.InOutSine
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Static Prefix
+                    Text {
+                        text: "SUBTUI:"
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize
+                        font.letterSpacing: 0.5
+                        anchors.verticalCenter: parent.verticalCenter
+                        renderType: Text.NativeRendering
+                    }
+
+                    // Scrolling Track Title/Artist Container
+                    Item {
+                        id: marqueeClip
+                        height: parent.height
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: leftMusicContainer.width - (vizRow.visible ? vizRow.width + 6 : 0) - 75
+                        clip: true
+
+                        Text {
+                            id: musicTextScroll
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: {
+                                const p = leftMusicContainer.player
+                                if (!p) return "IDLE"
+                                const artist = p.trackArtist || (p.metadata && p.metadata["xesam:artist"] ? p.metadata["xesam:artist"].toString() : "")
+                                const title = p.trackTitle || (p.metadata && p.metadata["xesam:title"] ? p.metadata["xesam:title"].toString() : (p.identity || "ACTIVE"))
+                                const content = artist ? (artist + " - " + title) : title
+                                return content.toUpperCase()
+                            }
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            font.letterSpacing: 0.5
+                            renderType: Text.NativeRendering
+
+                            x: marqueeAnim.running ? marqueeClip.width : 0
+
+                            NumberAnimation {
+                                id: marqueeAnim
+                                target: musicTextScroll
+                                property: "x"
+                                from: marqueeClip.width
+                                to: -musicTextScroll.implicitWidth
+                                duration: Math.max(6000, musicTextScroll.implicitWidth * 30)
+                                loops: Animation.Infinite
+                                running: musicTextScroll.implicitWidth > marqueeClip.width
+                            }
+                        }
+                    }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                onClicked: mouse => {
+                    const p = leftMusicContainer.player
+                    if (!p) return
+                    if (mouse.button === Qt.LeftButton) {
+                        root.musicOpen = !root.musicOpen
+                        root.trayOpen = false
+                        root.batteryOpen = false
+                    } else if (mouse.button === Qt.RightButton) {
+                        p.next()
+                    } else if (mouse.button === Qt.MiddleButton) {
+                        p.previous()
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: leftSep3
+            width: 1
+            height: 22
+            color: root.colDim
+            x: leftMusicContainer.visible ? leftMusicContainer.x + leftMusicContainer.width + 14 : leftSep2.x
+            visible: leftMusicContainer.visible
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
         // ── Center Bar Container (Bordered Title / Animated Launcher) ────
         Item {
@@ -298,6 +477,7 @@ Scope {
                     onClicked: {
                         root.trayOpen = !root.trayOpen
                         root.batteryOpen = false
+                        root.musicOpen = false
                     }
                 }
             }
@@ -352,7 +532,7 @@ Scope {
                             focus: true
 
                             Text {
-                                text: "             :COMMAND:"
+                                text: "            :COMMAND:"
                                 color: root.colMute
                                 font.family: root.fontFamily
                                 font.pixelSize: root.fontSize
@@ -472,7 +652,7 @@ Scope {
                     id: batText
                     anchors.fill: parent
                     text: root.isCharging ? "[CHARGING: " + root.battery + "%]" : "[BATTERY: " + root.battery + "%]"
-                    color: root.colFg
+                    color: root.batteryOpen ? root.colFg : (root.isCharging ? root.colBatActive : root.colFg)
                     font.family: root.fontFamily
                     font.pixelSize: root.fontSize
                     font.letterSpacing: 0.5
@@ -486,11 +666,367 @@ Scope {
                     onClicked: {
                         root.batteryOpen = !root.batteryOpen
                         root.trayOpen = false
+                        root.musicOpen = false
                     }
                 }
             }
         }
         Rectangle { width: 1; height: 22; color: root.colDim; anchors { right: parent.right; rightMargin: 14; verticalCenter: parent.verticalCenter } }
+    }
+
+    // ── Music Player Popup (Album Art, Progress Bar, Controls) ────────────
+    PopupWindow {
+        id: musicPopup
+        visible: root.musicOpen && leftMusicContainer.player !== null
+        color: "transparent"
+        anchor.window: topBarWindow
+        anchor.rect.x: leftMusicContainer.x
+        anchor.rect.y: topBarWindow.height + 2
+        implicitWidth: 320
+        implicitHeight: musicMainCol.height + 28
+        grabFocus: false
+
+        onVisibleChanged: {
+            if (!visible && root.musicOpen) {
+                root.musicOpen = false
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: root.colBg
+            border { width: 1; color: root.colDim }
+
+            Column {
+                id: musicMainCol
+                x: 14; y: 14
+                width: parent.width - 28
+                spacing: 12
+
+                Row {
+                    width: parent.width
+                    Text {
+                        text: "[PLAYER :: " + (leftMusicContainer.player ? leftMusicContainer.player.identity.toUpperCase() : "SUBTUI") + "]"
+                        color: root.colDim
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize - 1
+                        font.letterSpacing: 0.5
+                        renderType: Text.NativeRendering
+                    }
+                }
+
+                Row {
+                    width: parent.width
+                    spacing: 14
+
+                    Rectangle {
+                        width: 70; height: 70
+                        color: root.colMute
+                        border { width: 1; color: root.colDim }
+
+                        Image {
+                            id: albumArtImg
+                            anchors.fill: parent
+                            anchors.margins: 1
+                            source: {
+                                const p = leftMusicContainer.player
+                                if (!p) return ""
+                                if (p.artUrl && p.artUrl !== "") return p.artUrl
+                                if (p.metadata && p.metadata["mpris:artUrl"]) return p.metadata["mpris:artUrl"].toString()
+                                if (p.metadata && p.metadata["xesam:artUrl"]) return p.metadata["xesam:artUrl"].toString()
+                                return ""
+                            }
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+                            cache: false
+                        }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "[ART]"
+                            color: root.colDim
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize - 2
+                            visible: albumArtImg.status !== Image.Ready
+                        }
+                    }
+
+                    Column {
+                        width: parent.width - 84
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 4
+
+                        Text {
+                            width: parent.width
+                            text: leftMusicContainer.player && leftMusicContainer.player.trackTitle ? leftMusicContainer.player.trackTitle.toUpperCase() : "NO TRACK"
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            font.bold: true
+                            elide: Text.ElideRight
+                            renderType: Text.NativeRendering
+                        }
+
+                        Text {
+                            width: parent.width
+                            text: leftMusicContainer.player && leftMusicContainer.player.trackArtist ? leftMusicContainer.player.trackArtist.toUpperCase() : "UNKNOWN ARTIST"
+                            color: root.colDim
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize - 1
+                            elide: Text.ElideRight
+                            renderType: Text.NativeRendering
+                        }
+
+                        Text {
+                            width: parent.width
+                            text: leftMusicContainer.player && leftMusicContainer.player.trackAlbum ? leftMusicContainer.player.trackAlbum.toUpperCase() : ""
+                            color: root.colMute
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize - 2
+                            elide: Text.ElideRight
+                            visible: text !== ""
+                            renderType: Text.NativeRendering
+                        }
+                    }
+                }
+
+                Column {
+                    width: parent.width
+                    spacing: 4
+
+                    Rectangle {
+                        id: progressBarBg
+                        width: parent.width
+                        height: 8
+                        color: root.colMute
+                        border { width: 1; color: root.colDim }
+
+                        Rectangle {
+                            height: parent.height - 2
+                            x: 1; y: 1
+                            width: {
+                                const p = leftMusicContainer.player
+                                if (!p || !p.length || p.length <= 0) return 0
+                                return Math.min(parent.width - 2, Math.max(0, (parent.width - 2) * (p.position / p.length)))
+                            }
+                            color: root.colFg
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: mouse => {
+                                const p = leftMusicContainer.player
+                                if (p && p.length > 0) {
+                                    const targetPos = (mouse.x / width) * p.length
+                                    p.position = targetPos
+                                }
+                            }
+                        }
+                    }
+
+                    Row {
+                        width: parent.width
+                        Text {
+                            text: root.formatTime(leftMusicContainer.player ? leftMusicContainer.player.position : 0)
+                            color: root.colDim
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize - 2
+                            renderType: Text.NativeRendering
+                        }
+                        Item { Layout.fillWidth: true; width: parent.width - 100 }
+                        Text {
+                            text: root.formatTime(leftMusicContainer.player ? leftMusicContainer.player.length : 0)
+                            color: root.colDim
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize - 2
+                            renderType: Text.NativeRendering
+                        }
+                    }
+                }
+
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 16
+
+                    Rectangle {
+                        width: 50; height: 24
+                        color: "transparent"
+                        border { width: 1; color: prevBtnArea.containsMouse ? root.colFg : root.colDim }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "|<<"
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            renderType: Text.NativeRendering
+                        }
+
+                        MouseArea {
+                            id: prevBtnArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: if (leftMusicContainer.player) leftMusicContainer.player.previous()
+                        }
+                    }
+
+                    Rectangle {
+                        width: 70; height: 24
+                        color: "transparent"
+                        border { width: 1; color: playBtnArea.containsMouse ? root.colFg : root.colDim }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: (leftMusicContainer.player && leftMusicContainer.player.isPlaying) ? "[PAUSE]" : "[PLAY]"
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            renderType: Text.NativeRendering
+                        }
+
+                        MouseArea {
+                            id: playBtnArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                const p = leftMusicContainer.player
+                                if (p) {
+                                    if (p.isPlaying) {
+                                        p.pause()
+                                    } else {
+                                        p.play()
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        width: 50; height: 24
+                        color: "transparent"
+                        border { width: 1; color: nextBtnArea.containsMouse ? root.colFg : root.colDim }
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: ">>|"
+                            color: root.colFg
+                            font.family: root.fontFamily
+                            font.pixelSize: root.fontSize
+                            renderType: Text.NativeRendering
+                        }
+
+                        MouseArea {
+                            id: nextBtnArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: if (leftMusicContainer.player) leftMusicContainer.player.next()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Battery Submenu Popup (Floating / Non-Reserving) ─────────────────
+    PopupWindow {
+        id: batteryPopup
+        visible: root.batteryOpen && root.hasBattery
+        color: "transparent"
+        anchor.window: topBarWindow
+        anchor.rect.x: topBarWindow.width - width - 14
+        anchor.rect.y: topBarWindow.height + 2
+        implicitWidth: 320
+        implicitHeight: batMainCol.height + 28
+        grabFocus: false
+
+        onVisibleChanged: {
+            if (!visible && root.batteryOpen) {
+                root.batteryOpen = false
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: root.colBg
+            border { width: 1; color: root.colDim }
+
+            Column {
+                id: batMainCol
+                x: 14; y: 14
+                width: parent.width - 28
+                spacing: 10
+
+                Text {
+                    text: root.isCharging ? "[STATUS :: CHARGING]" : "[STATUS :: DISCHARGING]"
+                    color: root.colFg
+                    font.family: root.fontFamily
+                    font.pixelSize: root.fontSize
+                    font.letterSpacing: 0.5
+                    renderType: Text.NativeRendering
+                }
+
+                Row {
+                    spacing: 12
+                    height: 16
+
+                    Row {
+                        spacing: 3
+                        height: 16
+                        Repeater {
+                            model: 12
+                            Rectangle {
+                                required property int index
+                                width: 14
+                                height: 16
+                                color: (index / 12 < (root.battery / 100)) ? root.colBatActive : root.colBatInactive
+                            }
+                        }
+                    }
+
+                    Text {
+                        text: "[" + root.battery + "%]"
+                        color: root.colFg
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize
+                        font.bold: true
+                        height: 16
+                        verticalAlignment: Text.AlignVCenter
+                        renderType: Text.NativeRendering
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width
+                    height: 1
+                    color: root.colMute
+                }
+
+                Column {
+                    width: parent.width
+                    spacing: 4
+                    Text {
+                        text: "[TIME: " + root.formatDuration(root.isCharging ? root.timeToFull : root.timeToEmpty).toUpperCase() + "]"
+                        color: root.colDim
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize - 1
+                        font.letterSpacing: 0.5
+                        renderType: Text.NativeRendering
+                    }
+                    Text {
+                        text: "[RATE: " + root.energyRate.toFixed(1) + "W]"
+                        color: root.colDim
+                        font.family: root.fontFamily
+                        font.pixelSize: root.fontSize - 1
+                        font.letterSpacing: 0.5
+                        renderType: Text.NativeRendering
+                    }
+                }
+            }
+        }
     }
 
     // ── System Tray Popup ────────────────────────────────────────────────
@@ -599,95 +1135,6 @@ Scope {
         onClosed: {
             root.activeTrayItem = null
             root.activeMenuHandle = null
-        }
-    }
-
-    // ── Battery Submenu Popup ────────────────────────────────────────────
-    PopupWindow {
-        id: batteryPopup
-        visible: root.batteryOpen && root.hasBattery
-        color: "transparent"
-        anchor.window: topBarWindow
-        anchor.rect.x: rightRow.x + batContainer.x + batContainer.width / 2 - width / 2
-        anchor.rect.y: topBarWindow.height + 2
-        implicitWidth: 380
-        implicitHeight: batMainCol.height + 36
-        grabFocus: false
-
-        onVisibleChanged: {
-            if (!visible && root.batteryOpen) {
-                root.batteryOpen = false
-            }
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            color: root.colBg
-            border { width: 1; color: root.colDim }
-
-            Column {
-                id: batMainCol
-                x: 18; y: 18
-                width: parent.width - 36
-                spacing: 14
-
-                Text {
-                    text: "BATTERY :: " + (root.isCharging ? "Charging" : "Discharging")
-                    color: root.colFg
-                    font.family: root.fontFamily
-                    font.pixelSize: root.fontSize
-                    font.letterSpacing: 0.5
-                    renderType: Text.NativeRendering
-                }
-
-                Row {
-                    spacing: 16
-                    height: 16
-
-                    Row {
-                        spacing: 4
-                        height: 16
-                        Repeater {
-                            model: 15
-                            Rectangle {
-                                required property int index
-                                width: 14
-                                height: 16
-                                color: (index / 15 < (root.battery / 100)) ? root.colBatActive : root.colBatInactive
-                            }
-                        }
-                    }
-
-                    Text {
-                        text: root.battery + "%"
-                        color: root.colFg
-                        font.family: root.fontFamily
-                        font.pixelSize: root.fontSize + 4
-                        font.bold: true
-                        height: 16
-                        verticalAlignment: Text.AlignVCenter
-                        renderType: Text.NativeRendering
-                    }
-                }
-
-                Column {
-                    spacing: 4
-                    Text {
-                        text: (root.isCharging ? "Time to Full: " : "Time Left: ") + root.formatDuration(root.isCharging ? root.timeToFull : root.timeToEmpty)
-                        color: root.colFg
-                        font.family: root.fontFamily
-                        font.pixelSize: root.fontSize - 1
-                        renderType: Text.NativeRendering
-                    }
-                    Text {
-                        text: (root.isCharging ? "Charging: +" : "Discharging: ") + root.energyRate.toFixed(1) + "W"
-                        color: root.colFg
-                        font.family: root.fontFamily
-                        font.pixelSize: root.fontSize - 1
-                        renderType: Text.NativeRendering
-                    }
-                }
-            }
         }
     }
 }
