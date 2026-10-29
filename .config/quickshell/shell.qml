@@ -27,6 +27,7 @@ Scope {
     property int fontSize:            13
     property int gap:                 24
     property int rowHeight:           24
+	property int musicMarqueeThreshold:  55
     property bool trayTint:           true
     property bool traySilhouette:     false
     property bool kanjiTags:          true
@@ -335,145 +336,148 @@ Scope {
         }
         Rectangle { id: leftSep2; width: 1; height: 22; color: root.colDim; x: tagBox.x + tagBox.width + 14; anchors.verticalCenter: parent.verticalCenter }
 
-        // ── SubTUI Music Widget (Ignores Web Browsers / YouTube) ───────────
-        Item {
-            id: leftMusicContainer
-            readonly property var player: {
-                const players = Mpris.players.values
-                if (!players || players.length === 0) return null
+		// ── SubTUI Music Widget (Ignores Web Browsers / YouTube) ───────────
+		Item {
+			id: leftMusicContainer
+			readonly property var player: {
+				const players = Mpris.players.values
+				if (!players || players.length === 0) return null
 
-                // Keywords to identify web browsers and browser media integrations
-                const ignoreKeywords = ["firefox", "chrome", "chromium", "brave", "edge", "opera", "browser", "plasma-browser-integration"]
+				const ignoreKeywords = ["firefox", "chrome", "chromium", "brave", "edge", "opera", "browser", "plasma-browser-integration"]
 
-                // 1. Try to find a preferred dedicated music player first
-                const preferred = players.find(p => {
-                    const id = (p.identity || "").toLowerCase()
-                    return id.includes("subtui") || id.includes("mpv") || id.includes("spotify") || id.includes("vlc")
-                })
-                if (preferred) return preferred
+				const preferred = players.find(p => {
+					const id = (p.identity || "").toLowerCase()
+					return id.includes("subtui") || id.includes("mpv") || id.includes("spotify") || id.includes("vlc")
+				})
+				if (preferred) return preferred
 
-                // 2. Otherwise, filter out any browser-based players
-                const nonBrowserPlayers = players.filter(p => {
-                    const id = (p.identity || "").toLowerCase()
-                    const entry = (p.desktopEntry || "").toLowerCase()
-                    return !ignoreKeywords.some(kw => id.includes(kw) || entry.includes(kw))
-                })
+				const nonBrowserPlayers = players.filter(p => {
+					const id = (p.identity || "").toLowerCase()
+					const entry = (p.desktopEntry || "").toLowerCase()
+					return !ignoreKeywords.some(kw => id.includes(kw) || entry.includes(kw))
+				})
 
-                return nonBrowserPlayers.length > 0 ? nonBrowserPlayers[0] : null
-            }
-            visible: player !== null
-            x: leftSep2.x + 14
-            anchors.verticalCenter: parent.verticalCenter
-            width: visible ? 240 : 0
-            height: 24
+				return nonBrowserPlayers.length > 0 ? nonBrowserPlayers[0] : null
+			}
+			visible: player !== null
+			x: leftSep2.x + 14
+			anchors.verticalCenter: parent.verticalCenter
 
-            Behavior on width { NumberAnimation { duration: 150 } }
+			width: visible ? (marqueeClip.isLongText ? 240 : Math.max(120, musicTextStatic.implicitWidth + (vizRow.visible ? vizRow.width + 16 : 0) + 24)) : 0
+			height: 24
 
-            Rectangle {
-                anchors.fill: parent
-                color: "transparent"
-                border { width: 1; color: root.musicOpen ? root.colFg : root.colDim }
+			Behavior on width { NumberAnimation { duration: 150 } }
 
-                Row {
-                    anchors.fill: parent
-                    anchors.leftMargin: 8
-                    anchors.rightMargin: 8
-                    spacing: 6
+			Rectangle {
+				anchors.fill: parent
+				color: "transparent"
+				border { width: 1; color: root.musicOpen ? root.colFg : root.colDim }
 
-                    // Tiny Visualizer Bars (animate while the player is playing)
-                    Row {
-                        id: vizRow
-                        spacing: 2
-                        height: 12
-                        anchors.verticalCenter: parent.verticalCenter
-                        visible: leftMusicContainer.player ? leftMusicContainer.player.isPlaying : false
+				Row {
+					anchors.fill: parent
+					anchors.leftMargin: 8
+					anchors.rightMargin: 8
+					spacing: 6
 
-                        Repeater {
-                            model: 5
-                            Rectangle {
-                                required property int index
-                                width: 2
-                                height: 3 + Math.max(0, Math.min(9, root.vizLevels[index] || 0))
-                                color: root.colBatActive
-                                anchors.verticalCenter: parent.verticalCenter
+					Row {
+						id: vizRow
+						spacing: 2
+						height: 12
+						anchors.verticalCenter: parent.verticalCenter
+						visible: leftMusicContainer.player ? leftMusicContainer.player.isPlaying : false
 
-                                Behavior on height { NumberAnimation { duration: 90 } }
-                            }
-                        }
-                    }
+						Repeater {
+							model: 5
+							Rectangle {
+								required property int index
+								width: 2
+								height: 3 + Math.max(0, Math.min(9, root.vizLevels[index] || 0))
+								color: root.colBatActive
+								anchors.verticalCenter: parent.verticalCenter
 
-                    // Static Prefix
-                    Text {
-                        text: ""
-                        color: root.colFg
-                        font.family: root.fontFamily
-                        font.pixelSize: root.fontSize
-                        font.letterSpacing: 0.5
-                        anchors.verticalCenter: parent.verticalCenter
-                        renderType: Text.NativeRendering
-                    }
+								Behavior on height { NumberAnimation { duration: 90 } }
+							}
+						}
+					}
 
-                    // Scrolling Track Title/Artist Container
-                    Item {
-                        id: marqueeClip
-                        height: parent.height
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: leftMusicContainer.width - (vizRow.visible ? vizRow.width + 6 : 0) - 15
-                        clip: true
+					Item {
+						id: marqueeClip
+						height: parent.height
+						anchors.verticalCenter: parent.verticalCenter
+						width: leftMusicContainer.width - (vizRow.visible ? vizRow.width + 6 : 0) - 16
+						clip: true
 
-                        Text {
-                            id: musicTextScroll
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: {
-                                const p = leftMusicContainer.player
-                                if (!p) return "IDLE"
-                                const artist = p.trackArtist || (p.metadata && p.metadata["xesam:artist"] ? p.metadata["xesam:artist"].toString() : "")
-                                const title = p.trackTitle || (p.metadata && p.metadata["xesam:title"] ? p.metadata["xesam:title"].toString() : (p.identity || "ACTIVE"))
-                                const content = artist ? (artist + " - " + title) : title
-                                return content.toUpperCase()
-                            }
-                            color: root.colFg
-                            font.family: root.fontFamily
-                            font.pixelSize: root.fontSize
-                            font.letterSpacing: 0.5
-                            renderType: Text.NativeRendering
+						readonly property string trackString: {
+							const p = leftMusicContainer.player
+							if (!p) return "IDLE"
+							const artist = p.trackArtist || (p.metadata && p.metadata["xesam:artist"] ? p.metadata["xesam:artist"].toString() : "")
+							const title = p.trackTitle || (p.metadata && p.metadata["xesam:title"] ? p.metadata["xesam:title"].toString() : (p.identity || "ACTIVE"))
+							const content = artist ? (artist + " - " + title) : title
+							return content.toUpperCase()
+						}
 
-                            x: marqueeAnim.running ? marqueeClip.width : 0
+						// Uses the root variable now
+						readonly property bool isLongText: trackString.length > root.musicMarqueeThreshold
 
-                            NumberAnimation {
-                                id: marqueeAnim
-                                target: musicTextScroll
-                                property: "x"
-                                from: marqueeClip.width
-                                to: -musicTextScroll.implicitWidth
-                                duration: Math.max(6000, musicTextScroll.implicitWidth * 30)
-                                loops: Animation.Infinite
-                                running: musicTextScroll.implicitWidth > marqueeClip.width
-                            }
-                        }
-                    }
-                }
-            }
+						Text {
+							id: musicTextStatic
+							anchors.verticalCenter: parent.verticalCenter
+							text: marqueeClip.trackString
+							color: root.colFg
+							font.family: root.fontFamily
+							font.pixelSize: root.fontSize
+							font.letterSpacing: 0.5
+							renderType: Text.NativeRendering
+							visible: !marqueeClip.isLongText
+						}
 
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-                onClicked: mouse => {
-                    const p = leftMusicContainer.player
-                    if (!p) return
-                    if (mouse.button === Qt.LeftButton) {
-                        root.musicOpen = !root.musicOpen
-                        root.trayOpen = false
-                        root.batteryOpen = false
-                    } else if (mouse.button === Qt.RightButton) {
-                        p.next()
-                    } else if (mouse.button === Qt.MiddleButton) {
-                        p.previous()
-                    }
-                }
-            }
-        }
+						Text {
+							id: musicTextScroll
+							anchors.verticalCenter: parent.verticalCenter
+							text: marqueeClip.trackString
+							color: root.colFg
+							font.family: root.fontFamily
+							font.pixelSize: root.fontSize
+							font.letterSpacing: 0.5
+							renderType: Text.NativeRendering
+							visible: marqueeClip.isLongText
+
+							x: marqueeAnim.running ? marqueeClip.width : 0
+
+							NumberAnimation {
+								id: marqueeAnim
+								target: musicTextScroll
+								property: "x"
+								from: marqueeClip.width
+								to: -musicTextScroll.implicitWidth
+								duration: Math.max(6000, musicTextScroll.implicitWidth * 30)
+								loops: Animation.Infinite
+								running: marqueeClip.isLongText && musicTextScroll.implicitWidth > marqueeClip.width
+							}
+						}
+					}
+				}
+			}
+
+			MouseArea {
+				anchors.fill: parent
+				cursorShape: Qt.PointingHandCursor
+				acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+				onClicked: mouse => {
+					const p = leftMusicContainer.player
+					if (!p) return
+					if (mouse.button === Qt.LeftButton) {
+						root.musicOpen = !root.musicOpen
+						root.trayOpen = false
+						root.batteryOpen = false
+					} else if (mouse.button === Qt.RightButton) {
+						p.next()
+					} else if (mouse.button === Qt.MiddleButton) {
+						p.previous()
+					}
+				}
+			}
+		}
 
         Rectangle {
             id: leftSep3
@@ -877,24 +881,34 @@ Scope {
                         }
                     }
 
-                    Row {
-                        width: parent.width
-                        Text {
-                            text: root.formatTime(leftMusicContainer.player ? leftMusicContainer.player.position : 0)
-                            color: root.colDim
-                            font.family: root.fontFamily
-                            font.pixelSize: root.fontSize - 2
-                            renderType: Text.NativeRendering
-                        }
-                        Item { Layout.fillWidth: true; width: parent.width - 100 }
-                        Text {
-                            text: root.formatTime(leftMusicContainer.player ? leftMusicContainer.player.length : 0)
-                            color: root.colDim
-                            font.family: root.fontFamily
-                            font.pixelSize: root.fontSize - 2
-                            renderType: Text.NativeRendering
-                        }
-                    }
+					Row {
+						width: parent.width
+						spacing: 8  // <── Adds a clean gap between elapsed and total duration
+
+						Text {
+							text: formatTime(leftMusicContainer.player ? leftMusicContainer.player.position : 0)
+							color: root.colDim
+							font.family: root.fontFamily
+							font.pixelSize: root.fontSize - 1
+							renderType: Text.NativeRendering
+						}
+
+						Text {
+							text: "/"
+							color: root.colDim
+							font.family: root.fontFamily
+							font.pixelSize: root.fontSize - 1
+							renderType: Text.NativeRendering
+						}
+
+						Text {
+							text: formatTime(leftMusicContainer.player ? leftMusicContainer.player.length : 0)
+							color: root.colDim
+							font.family: root.fontFamily
+							font.pixelSize: root.fontSize - 1
+							renderType: Text.NativeRendering
+						}
+					}
                 }
 
                 Row {
